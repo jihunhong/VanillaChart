@@ -1,0 +1,19 @@
+{
+  "name": "vanilachart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jihunhong/VanilaChart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jihunhong/VanilaChart/issues"
+  },
+  "homepage": "https://github.com/jihunhong/VanilaChart#readme"
+}
