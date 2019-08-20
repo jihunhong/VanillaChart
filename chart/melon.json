@@ -1,0 +1,502 @@
+[
+  {
+    "title": "Done For Me",
+    "artist": "펀치 (Punch)",
+    "rank": 1
+  },
+  {
+    "title": "안녕",
+    "artist": "폴킴",
+    "rank": 2
+  },
+  {
+    "title": "기억해줘요 내 모든 날과 그때를",
+    "artist": "거미",
+    "rank": 3
+  },
+  {
+    "title": "오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "artist": "마크툽 (MAKTUB)",
+    "rank": 4
+  },
+  {
+    "title": "그대라는 시",
+    "artist": "태연 (TAEYEON)",
+    "rank": 5
+  },
+  {
+    "title": "내 목소리 들리니",
+    "artist": "벤",
+    "rank": 6
+  },
+  {
+    "title": "니 소식",
+    "artist": "송하예",
+    "rank": 7
+  },
+  {
+    "title": "술이 문제야",
+    "artist": "장혜진, 윤민수(바이브)",
+    "rank": 8
+  },
+  {
+    "title": "내 맘을 볼 수 있나요",
+    "artist": "헤이즈 (Heize)",
+    "rank": 9
+  },
+  {
+    "title": "포장마차",
+    "artist": "황인욱",
+    "rank": 10
+  },
+  {
+    "title": "헤어져줘서 고마워",
+    "artist": "벤",
+    "rank": 11
+  },
+  {
+    "title": "2002",
+    "artist": "Anne-Marie",
+    "rank": 12
+  },
+  {
+    "title": "나의 어깨에 기대어요",
+    "artist": "10cm",
+    "rank": 13
+  },
+  {
+    "title": "사랑에 연습이 있었다면 (Prod. 2soo)",
+    "artist": "임재현",
+    "rank": 14
+  },
+  {
+    "title": "ICY",
+    "artist": "ITZY (있지)",
+    "rank": 15
+  },
+  {
+    "title": "시든 꽃에 물을 주듯",
+    "artist": "HYNN(박혜원)",
+    "rank": 16
+  },
+  {
+    "title": "작은 것들을 위한 시 (Boy With Luv) feat. Halsey",
+    "artist": "방탄소년단",
+    "rank": 17
+  },
+  {
+    "title": "bad guy",
+    "artist": "Billie Eilish (빌리 아일리시)",
+    "rank": 18
+  },
+  {
+    "title": "Speechless (Full)",
+    "artist": "Naomi Scott",
+    "rank": 19
+  },
+  {
+    "title": "Another Day",
+    "artist": "먼데이 키즈 (Monday Kiz), 펀치 (Punch)",
+    "rank": 20
+  },
+  {
+    "title": "솔직하게 말해서 나",
+    "artist": "김나영",
+    "rank": 21
+  },
+  {
+    "title": "인사",
+    "artist": "멜로망스",
+    "rank": 22
+  },
+  {
+    "title": "Snapping",
+    "artist": "청하",
+    "rank": 23
+  },
+  {
+    "title": "Señorita",
+    "artist": "Shawn Mendes, Camila Cabello",
+    "rank": 24
+  },
+  {
+    "title": "사랑이 식었다고 말해도 돼",
+    "artist": "먼데이 키즈 (Monday Kiz)",
+    "rank": 25
+  },
+  {
+    "title": "BAND",
+    "artist": "창모 (CHANGMO), Hash Swan, ASH ISLAND, 김효은",
+    "rank": 26
+  },
+  {
+    "title": "너에게 못했던 내 마지막 말은",
+    "artist": "다비치",
+    "rank": 27
+  },
+  {
+    "title": "그 끝에 그대",
+    "artist": "청하",
+    "rank": 28
+  },
+  {
+    "title": "We don`t talk together (Feat. 기리보이) (Prod. SUGA)",
+    "artist": "헤이즈 (Heize)",
+    "rank": 29
+  },
+  {
+    "title": "괜찮아도 괜찮아 (That`s okay)",
+    "artist": "디오 (D.O.)",
+    "rank": 30
+  },
+  {
+    "title": "내 안부",
+    "artist": "이우",
+    "rank": 31
+  },
+  {
+    "title": "Say Goodbye",
+    "artist": "송하예",
+    "rank": 32
+  },
+  {
+    "title": "사계 (Four Seasons)",
+    "artist": "태연 (TAEYEON)",
+    "rank": 33
+  },
+  {
+    "title": "모든 날, 모든 순간 (Every day, Every Moment)",
+    "artist": "폴킴",
+    "rank": 34
+  },
+  {
+    "title": "사월이 지나면 우리 헤어져요 (Beautiful goodbye)",
+    "artist": "첸 (CHEN)",
+    "rank": 35
+  },
+  {
+    "title": "FANCY",
+    "artist": "TWICE (트와이스)",
+    "rank": 36
+  },
+  {
+    "title": "너만 너만 너만",
+    "artist": "양다일",
+    "rank": 37
+  },
+  {
+    "title": "아퍼 (Feat. Kid Milli, Lil tachi, 김승민, NO:EL, C JAMM)",
+    "artist": "기리보이",
+    "rank": 38
+  },
+  {
+    "title": "노래방에서",
+    "artist": "장범준",
+    "rank": 39
+  },
+  {
+    "title": "그때가 좋았어",
+    "artist": "케이시 (Kassy)",
+    "rank": 40
+  },
+  {
+    "title": "Paris In The Rain",
+    "artist": "Lauv",
+    "rank": 41
+  },
+  {
+    "title": "UN Village",
+    "artist": "백현 (BAEKHYUN)",
+    "rank": 42
+  },
+  {
+    "title": "달라달라",
+    "artist": "ITZY (있지)",
+    "rank": 43
+  },
+  {
+    "title": "너를 만나",
+    "artist": "폴킴",
+    "rank": 44
+  },
+  {
+    "title": "주저하는 연인들을 위해",
+    "artist": "잔나비",
+    "rank": 45
+  },
+  {
+    "title": "Love Shot",
+    "artist": "EXO",
+    "rank": 46
+  },
+  {
+    "title": "Goodbye",
+    "artist": "박효신",
+    "rank": 47
+  },
+  {
+    "title": "비가 내리는 날에는",
+    "artist": "윤하 (YOUNHA)",
+    "rank": 48
+  },
+  {
+    "title": "뭐해 (What are you up to)",
+    "artist": "강다니엘",
+    "rank": 49
+  },
+  {
+    "title": "봄날",
+    "artist": "방탄소년단",
+    "rank": 50
+  },
+  {
+    "title": "HIT",
+    "artist": "세븐틴",
+    "rank": 51
+  },
+  {
+    "title": "Believer",
+    "artist": "Imagine Dragons",
+    "rank": 52
+  },
+  {
+    "title": "옥탑방 (Rooftop)",
+    "artist": "엔플라잉 (N.Flying)",
+    "rank": 53
+  },
+  {
+    "title": "나만, 봄",
+    "artist": "볼빨간사춘기",
+    "rank": 54
+  },
+  {
+    "title": "Way Back Home",
+    "artist": "숀 (SHAUN)",
+    "rank": 55
+  },
+  {
+    "title": "IDOL",
+    "artist": "방탄소년단",
+    "rank": 56
+  },
+  {
+    "title": "사계 (하루살이)",
+    "artist": "엠씨더맥스",
+    "rank": 57
+  },
+  {
+    "title": "BUNGEE (Fall in Love)",
+    "artist": "오마이걸",
+    "rank": 58
+  },
+  {
+    "title": "벌써 12시",
+    "artist": "청하",
+    "rank": 59
+  },
+  {
+    "title": "방에 모기가 있어 (Do You Think Of Me?)",
+    "artist": "10cm",
+    "rank": 60
+  },
+  {
+    "title": "Kill This Love",
+    "artist": "BLACKPINK",
+    "rank": 61
+  },
+  {
+    "title": "서울 밤 (feat. 빈지노)",
+    "artist": "어반자카파",
+    "rank": 62
+  },
+  {
+    "title": "A Whole New World",
+    "artist": "Mena Massoud, Naomi Scott",
+    "rank": 63
+  },
+  {
+    "title": "누구 없소 (NO ONE) (Feat. B.I of iKON)",
+    "artist": "이하이",
+    "rank": 64
+  },
+  {
+    "title": "넘쳐흘러",
+    "artist": "엠씨더맥스",
+    "rank": 65
+  },
+  {
+    "title": "AH YEAH (아예)",
+    "artist": "WINNER",
+    "rank": 66
+  },
+  {
+    "title": "비워 (Beer) (Prod. Way Ched)",
+    "artist": "창모 (CHANGMO), Hash Swan, ASH ISLAND, 김효은, 릴러말즈 (Leellamarz), The Quiett",
+    "rank": 67
+  },
+  {
+    "title": "Dance The Night Away",
+    "artist": "TWICE (트와이스)",
+    "rank": 68
+  },
+  {
+    "title": "대충 입고 나와",
+    "artist": "우디 (Woody)",
+    "rank": 69
+  },
+  {
+    "title": "열대야 (Fever)",
+    "artist": "여자친구 (GFRIEND)",
+    "rank": 70
+  },
+  {
+    "title": "비",
+    "artist": "폴킴",
+    "rank": 71
+  },
+  {
+    "title": "I Don`t Care",
+    "artist": "Ed Sheeran, Justin Bieber",
+    "rank": 72
+  },
+  {
+    "title": "Tempo",
+    "artist": "EXO",
+    "rank": 73
+  },
+  {
+    "title": "소우주 (Mikrokosmos)",
+    "artist": "방탄소년단",
+    "rank": 74
+  },
+  {
+    "title": "이별하러 가는 길",
+    "artist": "임한별",
+    "rank": 75
+  },
+  {
+    "title": "comethru",
+    "artist": "Jeremy Zucker",
+    "rank": 76
+  },
+  {
+    "title": "돈 Call Me (Prod.BRLLNT)",
+    "artist": "염따",
+    "rank": 77
+  },
+  {
+    "title": "별 보러 갈래?",
+    "artist": "볼빨간사춘기",
+    "rank": 78
+  },
+  {
+    "title": "짐살라빔 (Zimzalabim)",
+    "artist": "Red Velvet (레드벨벳)",
+    "rank": 79
+  },
+  {
+    "title": "비오는 날 뭐해",
+    "artist": "하은",
+    "rank": 80
+  },
+  {
+    "title": "오늘 밤에",
+    "artist": "홍진영",
+    "rank": 81
+  },
+  {
+    "title": "Make It Right",
+    "artist": "방탄소년단",
+    "rank": 82
+  },
+  {
+    "title": "Dionysus",
+    "artist": "방탄소년단",
+    "rank": 83
+  },
+  {
+    "title": "교통정리 (Feat. 헤이즈)",
+    "artist": "기리보이",
+    "rank": 84
+  },
+  {
+    "title": "What a life",
+    "artist": "세훈&찬열",
+    "rank": 85
+  },
+  {
+    "title": "U GOT IT",
+    "artist": "갓츄 (GOT U)",
+    "rank": 86
+  },
+  {
+    "title": "어떤 별보다",
+    "artist": "Red Velvet (레드벨벳)",
+    "rank": 87
+  },
+  {
+    "title": "BOOM",
+    "artist": "NCT DREAM",
+    "rank": 88
+  },
+  {
+    "title": "있어 희미하게 (Feat. Gaeko)",
+    "artist": "세훈&찬열",
+    "rank": 89
+  },
+  {
+    "title": "아주 NICE",
+    "artist": "세븐틴",
+    "rank": 90
+  },
+  {
+    "title": "I HOPE",
+    "artist": "강다니엘",
+    "rank": 91
+  },
+  {
+    "title": "180도",
+    "artist": "벤",
+    "rank": 92
+  },
+  {
+    "title": "Color",
+    "artist": "강다니엘",
+    "rank": 93
+  },
+  {
+    "title": "Horizon",
+    "artist": "강다니엘",
+    "rank": 94
+  },
+  {
+    "title": "어쩌나",
+    "artist": "세븐틴",
+    "rank": 95
+  },
+  {
+    "title": "Home",
+    "artist": "세븐틴",
+    "rank": 96
+  },
+  {
+    "title": "Intro (Through the night)",
+    "artist": "강다니엘",
+    "rank": 97
+  },
+  {
+    "title": "부르면 돼",
+    "artist": "세훈&찬열",
+    "rank": 98
+  },
+  {
+    "title": "GIDDY UP (Prod. GroovyRoom)",
+    "artist": "식케이 (Sik-K), 김하온 (HAON), pH-1, Woodie Gochild, 박재범",
+    "rank": 99
+  },
+  {
+    "title": "Uh-Oh",
+    "artist": "(여자)아이들",
+    "rank": 100
+  }
+]
