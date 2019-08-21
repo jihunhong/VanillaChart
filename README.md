@@ -19,7 +19,7 @@
 
 ## 📷 Preview
 
-<center><img src="/19.07.01 screenshot.gif"></center>
+<center><img src="https://github.com/jihunhong/CherryChart/raw/master/19.07.01%20screenshot.gif"></center>
 
 ## ✒️ 개요
 기존의 음원 플랫폼은 지니를 사용하다가
