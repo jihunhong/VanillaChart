@@ -3,13 +3,18 @@ const youtube = new Youtube();
 
 const apiKey = require('./apikey');
 
-let q = 'i\'m sorry DEAN'
-const limit = 10;
+const genie = require('./chart/genie.json');
+const melon = require('./chart/melon.json');
+const bugs = require('./chart/bugs.json');
 
+let q = '';
+const limit = 1;
 youtube.setKey(apiKey);
 
 youtube.addParam('order', 'rating');
 youtube.addParam('type', 'video');
+
+const searching = function(){
 
 youtube.search(q, limit, function(err, result){
     if(err) { console.log(err); return;}
@@ -17,14 +22,20 @@ youtube.search(q, limit, function(err, result){
     console.log(JSON.stringify(result, null, 2));
 
     const items = result["items"];
+    
     for(let i in items){
-        var video = items[i];
-        var title = video["snippet"]["title"];
-        var video_id = video["id"]["videoId"];
-        var url = "https://www.youtube.com/watch?v=" + video_id;
-        console.log("제목 : " + title);
-        console.log("URL : " + url);
-        console.log("-----------");
-    }
+        let video = items[i];
 
+        let video_id = video["id"]["videoId"];
+    }
+    return items[0].id.videoId;
+})};
+
+genie.forEach(function(el){
+    q = el.title + el.artist;
+    el.video_id = searching();
 })
+
+
+
+

@@ -6,11 +6,11 @@ const path = require('path');
 
 class Chart{
     constructor(name, url, list, title, artist){
-        this.name   = name;
-        this.url    = url;
-        this.list   = list;
-        this.title  = title;
-        this.artist = artist;
+        this.name     = name;
+        this.url      = url;
+        this.list     = list;
+        this.title    = title;
+        this.artist   = artist;
     }
 
     getData(){
@@ -32,7 +32,8 @@ class Chart{
             $musicList.each(function (i, el) {
                 array[i] = {
                     title: $(this).find(title).text().trim(),
-                    artist: $(this).find(artist).text().trim()
+                    artist: $(this).find(artist).text().trim(),
+                    video_id: ''
                 };
             });
         
