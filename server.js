@@ -1,12 +1,9 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const router = require('./router/main.js')(app);
+const router = require('./router/chartDataRouter.js/index.js')(app);
 
-app.set('views', path.join(__dirname,'/views'));
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
-
+app.use(express.json());
 app.use(express.static('public'));
 
 const server = app.listen(3000, function(){

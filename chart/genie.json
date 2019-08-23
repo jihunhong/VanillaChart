@@ -2,301 +2,251 @@
   {
     "title": "Done For Me",
     "artist": "펀치 (Punch)",
-    "rank": 1,
-    "video_id": "rDcpqs1wPWc"
+    "rank": 1
   },
   {
     "title": "안녕",
     "artist": "폴킴",
-    "rank": 2,
-    "video_id": "2IjzF4Kn80s"
+    "rank": 2
   },
   {
     "title": "기억해줘요 내 모든 날과 그때를",
     "artist": "거미 (Gummy)",
-    "rank": 3,
-    "video_id": "DBUDVrvbnH4"
+    "rank": 3
   },
   {
     "title": "오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
     "artist": "마크툽 (Maktub)",
-    "rank": 4,
-    "video_id": "dmSUBdk4SY4"
+    "rank": 4
   },
   {
     "title": "그대라는 시",
     "artist": "태연 (TAEYEON)",
-    "rank": 5,
-    "video_id": "uy4e63edV_k"
-  },
-  {
-    "title": "음파음파 (Umpah Umpah)",
-    "artist": "Red Velvet (레드벨벳)",
-    "rank": 6,
-    "video_id": "vHS9E6JFja8"
+    "rank": 5
   },
   {
     "title": "내 목소리 들리니",
     "artist": "벤",
-    "rank": 7,
-    "video_id": "2Zki-6vbWq8"
+    "rank": 6
   },
   {
-    "title": "술이 문제야",
-    "artist": "장혜진 & 윤민수(바이브)",
-    "rank": 8,
-    "video_id": "XcbEM7j_ARQ"
+    "title": "음파음파 (Umpah Umpah)",
+    "artist": "Red Velvet (레드벨벳)",
+    "rank": 7
   },
   {
     "title": "니 소식",
     "artist": "송하예",
-    "rank": 9,
-    "video_id": "7JuTEHfF2jo"
-  },
-  {
-    "title": "2002",
-    "artist": "Anne Marie",
-    "rank": 10,
-    "video_id": "Il-an3K9pjg"
-  },
-  {
-    "title": "Say Goodbye",
-    "artist": "송하예",
-    "rank": 11,
-    "video_id": "Sf8eWALfiZ8"
-  },
-  {
-    "title": "ICY",
-    "artist": "ITZY (있지)",
-    "rank": 12,
-    "video_id": "zndvqTc4P9I"
+    "rank": 8
   },
   {
     "title": "포장마차",
     "artist": "황인욱",
-    "rank": 13,
-    "video_id": "Hi0skksGeRk"
+    "rank": 9
+  },
+  {
+    "title": "술이 문제야",
+    "artist": "장혜진 & 윤민수(바이브)",
+    "rank": 10
+  },
+  {
+    "title": "Say Goodbye",
+    "artist": "송하예",
+    "rank": 11
   },
   {
     "title": "시든 꽃에 물을 주듯",
     "artist": "HYNN (박혜원)",
-    "rank": 14,
-    "video_id": "4qtTZAcaVlQ"
+    "rank": 12
   },
   {
-    "title": "그 끝에 그대",
-    "artist": "청하",
-    "rank": 15,
-    "video_id": "zHU69RPi6Hk"
+    "title": "2002",
+    "artist": "Anne Marie",
+    "rank": 13
+  },
+  {
+    "title": "ICY",
+    "artist": "ITZY (있지)",
+    "rank": 14
+  },
+  {
+    "title": "흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "artist": "장범준",
+    "rank": 15
   },
   {
     "title": "헤어져줘서 고마워",
     "artist": "벤",
-    "rank": 16,
-    "video_id": "Mqocx4DxHjA"
+    "rank": 16
+  },
+  {
+    "title": "그 끝에 그대",
+    "artist": "청하",
+    "rank": 17
   },
   {
     "title": "사랑에 연습이 있었다면 (Prod. by 2soo)",
     "artist": "임재현",
-    "rank": 17,
-    "video_id": "kXAvbHPdTZ0"
+    "rank": 18
   },
   {
     "title": "내 맘을 볼 수 있나요",
     "artist": "헤이즈 (Heize)",
-    "rank": 18,
-    "video_id": "eyaVppPVSaA"
+    "rank": 19
   },
   {
     "title": "나의 어깨에 기대어요",
     "artist": "10cm",
-    "rank": 19,
-    "video_id": "IhF3duahDDc"
-  },
-  {
-    "title": "Speechless (Full)",
-    "artist": "Naomi Scott",
-    "rank": 20,
-    "video_id": "mw5VIEIvuMI"
+    "rank": 20
   },
   {
     "title": "bad guy",
     "artist": "Billie Eilish",
-    "rank": 21,
-    "video_id": "DyDfgMOUjCI"
+    "rank": 21
   },
   {
-    "title": "작은 것들을 위한 시 (Boy With Luv) (Feat. Halsey)",
-    "artist": "방탄소년단",
-    "rank": 22,
-    "video_id": "XsX3ATc3FbA"
-  },
-  {
-    "title": "Senorita",
-    "artist": "Camila Cabello & Shawn Mendes",
-    "rank": 23,
-    "video_id": "Pkh8UtuejGw"
-  },
-  {
-    "title": "Another Day",
-    "artist": "먼데이 키즈 (Monday Kiz) & 펀치 (Punch)",
-    "rank": 24,
-    "video_id": "iZuR8NoLbLw"
-  },
-  {
-    "title": "Snapping",
-    "artist": "청하",
-    "rank": 25,
-    "video_id": "SxhPskMuhus"
-  },
-  {
-    "title": "솔직하게 말해서 나",
-    "artist": "김나영",
-    "rank": 26,
-    "video_id": "CPv9YNpQYhc"
-  },
-  {
-    "title": "사랑이 식었다고 말해도 돼",
-    "artist": "먼데이 키즈 (Monday Kiz)",
-    "rank": 27,
-    "video_id": "ZB5VBP3cOrM"
-  },
-  {
-    "title": "인사",
-    "artist": "멜로망스 (MeloMance)",
-    "rank": 28,
-    "video_id": "-6oSC5ByCbg"
-  },
-  {
-    "title": "너에게 못했던 내 마지막 말은",
-    "artist": "다비치",
-    "rank": 29,
-    "video_id": "G1dbcPJXxb0"
+    "title": "Speechless (Full)",
+    "artist": "Naomi Scott",
+    "rank": 22
   },
   {
     "title": "모든 날, 모든 순간 (Every day, Every Moment)",
     "artist": "폴킴",
-    "rank": 30,
-    "video_id": "1q_t6RNuH8c"
+    "rank": 23
+  },
+  {
+    "title": "Senorita",
+    "artist": "Camila Cabello & Shawn Mendes",
+    "rank": 24
+  },
+  {
+    "title": "작은 것들을 위한 시 (Boy With Luv) (Feat. Halsey)",
+    "artist": "방탄소년단",
+    "rank": 25
+  },
+  {
+    "title": "너에게 못했던 내 마지막 말은",
+    "artist": "다비치",
+    "rank": 26
+  },
+  {
+    "title": "Another Day",
+    "artist": "먼데이 키즈 (Monday Kiz) & 펀치 (Punch)",
+    "rank": 27
+  },
+  {
+    "title": "사랑이 식었다고 말해도 돼",
+    "artist": "먼데이 키즈 (Monday Kiz)",
+    "rank": 28
+  },
+  {
+    "title": "솔직하게 말해서 나",
+    "artist": "김나영",
+    "rank": 29
+  },
+  {
+    "title": "Snapping",
+    "artist": "청하",
+    "rank": 30
   },
   {
     "title": "방에 모기가 있어 (Do You Think Of Me?)",
     "artist": "10cm",
-    "rank": 31,
-    "video_id": "YiU1IoVjCoQ"
+    "rank": 31
   },
   {
     "title": "조금 더 외로워지겠지",
     "artist": "김나영",
-    "rank": 32,
-    "video_id": "cdFbR_IvoTY"
+    "rank": 32
+  },
+  {
+    "title": "인사",
+    "artist": "멜로망스 (MeloMance)",
+    "rank": 33
   },
   {
     "title": "BAND",
     "artist": "창모 & Hash Swan & ASH ISLAND & 김효은",
-    "rank": 33,
-    "video_id": "MoN5NvC6uzk"
-  },
-  {
-    "title": "사계 (Four Seasons)",
-    "artist": "태연 (TAEYEON)",
-    "rank": 34,
-    "video_id": "4HG_CJzyX6A"
-  },
-  {
-    "title": "FANCY",
-    "artist": "TWICE (트와이스)",
-    "rank": 35,
-    "video_id": "kOHB85vDuow"
-  },
-  {
-    "title": "We don't talk together (Feat. 기리보이) (Prod. by SUGA)",
-    "artist": "헤이즈 (Heize)",
-    "rank": 36,
-    "video_id": "ByHNlfmmT-w"
-  },
-  {
-    "title": "노래방에서",
-    "artist": "장범준",
-    "rank": 37,
-    "video_id": "BUzI-awsi1s"
-  },
-  {
-    "title": "그때가 좋았어",
-    "artist": "케이시 (Kassy)",
-    "rank": 38,
-    "video_id": "l3arzUTr848"
+    "rank": 34
   },
   {
     "title": "내 안부",
     "artist": "이우",
-    "rank": 39,
-    "video_id": "TM_ka9OOqno"
+    "rank": 35
+  },
+  {
+    "title": "노래방에서",
+    "artist": "장범준",
+    "rank": 36
   },
   {
     "title": "비가 내리는 날에는",
     "artist": "윤하 (YOUNHA)",
-    "rank": 40,
-    "video_id": "rWR920rbfHA"
+    "rank": 37
   },
   {
-    "title": "All Falls Down (Feat. Noah Cyrus & Digital Farm Animals)",
-    "artist": "Alan Walker",
-    "rank": 41,
-    "video_id": "6RLLOEzdxsM"
-  },
-  {
-    "title": "너를 만나",
-    "artist": "폴킴",
-    "rank": 42,
-    "video_id": "YBzJ0jmHv-4"
-  },
-  {
-    "title": "주저하는 연인들을 위해",
-    "artist": "잔나비",
-    "rank": 43,
-    "video_id": "GKLycn_9vFM"
+    "title": "사계 (Four Seasons)",
+    "artist": "태연 (TAEYEON)",
+    "rank": 38
   },
   {
     "title": "괜찮아도 괜찮아 (That's okay)",
     "artist": "디오 (D.O.)",
-    "rank": 44,
-    "video_id": "j2aQ_NqeTNw"
+    "rank": 39
+  },
+  {
+    "title": "그때가 좋았어",
+    "artist": "케이시 (Kassy)",
+    "rank": 40
+  },
+  {
+    "title": "너를 만나",
+    "artist": "폴킴",
+    "rank": 41
+  },
+  {
+    "title": "We don't talk together (Feat. 기리보이) (Prod. by SUGA)",
+    "artist": "헤이즈 (Heize)",
+    "rank": 42
   },
   {
     "title": "Paris In The Rain",
     "artist": "Lauv",
-    "rank": 45,
-    "video_id": "kOCkne-Bku4"
+    "rank": 43
+  },
+  {
+    "title": "FANCY",
+    "artist": "TWICE (트와이스)",
+    "rank": 44
   },
   {
     "title": "달라달라",
     "artist": "ITZY (있지)",
-    "rank": 46,
-    "video_id": "pNfTK39k55U"
+    "rank": 45
   },
   {
     "title": "아퍼 (Feat. Kid Milli & Lil tachi & 김승민 & NO:EL & C JAMM)",
     "artist": "기리보이",
-    "rank": 47,
-    "video_id": "486cFz09diA"
-  },
-  {
-    "title": "옥탑방 (Rooftop)",
-    "artist": "엔플라잉 (N.Flying)",
-    "rank": 48,
-    "video_id": "VpaUh_BGqE0"
+    "rank": 46
   },
   {
     "title": "Way Back Home",
     "artist": "숀 (SHAUN)",
-    "rank": 49,
-    "video_id": "amOSaNX7KJg"
+    "rank": 47
   },
   {
-    "title": "A Whole New World",
-    "artist": "Mena Massoud & Naomi Scott",
-    "rank": 50,
-    "video_id": "eitDnP0_83k"
+    "title": "BUNGEE (Fall in Love)",
+    "artist": "오마이걸 (OH MY GIRL)",
+    "rank": 48
+  },
+  {
+    "title": "주저하는 연인들을 위해",
+    "artist": "잔나비",
+    "rank": 49
+  },
+  {
+    "title": "All Falls Down (Feat. Noah Cyrus & Digital Farm Animals)",
+    "artist": "Alan Walker",
+    "rank": 50
   }
 ]
