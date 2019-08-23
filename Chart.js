@@ -32,8 +32,7 @@ class Chart{
             $musicList.each(function (i, el) {
                 array[i] = {
                     title: $(this).find(title).text().trim(),
-                    artist: $(this).find(artist).text().trim(),
-                    video_id: ''
+                    artist: $(this).find(artist).text().trim()
                 };
             });
         

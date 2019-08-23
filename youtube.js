@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
@@ -14,28 +16,28 @@ youtube.setKey(apiKey);
 youtube.addParam('order', 'rating');
 youtube.addParam('type', 'video');
 
-const searching = function(){
-
-youtube.search(q, limit, function(err, result){
-    if(err) { console.log(err); return;}
-
-    console.log(JSON.stringify(result, null, 2));
-
-    const items = result["items"];
+function searching() {
+    let video_id = "";
     
-    for(let i in items){
-        let video = items[i];
+    return new Promise(function(res, rej){
+        youtube.search(q, limit, function (err, result) {
+            if(err) { rej(err)}
+            console.log(result)
+            const items = result["items"];
+            
+            res(items[0]["id"]["videoId"]);
+        })
+    }) 
+};
 
-        let video_id = video["id"]["videoId"];
+
+async function genieToYoutube(){
+    for( let music of genie){
+        q = `${music.title} ${music.artist}`;
+        music.video_id = await searching();
     }
-    return items[0].id.videoId;
-})};
-
-genie.forEach(function(el){
-    q = el.title + el.artist;
-    el.video_id = searching();
-})
+    fs.writeFileSync( path.join('./chart/'+ 'genie' + '.json')  , JSON.stringify(genie, null, 2));
+}
 
 
-
-
+genieToYoutube();
