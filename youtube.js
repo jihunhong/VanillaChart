@@ -23,7 +23,7 @@ function searching() {
 
     return new Promise(function(res, rej){
         youtube.search(q, limit, function (err, result) {
-            if(err) { rej(err) }
+            if(err) { console.log(err);}
             count++;
 
             const json = {'query': q,
@@ -33,23 +33,31 @@ function searching() {
             youtubeAPI.push(json);
 
             fs.writeFileSync( path.join('./youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
-            
-            const items = result["items"];
-            
-            res(items[0]["id"]["videoId"]);
-            // 검색결과중 official 이나 뮤직비디오인것 판별 해야함
+            const items = [];
+
+            try{
+                items = result["items"];
+                res(items[0]["id"]["videoId"]);
+            }catch(e){
+                res('none');
+            }
         })
     }) 
 };
 
 
-async function insertVideoId(){
-    for( let music of melon){
-        q = `${music.title} ${music.artist}`;
-        music.video_id = await searching();
+function insertVideoId(){
+    const iterateSearch = async function(chart, name){
+        for( let music of chart){
+            q = `${music.title} ${music.artist}`;
+            music.video_id = await searching();
+        }
+        fs.writeFileSync( path.join('./chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
     }
-    fs.writeFileSync( path.join('./chart/'+ 'melon' + '.json')  , JSON.stringify(melon, null, 2));
-}
 
+    iterateSearch(melon, 'melon');
+    iterateSearch(genie, 'genie');
+    iterateSearch(bugs, 'bugs');
+}
 
 insertVideoId();
