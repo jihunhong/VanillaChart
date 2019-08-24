@@ -3,13 +3,13 @@ const path = require('path');
 const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
-const apiKey = require('./apikey');
+const apiKey = require('../apikey');
 
-const genie = require('./chart/genie.json');
-const melon = require('./chart/melon.json');
-const bugs = require('./chart/bugs.json');
+const genie = require('../chart/genie.json');
+const melon = require('../chart/melon.json');
+const bugs  = require('../chart/bugs.json');
 
-const youtubeAPI = require('./youtubeAPI.json');
+const youtubeAPI = require('../logs/youtubeAPI.json');
 
 let q = '';
 const limit = 1;
@@ -35,7 +35,7 @@ function searching() {
                 
             youtubeAPI.push(json);
 
-            fs.writeFileSync( path.join('./youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
+            fs.writeFileSync( path.join('../logs/youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
             let responseItems = [];
 
             try{
@@ -53,10 +53,12 @@ async function insertVideoId(){
     const iterateSearch = async function(chart, name){
         for(let i=0; i<chart.length; i++){
             const music = chart[i];
-            q = `${music.title} ${music.artist}`;
+            q = `${music.artist} - ${music.title} `;
             music.video_id = await searching();
             chart[i] = music;
-            fs.writeFileSync( path.join('./chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
+            
+            fs.writeFileSync( path.join('../chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
+            
             console.log(`${music.rank} : ${music.title} 완료`);
         }
         console.log(`============${name} 완료`);
