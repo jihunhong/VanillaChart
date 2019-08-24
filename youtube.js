@@ -23,21 +23,24 @@ function searching() {
 
     return new Promise(function(res, rej){
         youtube.search(q, limit, function (err, result) {
-            if(err) { console.log(err);}
+            if(err) { console.log(err); }
+            
             count++;
 
             const json = {'query': q,
                           'date': new Date(),
                           'count': count};
-            
+
+            // if(result["items"] !== null) {json.video_id = result["items"][0]["id"]["videoId"];}
+                
             youtubeAPI.push(json);
 
             fs.writeFileSync( path.join('./youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
-            const items = [];
+            let responseItems = [];
 
             try{
-                items = result["items"];
-                res(items[0]["id"]["videoId"]);
+                responseItems = result.items.slice(0);
+                res(responseItems[0]["id"]["videoId"]);
             }catch(e){
                 res('none');
             }
@@ -46,18 +49,22 @@ function searching() {
 };
 
 
-function insertVideoId(){
+async function insertVideoId(){
     const iterateSearch = async function(chart, name){
-        for( let music of chart){
+        for(let i=0; i<chart.length; i++){
+            const music = chart[i];
             q = `${music.title} ${music.artist}`;
             music.video_id = await searching();
+            chart[i] = music;
+            fs.writeFileSync( path.join('./chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
+            console.log(`${music.rank} : ${music.title} 완료`);
         }
-        fs.writeFileSync( path.join('./chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
+        console.log(`============${name} 완료`);
     }
 
-    iterateSearch(melon, 'melon');
-    iterateSearch(genie, 'genie');
-    iterateSearch(bugs, 'bugs');
+    // await iterateSearch(melon, 'melon');
+    await iterateSearch(genie, 'genie');
+    // await iterateSearch(bugs, 'bugs');
 }
 
 insertVideoId();
