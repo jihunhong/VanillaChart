@@ -46,7 +46,7 @@ class Chart{
 
             return chart;
         })
-        .then(res => fs.writeFileSync( path.join('./chart/'+ this.name + '.json')  , JSON.stringify(res, null, 2)));
+        .then(res => fs.writeFileSync( path.join('../chart/'+ this.name + '.json')  , JSON.stringify(res, null, 2)));
 
     }
 }

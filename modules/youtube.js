@@ -11,23 +11,28 @@ const bugs  = require('../chart/bugs.json');
 
 const youtubeAPI = require('../logs/youtubeAPI.json');
 
-let q = '';
+
 const limit = 1;
 youtube.setKey(apiKey);
 
 youtube.addParam('order', 'rating');
 youtube.addParam('type', 'video');
 
-function searching() {
+function searching(music) {
     let count = youtubeAPI[youtubeAPI.length-1].count;
 
     return new Promise(function(res, rej){
+        const q = `${music.artist} - ${music.title}`;
+
         youtube.search(q, limit, function (err, result) {
             if(err) { console.log(err); }
             
             count++;
 
+
             const json = {'query': q,
+                          'title': music.title,
+                          'artist': music.artist,
                           'date': new Date(),
                           'count': count};
 
@@ -53,9 +58,11 @@ async function insertVideoId(){
     const iterateSearch = async function(chart, name){
         for(let i=0; i<chart.length; i++){
             const music = chart[i];
-            q = `${music.artist} - ${music.title} `;
-            music.video_id = await searching();
-            chart[i] = music;
+
+            await searching(music).then(function(video_id){
+                music.video_id = video_id;
+                chart[i] = music;
+            });
             
             fs.writeFileSync( path.join('../chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
             
@@ -65,8 +72,8 @@ async function insertVideoId(){
     }
 
     // await iterateSearch(melon, 'melon');
-    await iterateSearch(genie, 'genie');
-    // await iterateSearch(bugs, 'bugs');
+    // await iterateSearch(genie, 'genie');
+    await iterateSearch(bugs, 'bugs');
 }
 
 insertVideoId();
