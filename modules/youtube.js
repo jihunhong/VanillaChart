@@ -12,11 +12,10 @@ const bugs  = require('../chart/bugs.json');
 const youtubeAPI = require('../logs/youtubeAPI.json');
 
 
-const limit = 1;
+const limit = 3;
 youtube.setKey(apiKey);
 
-youtube.addParam('order', 'rating');
-youtube.addParam('type', 'video');
+youtube.addParam('regionCode', 'kr');
 
 function searching(music) {
     let count = youtubeAPI[youtubeAPI.length-1].count;
@@ -36,7 +35,7 @@ function searching(music) {
                           'date': new Date(),
                           'count': count};
 
-            // if(result["items"] !== null) {json.video_id = result["items"][0]["id"]["videoId"];}
+            
                 
             youtubeAPI.push(json);
 
@@ -45,7 +44,10 @@ function searching(music) {
 
             try{
                 responseItems = result.items.slice(0);
-                res(responseItems[0]["id"]["videoId"]);
+
+                const officialItem = responseItems.find((v) => v.snippet.title.includes('MV') );
+
+                officialItem == undefined ? res(responseItems[0].id.videoId) : res(officialItem.id.videoId);
             }catch(e){
                 res('none');
             }
