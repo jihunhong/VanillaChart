@@ -29,5 +29,25 @@ module.exports = function (app) {
         res.json(result.success(music));
     })
 
+    app.get('/api/:chart', function (req, res) {
+        const name = req.params.chart;
+        const chart = charts[name];
+
+        const title = req.query.title;
+        const music = chart.find((v) => v.title == title);
+
+        res.json(result.success(music));
+    })
+
+    app.get('/api/:chart', function (req, res) {
+        const name = req.params.chart;
+        const chart = charts[name];
+
+        const artist = req.query.artist;
+        const music = chart.find((v) => v.artist == artist);
+
+        res.json(result.success(music));
+    })
+    
 
 }
