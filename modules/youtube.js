@@ -45,7 +45,8 @@ function searching(music) {
             try{
                 responseItems = result.items.slice(0);
 
-                const officialItem = responseItems.find((v) => v.snippet.title.includes('MV') );
+                const officialItem = responseItems.find((v) => 
+                    v.snippet.title.includes('MV') || v.snippet.title.includes('M/V') || v.snippet.title.includes('Official') );
 
                 officialItem == undefined ? res(responseItems[0].id.videoId) : res(officialItem.id.videoId);
             }catch(e){
@@ -74,8 +75,8 @@ async function insertVideoId(){
     }
 
     // await iterateSearch(melon, 'melon');
-    // await iterateSearch(genie, 'genie');
-    await iterateSearch(bugs, 'bugs');
+    await iterateSearch(genie, 'genie');
+    // await iterateSearch(bugs, 'bugs');
 }
 
 insertVideoId();
