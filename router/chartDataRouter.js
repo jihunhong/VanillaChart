@@ -23,31 +23,10 @@ module.exports = function (app) {
         const name = req.params.chart;
         const chart = charts[name];
 
-        const rank = req.query.rank;
-        const music = chart.find((v) => v.rank == rank);
+        const keys = Object.keys(req.query);
+        const queryKey = keys[0];
+        const music = chart.find((v) => v[queryKey] == req.query[queryKey]);
 
-        res.json(result.success(music));
+        res.json(result.judge(music));
     })
-
-    app.get('/api/:chart', function (req, res) {
-        const name = req.params.chart;
-        const chart = charts[name];
-
-        const title = req.query.title;
-        const music = chart.find((v) => v.title == title);
-
-        res.json(result.success(music));
-    })
-
-    app.get('/api/:chart', function (req, res) {
-        const name = req.params.chart;
-        const chart = charts[name];
-
-        const artist = req.query.artist;
-        const music = chart.find((v) => v.artist == artist);
-
-        res.json(result.success(music));
-    })
-    
-
 }

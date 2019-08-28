@@ -10,7 +10,7 @@ module.exports = class JSONResult{
     fail(msg){
         return new JSONResult('fail', msg, null);
     }
-    judge(result, data){
-        result === true ? this.success(data) : this.fail('실패');
+    judge(data){
+        return data === undefined ? this.fail('실패') : this.success(data) ;
     }
 }
