@@ -3,7 +3,7 @@ const path = require('path');
 const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
-const apiKey = require('../apikey');
+const apiKeys = require('../apiKeys.json');
 
 const genie = require('../chart/genie.json');
 const melon = require('../chart/melon.json');
@@ -13,33 +13,35 @@ const youtubeAPI = require('../logs/youtubeAPI.json');
 
 
 const limit = 3;
-youtube.setKey(apiKey);
 
-youtube.addParam('regionCode', 'kr');
+function searching(music, name) {
+    
+    const currentKey = apiKeys.find((v) => name === v.name);
 
-function searching(music) {
-    let count = youtubeAPI[youtubeAPI.length-1].count;
+    youtube.setKey(currentKey.key);
+
+    youtube.addParam('regionCode', 'kr');
 
     return new Promise(function(res, rej){
         const q = `${music.artist} - ${music.title}`;
 
         youtube.search(q, limit, function (err, result) {
-            if(err) { console.log(err); }
+            currentKey.quota++;
+            if(err) { console.log(err);}
             
-            count++;
-
 
             const json = {'query': q,
                           'title': music.title,
                           'artist': music.artist,
-                          'date': new Date(),
-                          'count': count};
+                          'date': new Date()
+                         };
 
             
                 
             youtubeAPI.push(json);
 
             fs.writeFileSync( path.join('../logs/youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
+            fs.writeFileSync( path.join('../apikeys.json')  , JSON.stringify(apiKeys, null, 2));
             let responseItems = [];
 
             try{
@@ -62,7 +64,7 @@ async function insertVideoId(){
         for(let i=0; i<chart.length; i++){
             const music = chart[i];
 
-            await searching(music).then(function(video_id){
+            await searching(music, name).then(function(video_id){
                 music.video_id = video_id;
                 chart[i] = music;
             });
@@ -74,9 +76,9 @@ async function insertVideoId(){
         console.log(`============${name} 완료`);
     }
 
-    // await iterateSearch(melon, 'melon');
+    await iterateSearch(melon, 'melon');
     await iterateSearch(genie, 'genie');
-    // await iterateSearch(bugs, 'bugs');
+    await iterateSearch(bugs, 'bugs');
 }
 
 insertVideoId();
