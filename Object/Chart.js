@@ -29,12 +29,12 @@ class Chart{
             const title = this.title;
             const artist = this.artist;
 
-            $musicList.each(function (i, el) {
+            for(let i=0; i < 50; i++){
                 array[i] = {
-                    title: $(this).find(title).text().trim(),
-                    artist: $(this).find(artist).text().trim()
+                    title: $($musicList[i]).find(title).text().trim(),
+                    artist: $($musicList[i]).find(artist).text().trim()
                 };
-            });
+            }
         
             const chart = array.filter(function (v) {
                 return v.title !== ''; 
