@@ -11,7 +11,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 
 
-const server = app.listen(3000, function(){
-    console.log("Express server has started on port 3000");
-})
+app.listen(3000, () => 
+    console.log("Express server has started on port 3000")
+);
 
