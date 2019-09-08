@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { MDBRow, MDBCol } from "mdbreact";
 
 
-import First from './First/first.jsx';
+import First from './First/First.jsx';
 
 class topchart extends Component{
 

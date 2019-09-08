@@ -1,23 +1,27 @@
 import React, {Component} from 'react';
 import './chart.css';
 
-
-
+import TopChart from '../TopChart/TopChart';
 
 class Chart extends Component {
+
     state = {
-        chart: []
+        chart: [],
+        name: this.props.match.url.replace('/', '') || 'melon',
     };
 
     componentDidMount(){
-        fetch('/api/chart/melon')
+        fetch(`/api/chart/${this.state.name}`)
         .then(res => res.json())
-        .then(json => this.setState({chart: json.data}, () => console.log('Melon Data api fetched...', json)));
+        .then(json => this.setState({chart: json.data}, () => console.log('Chart Data api fetched...', json)));
     }
 
 
     render(){
+        console.log(`${this.state.name} is loaded`);
         return (
+            <>
+            <TopChart/>
             <div>
                 <ul>
                     {this.state.chart.map(v => 
@@ -25,6 +29,7 @@ class Chart extends Component {
                     )}
                 </ul>
             </div>
+            </>
           );
     }
   
