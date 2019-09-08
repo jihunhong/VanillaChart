@@ -11,7 +11,7 @@ class Navbar extends Component{
         isOpen : false
     };
 
-    toggle = () => {
+    toggleCollapse  = () => {
         this.setState({isOpen: !this.state.isOpen});
     };
     
@@ -24,17 +24,14 @@ class Navbar extends Component{
         };
 
         return(
-            <Router>
-                <MDBNavbar style={navbarColor} dark expand="md">
+            
+                <MDBNavbar style={navbarColor} dark expand="lg" scrolling="true" fixed="top" color="black" transparent="true">
                 <MDBNavbarBrand>
-                <strong className="white-text">Navbar</strong>
+                <strong className="white-text">Vanila Chart</strong>
                 </MDBNavbarBrand>
                 <MDBNavbarToggler onClick={this.toggleCollapse} />
                 <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                 <MDBNavbarNav left>
-                        <MDBNavItem active>
-                        <MDBNavLink to="/">Home</MDBNavLink>
-                        </MDBNavItem>
                         <MDBNavItem>
                         <MDBNavLink to="/melon">melon</MDBNavLink>
                         </MDBNavItem>
@@ -72,7 +69,6 @@ class Navbar extends Component{
                     </MDBNavbarNav>
                     </MDBCollapse>
                 </MDBNavbar>
-            </Router>
         )
     }
 }
