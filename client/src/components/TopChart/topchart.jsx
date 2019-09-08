@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBMask
-} from "mdbreact";
+import { MDBRow, MDBCol } from "mdbreact";
 
 
 import First from './First/first.jsx';
