@@ -4,7 +4,7 @@ import { MDBRow, MDBCol } from "mdbreact";
 
 import First from './First/First.jsx';
 
-class topchart extends Component{
+class Topchart extends Component{
 
     state = {
         chartName: 'MELON'
@@ -27,4 +27,4 @@ class topchart extends Component{
     }
 }
 
-export default topchart;
+export default Topchart;

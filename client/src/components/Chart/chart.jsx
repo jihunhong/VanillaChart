@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './chart.css';
 
-import TopChart from '../TopChart/TopChart';
+import TopChart from './TopChart/Topchart.jsx';
 
 class Chart extends Component {
 

@@ -6,9 +6,8 @@ import "mdbreact/dist/css/mdb.css";
 import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
-import Nav from './components/Nav/Nav';
-import Chart from './components/Chart/Chart';
-import Topchart from './components/TopChart/TopChart';
+import Nav from './components/Nav/Nav.jsx';
+import Chart from './components/Chart/Chart.jsx';
 
 
 function App() {
