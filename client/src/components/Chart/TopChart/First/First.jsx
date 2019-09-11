@@ -16,7 +16,7 @@ class First extends Component{
     }
 
     render(){
-        const logoBackground = {
+        const coverBackground = {
             backgroundImage: "url('https://i.ytimg.com/vi/" + this.state.music.video_id + "/maxresdefault.jpg')"
         };
 
@@ -27,7 +27,7 @@ class First extends Component{
                         <p className="top_title">{this.state.music.title}</p>
                         <p className="top_artist">{this.state.music.artist}</p>
                     </div>
-                    <div className="logo" style={logoBackground}></div>
+                    <div className="cover" style={coverBackground}></div>
                     
                 </MDBCol>
             </>
