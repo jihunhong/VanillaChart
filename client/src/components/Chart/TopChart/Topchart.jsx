@@ -7,7 +7,7 @@ import First from './First/First.jsx';
 class Topchart extends Component{
 
     state = {
-        chartName: 'MELON'
+        chartName: 'melon',
     }
 
     render(){

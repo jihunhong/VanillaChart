@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './chart.css';
 
-import TopChart from './TopChart/Topchart.jsx';
+import TopChart from './TopChart/Topchart';
 
 class Chart extends Component {
 
@@ -18,7 +18,6 @@ class Chart extends Component {
 
 
     render(){
-        console.log(`${this.state.name} is loaded`);
         return (
             <>
             <TopChart/>
