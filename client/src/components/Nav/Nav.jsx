@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon 
 } from "mdbreact";
-import { BrowserRouter as Router } from 'react-router-dom';
 
 
 class Navbar extends Component{
@@ -33,13 +32,13 @@ class Navbar extends Component{
                 <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                 <MDBNavbarNav left>
                         <MDBNavItem>
-                        <MDBNavLink to="/melon">melon</MDBNavLink>
+                        <MDBNavLink to="/melon" chartname={"melon"}>melon</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                        <MDBNavLink to="/genie">genie</MDBNavLink>
+                        <MDBNavLink to="/genie" chartname={"genie"}>genie</MDBNavLink>
                         </MDBNavItem>
                         <MDBNavItem>
-                         <MDBNavLink to="/bugs">bugs</MDBNavLink>
+                         <MDBNavLink to="/bugs" chartname={"bugs"}>bugs</MDBNavLink>
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>

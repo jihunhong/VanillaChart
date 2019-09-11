@@ -11,19 +11,20 @@ import Chart from './components/Chart/Chart.jsx';
 
 
 function App() {
-  return (
-      <Router>
-        <div className="App">
-        <Nav />
-        <Switch>
-          <Route key="melon" path="/melon" component={Chart} />
-          <Route key="genie" path="/genie" component={Chart} />
-          <Route key="bugs" path="/bugs" component={Chart} />
-          <Route key="root" path="/" exact component={Chart} />
-        </Switch>
-        </div>
-      </Router>
-  );
+
+    return (
+        <Router>
+          <div className="App">
+          <Nav />
+          <Switch>
+            <Route key="melon" path="/melon"  render={props => <Chart chartname="melon"/>} />
+            <Route key="genie" path="/genie"  render={props => <Chart chartname="genie"/>} />
+            <Route key="bugs" path="/bugs"    render={props => <Chart chartname="bugs"/>} />
+            <Route key="root" path="/" exact  render={props => <Chart chartname="melon"/>} />
+          </Switch>
+          </div>
+        </Router>
+    );
 }
 
 export default App;

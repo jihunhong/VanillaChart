@@ -19,7 +19,6 @@ module.exports = function (app) {
 
     app.get('/api/chart/:chart/:rank', function (req, res) {
         const chart = charts[req.params.chart];
-        console.log(typeof chart);
 
         const music = chart.find((v) => v['rank'] == req.params['rank']);
 

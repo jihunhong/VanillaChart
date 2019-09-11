@@ -8,7 +8,7 @@ class First extends Component{
         chartName: 'melon',
     }
 
-    componentDidMount(){
+    componentDidMount = () => {
         fetch(`/api/chart/melon/1`)
             .then(res => res.json())
             .then(json => this.setState({music: json.data}, 

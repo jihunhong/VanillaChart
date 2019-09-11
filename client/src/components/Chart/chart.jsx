@@ -7,20 +7,20 @@ class Chart extends Component {
 
     state = {
         chart: [],
-        name: this.props.match.url.replace('/', '') || 'melon',
+        chartName: this.props.chartname || 'melon',
     };
 
-    componentDidMount(){
-        fetch(`/api/chart/${this.state.name}`)
+    componentDidMount = () => {
+        fetch(`/api/chart/${this.props.chartname}`)
         .then(res => res.json())
-        .then(json => this.setState({chart: json.data}, () => console.log('Chart Data api fetched...', json)));
+        .then(json => this.setState({chart: json.data}, () => console.log(`${this.props.chartname} Data api fetched...`, json)));
     }
 
 
     render(){
         return (
             <>
-            <TopChart/>
+            <TopChart chartname={this.props.chartname}/>
             <div>
                 <ul>
                     {this.state.chart.map(v => 
