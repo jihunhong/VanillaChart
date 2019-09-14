@@ -3,6 +3,8 @@ import { MDBRow, MDBCol } from "mdbreact";
 
 
 import First from './First/First.jsx';
+import Second from './Second/Second.jsx';
+import Third from './Third/Third.jsx';
 
 class Topchart extends Component{
 
@@ -18,7 +20,9 @@ class Topchart extends Component{
                 <MDBCol md="10" className="mb-4 white-text text-center text-md-left">
                     <h1 className="display-4 font-weight-bold">Real Time in {this.props.chartname} Chart</h1>
                     <hr className="hr-light" />
-                    <First />
+                    <First chartname={this.props.chartname}/>
+                    <Second chartname={this.props.chartname}/>
+                    <Third chartname={this.props.chartname}/>
                 </MDBCol>
             </MDBRow>
             </MDBRow>
