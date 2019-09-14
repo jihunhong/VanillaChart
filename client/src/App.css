@@ -1,7 +1,8 @@
+
 body{
   background-color: #f0f0f0;
 }
-div.row{
+div.App > div.row{
   margin: 0px;
   background-image: url(./chart_bg.svg);
   background-size: cover;
@@ -74,7 +75,7 @@ div.sm-font-box > .top_title{
   background-color: #0000004a;
 }
 
-div.sm-font-box > .top_author{
+div.sm-font-box > .top_artist{
   color: white;
   bottom: -7px;
   left: 15px;
@@ -97,7 +98,7 @@ div.sm-logo{
   border: 1px solid #000000;
 }
 
-div.cover{
+div.logo{
   border-radius: 4px;
   width: 98.8%;
   min-height: 417px;
@@ -204,6 +205,10 @@ span.music_link, .add_button{
 .chart{
   margin: 71px auto 40px auto !important;
   width: unset !important;
+}
+
+.chart > .row > div{
+  padding: 0px;
 }
 
 .chart_list > li{
