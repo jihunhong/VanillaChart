@@ -1503,5 +1503,737 @@
     "title": "이별하긴 하겠지",
     "artist": "김필(Kim Feel)\n김필(Kim Feel)",
     "date": "2019-09-01T08:08:58.939Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 워커홀릭",
+    "title": "워커홀릭",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:58:22.474Z"
+  },
+  {
+    "query": "폴킴 - 안녕",
+    "title": "안녕",
+    "artist": "폴킴",
+    "date": "2019-09-14T10:58:23.045Z"
+  },
+  {
+    "query": "케이시 (Kassy) - 가을밤 떠난 너",
+    "title": "가을밤 떠난 너",
+    "artist": "케이시 (Kassy)",
+    "date": "2019-09-14T10:58:23.617Z"
+  },
+  {
+    "query": "휘인 (Whee In) - 헤어지자 (Prod. 정키)",
+    "title": "헤어지자 (Prod. 정키)",
+    "artist": "휘인 (Whee In)",
+    "date": "2019-09-14T10:58:24.362Z"
+  },
+  {
+    "query": "마크툽 (MAKTUB) - 오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "title": "오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "artist": "마크툽 (MAKTUB)",
+    "date": "2019-09-14T10:58:24.968Z"
+  },
+  {
+    "query": "거미 - 기억해줘요 내 모든 날과 그때를",
+    "title": "기억해줘요 내 모든 날과 그때를",
+    "artist": "거미",
+    "date": "2019-09-14T10:58:25.567Z"
+  },
+  {
+    "query": "HYNN(박혜원) - 시든 꽃에 물을 주듯",
+    "title": "시든 꽃에 물을 주듯",
+    "artist": "HYNN(박혜원)",
+    "date": "2019-09-14T10:58:26.154Z"
+  },
+  {
+    "query": "황인욱 - 포장마차",
+    "title": "포장마차",
+    "artist": "황인욱",
+    "date": "2019-09-14T10:58:26.707Z"
+  },
+  {
+    "query": "송하예 - 니 소식",
+    "title": "니 소식",
+    "artist": "송하예",
+    "date": "2019-09-14T10:58:27.253Z"
+  },
+  {
+    "query": "태연 (TAEYEON) - 그대라는 시",
+    "title": "그대라는 시",
+    "artist": "태연 (TAEYEON)",
+    "date": "2019-09-14T10:58:27.847Z"
+  },
+  {
+    "query": "장범준 - 흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "title": "흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "artist": "장범준",
+    "date": "2019-09-14T10:58:28.566Z"
+  },
+  {
+    "query": "장혜진, 윤민수(바이브) - 술이 문제야",
+    "title": "술이 문제야",
+    "artist": "장혜진, 윤민수(바이브)",
+    "date": "2019-09-14T10:58:29.123Z"
+  },
+  {
+    "query": "펀치 (Punch) - Done For Me",
+    "title": "Done For Me",
+    "artist": "펀치 (Punch)",
+    "date": "2019-09-14T10:58:29.684Z"
+  },
+  {
+    "query": "Anne-Marie - 2002",
+    "title": "2002",
+    "artist": "Anne-Marie",
+    "date": "2019-09-14T10:58:30.423Z"
+  },
+  {
+    "query": "벤 - 내 목소리 들리니",
+    "title": "내 목소리 들리니",
+    "artist": "벤",
+    "date": "2019-09-14T10:58:31.153Z"
+  },
+  {
+    "query": "임재현 - 사랑에 연습이 있었다면 (Prod. 2soo)",
+    "title": "사랑에 연습이 있었다면 (Prod. 2soo)",
+    "artist": "임재현",
+    "date": "2019-09-14T10:58:31.860Z"
+  },
+  {
+    "query": "선미 - 날라리 (LALALAY)",
+    "title": "날라리 (LALALAY)",
+    "artist": "선미",
+    "date": "2019-09-14T10:58:32.595Z"
+  },
+  {
+    "query": "전상근 - 사랑이란 멜로는 없어",
+    "title": "사랑이란 멜로는 없어",
+    "artist": "전상근",
+    "date": "2019-09-14T10:58:33.277Z"
+  },
+  {
+    "query": "Crush - 나빠(NAPPA)",
+    "title": "나빠(NAPPA)",
+    "artist": "Crush",
+    "date": "2019-09-14T10:58:33.968Z"
+  },
+  {
+    "query": "먼데이 키즈 (Monday Kiz) - 사랑이 식었다고 말해도 돼",
+    "title": "사랑이 식었다고 말해도 돼",
+    "artist": "먼데이 키즈 (Monday Kiz)",
+    "date": "2019-09-14T10:58:34.739Z"
+  },
+  {
+    "query": "벤 - 헤어져줘서 고마워",
+    "title": "헤어져줘서 고마워",
+    "artist": "벤",
+    "date": "2019-09-14T10:58:35.467Z"
+  },
+  {
+    "query": "Shawn Mendes, Camila Cabello - Señorita",
+    "title": "Señorita",
+    "artist": "Shawn Mendes, Camila Cabello",
+    "date": "2019-09-14T10:58:36.253Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 워커홀릭",
+    "title": "워커홀릭",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:58:36.946Z"
+  },
+  {
+    "query": "폴킴 - 안녕",
+    "title": "안녕",
+    "artist": "폴킴",
+    "date": "2019-09-14T10:58:37.515Z"
+  },
+  {
+    "query": "케이시 (Kassy) - 가을밤 떠난 너",
+    "title": "가을밤 떠난 너",
+    "artist": "케이시 (Kassy)",
+    "date": "2019-09-14T10:58:38.132Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 25",
+    "title": "25",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:58:38.657Z"
+  },
+  {
+    "query": "마크툽 (Maktub) - 오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "title": "오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "artist": "마크툽 (Maktub)",
+    "date": "2019-09-14T10:58:39.240Z"
+  },
+  {
+    "query": "HYNN (박혜원) - 시든 꽃에 물을 주듯",
+    "title": "시든 꽃에 물을 주듯",
+    "artist": "HYNN (박혜원)",
+    "date": "2019-09-14T10:58:39.820Z"
+  },
+  {
+    "query": "거미 (Gummy) - 기억해줘요 내 모든 날과 그때를",
+    "title": "기억해줘요 내 모든 날과 그때를",
+    "artist": "거미 (Gummy)",
+    "date": "2019-09-14T10:58:40.412Z"
+  },
+  {
+    "query": "장범준 - 흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "title": "흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "artist": "장범준",
+    "date": "2019-09-14T10:58:41.168Z"
+  },
+  {
+    "query": "휘인 (Whee In) - 헤어지자 (Prod. by 정키 (Jung Key))",
+    "title": "헤어지자 (Prod. by 정키 (Jung Key))",
+    "artist": "휘인 (Whee In)",
+    "date": "2019-09-14T10:58:42.030Z"
+  },
+  {
+    "query": "송하예 - 니 소식",
+    "title": "니 소식",
+    "artist": "송하예",
+    "date": "2019-09-14T10:58:42.841Z"
+  },
+  {
+    "query": "황인욱 - 포장마차",
+    "title": "포장마차",
+    "artist": "황인욱",
+    "date": "2019-09-14T10:58:43.598Z"
+  },
+  {
+    "query": "태연 (TAEYEON) - 그대라는 시",
+    "title": "그대라는 시",
+    "artist": "태연 (TAEYEON)",
+    "date": "2019-09-14T10:58:44.335Z"
+  },
+  {
+    "query": "닐로 (Nilo) - 벗",
+    "title": "벗",
+    "artist": "닐로 (Nilo)",
+    "date": "2019-09-14T10:58:45.133Z"
+  },
+  {
+    "query": "볼빨간사춘기 - XX",
+    "title": "XX",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:58:45.853Z"
+  },
+  {
+    "query": "Anne Marie - 2002",
+    "title": "2002",
+    "artist": "Anne Marie",
+    "date": "2019-09-14T10:58:46.658Z"
+  },
+  {
+    "query": "펀치 (Punch) - Done For Me",
+    "title": "Done For Me",
+    "artist": "펀치 (Punch)",
+    "date": "2019-09-14T10:58:47.402Z"
+  },
+  {
+    "query": "장혜진 & 윤민수(바이브) - 술이 문제야",
+    "title": "술이 문제야",
+    "artist": "장혜진 & 윤민수(바이브)",
+    "date": "2019-09-14T10:58:48.153Z"
+  },
+  {
+    "query": "선미 - 날라리 (LALALAY)",
+    "title": "날라리 (LALALAY)",
+    "artist": "선미",
+    "date": "2019-09-14T10:58:48.969Z"
+  },
+  {
+    "query": "임재현 - 사랑에 연습이 있었다면 (Prod. by 2soo)",
+    "title": "사랑에 연습이 있었다면 (Prod. by 2soo)",
+    "artist": "임재현",
+    "date": "2019-09-14T10:58:49.785Z"
+  },
+  {
+    "query": "벤 - 내 목소리 들리니",
+    "title": "내 목소리 들리니",
+    "artist": "벤",
+    "date": "2019-09-14T10:58:50.540Z"
+  },
+  {
+    "query": "Crush - 나빠(NAPPA)",
+    "title": "나빠(NAPPA)",
+    "artist": "Crush",
+    "date": "2019-09-14T10:58:51.375Z"
+  },
+  {
+    "query": "먼데이 키즈 (Monday Kiz) - 사랑이 식었다고 말해도 돼",
+    "title": "사랑이 식었다고 말해도 돼",
+    "artist": "먼데이 키즈 (Monday Kiz)",
+    "date": "2019-09-14T10:58:52.287Z"
+  },
+  {
+    "query": "ITZY (있지) - ICY",
+    "title": "ICY",
+    "artist": "ITZY (있지)",
+    "date": "2019-09-14T10:58:53.119Z"
+  },
+  {
+    "query": "윤비 (YunB) & 영비 - 트루먼 쇼",
+    "title": "트루먼 쇼",
+    "artist": "윤비 (YunB) & 영비",
+    "date": "2019-09-14T10:58:53.902Z"
+  },
+  {
+    "query": "벤 - 헤어져줘서 고마워",
+    "title": "헤어져줘서 고마워",
+    "artist": "벤",
+    "date": "2019-09-14T10:58:54.745Z"
+  },
+  {
+    "query": "Billie Eilish - bad guy",
+    "title": "bad guy",
+    "artist": "Billie Eilish",
+    "date": "2019-09-14T10:58:55.698Z"
+  },
+  {
+    "query": "Camila Cabello & Shawn Mendes - Senorita",
+    "title": "Senorita",
+    "artist": "Camila Cabello & Shawn Mendes",
+    "date": "2019-09-14T10:58:56.558Z"
+  },
+  {
+    "query": "전상근 - 사랑이란 멜로는 없어",
+    "title": "사랑이란 멜로는 없어",
+    "artist": "전상근",
+    "date": "2019-09-14T10:58:57.423Z"
+  },
+  {
+    "query": "방탄소년단 - 작은 것들을 위한 시 (Boy With Luv) (Feat. Halsey)",
+    "title": "작은 것들을 위한 시 (Boy With Luv) (Feat. Halsey)",
+    "artist": "방탄소년단",
+    "date": "2019-09-14T10:58:58.174Z"
+  },
+  {
+    "query": "10cm - 나의 어깨에 기대어요",
+    "title": "나의 어깨에 기대어요",
+    "artist": "10cm",
+    "date": "2019-09-14T10:58:58.973Z"
+  },
+  {
+    "query": "Red Velvet (레드벨벳) - 음파음파 (Umpah Umpah)",
+    "title": "음파음파 (Umpah Umpah)",
+    "artist": "Red Velvet (레드벨벳)",
+    "date": "2019-09-14T10:58:59.811Z"
+  },
+  {
+    "query": "볼빨간사춘기 - Taste",
+    "title": "Taste",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:00.504Z"
+  },
+  {
+    "query": "폴킴 - 모든 날, 모든 순간 (Every day, Every Moment)",
+    "title": "모든 날, 모든 순간 (Every day, Every Moment)",
+    "artist": "폴킴",
+    "date": "2019-09-14T10:59:01.240Z"
+  },
+  {
+    "query": "Naomi Scott - Speechless (Full)",
+    "title": "Speechless (Full)",
+    "artist": "Naomi Scott",
+    "date": "2019-09-14T10:59:02.094Z"
+  },
+  {
+    "query": "V.O.S - 다시 만날까 봐",
+    "title": "다시 만날까 봐",
+    "artist": "V.O.S",
+    "date": "2019-09-14T10:59:02.904Z"
+  },
+  {
+    "query": "청하 - 그 끝에 그대",
+    "title": "그 끝에 그대",
+    "artist": "청하",
+    "date": "2019-09-14T10:59:03.727Z"
+  },
+  {
+    "query": "창모 & Hash Swan & ASH ISLAND & 김효은 - BAND",
+    "title": "BAND",
+    "artist": "창모 & Hash Swan & ASH ISLAND & 김효은",
+    "date": "2019-09-14T10:59:04.585Z"
+  },
+  {
+    "query": "김나영 - 솔직하게 말해서 나",
+    "title": "솔직하게 말해서 나",
+    "artist": "김나영",
+    "date": "2019-09-14T10:59:05.407Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 낮 (Day off)",
+    "title": "낮 (Day off)",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:06.141Z"
+  },
+  {
+    "query": "헤이즈 (Heize) - 내 맘을 볼 수 있나요",
+    "title": "내 맘을 볼 수 있나요",
+    "artist": "헤이즈 (Heize)",
+    "date": "2019-09-14T10:59:07.005Z"
+  },
+  {
+    "query": "다비치 - 너에게 못했던 내 마지막 말은",
+    "title": "너에게 못했던 내 마지막 말은",
+    "artist": "다비치",
+    "date": "2019-09-14T10:59:07.857Z"
+  },
+  {
+    "query": "송하예 - Say Goodbye",
+    "title": "Say Goodbye",
+    "artist": "송하예",
+    "date": "2019-09-14T10:59:08.541Z"
+  },
+  {
+    "query": "케이시 (Kassy) - 그때가 좋았어",
+    "title": "그때가 좋았어",
+    "artist": "케이시 (Kassy)",
+    "date": "2019-09-14T10:59:09.365Z"
+  },
+  {
+    "query": "폴킴 - 너를 만나",
+    "title": "너를 만나",
+    "artist": "폴킴",
+    "date": "2019-09-14T10:59:10.241Z"
+  },
+  {
+    "query": "장범준 - 노래방에서",
+    "title": "노래방에서",
+    "artist": "장범준",
+    "date": "2019-09-14T10:59:11.128Z"
+  },
+  {
+    "query": "스윙스 & 키드밀리 & 매드클라운 - 담아 (Feat. 염따 & pH-1) (Prod. by BOYCOLD)",
+    "title": "담아 (Feat. 염따 & pH-1) (Prod. by BOYCOLD)",
+    "artist": "스윙스 & 키드밀리 & 매드클라운",
+    "date": "2019-09-14T10:59:12.020Z"
+  },
+  {
+    "query": "청하 - Snapping",
+    "title": "Snapping",
+    "artist": "청하",
+    "date": "2019-09-14T10:59:12.827Z"
+  },
+  {
+    "query": "태연 (TAEYEON) - 사계 (Four Seasons)",
+    "title": "사계 (Four Seasons)",
+    "artist": "태연 (TAEYEON)",
+    "date": "2019-09-14T10:59:13.665Z"
+  },
+  {
+    "query": "먼데이 키즈 (Monday Kiz) & 펀치 (Punch) - Another Day",
+    "title": "Another Day",
+    "artist": "먼데이 키즈 (Monday Kiz) & 펀치 (Punch)",
+    "date": "2019-09-14T10:59:14.518Z"
+  },
+  {
+    "query": "Lauv - Paris In The Rain",
+    "title": "Paris In The Rain",
+    "artist": "Lauv",
+    "date": "2019-09-14T10:59:15.364Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 워커홀릭",
+    "title": "워커홀릭",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:16.096Z"
+  },
+  {
+    "query": "에이오에이(AOA) - 너나 해 (Egotistic)",
+    "title": "너나 해 (Egotistic)",
+    "artist": "에이오에이(AOA)",
+    "date": "2019-09-14T10:59:16.871Z"
+  },
+  {
+    "query": "볼빨간사춘기 - XX",
+    "title": "XX",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:17.606Z"
+  },
+  {
+    "query": "장범준 - 흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "title": "흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
+    "artist": "장범준",
+    "date": "2019-09-14T10:59:18.225Z"
+  },
+  {
+    "query": "폴킴(Paul Kim) - 안녕",
+    "title": "안녕",
+    "artist": "폴킴(Paul Kim)",
+    "date": "2019-09-14T10:59:18.891Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 25",
+    "title": "25",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:19.502Z"
+  },
+  {
+    "query": "HYNN(박혜원) - 시든 꽃에 물을 주듯",
+    "title": "시든 꽃에 물을 주듯",
+    "artist": "HYNN(박혜원)",
+    "date": "2019-09-14T10:59:20.189Z"
+  },
+  {
+    "query": "케이시 - 가을밤 떠난 너",
+    "title": "가을밤 떠난 너",
+    "artist": "케이시",
+    "date": "2019-09-14T10:59:20.822Z"
+  },
+  {
+    "query": "볼빨간사춘기 - Taste",
+    "title": "Taste",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:21.502Z"
+  },
+  {
+    "query": "휘인(Whee In) - 헤어지자 (Prod. 정키)",
+    "title": "헤어지자 (Prod. 정키)",
+    "artist": "휘인(Whee In)",
+    "date": "2019-09-14T10:59:22.270Z"
+  },
+  {
+    "query": "태연 (TAEYEON) - 그대라는 시",
+    "title": "그대라는 시",
+    "artist": "태연 (TAEYEON)",
+    "date": "2019-09-14T10:59:22.968Z"
+  },
+  {
+    "query": "거미 - 기억해줘요 내 모든 날과 그때를",
+    "title": "기억해줘요 내 모든 날과 그때를",
+    "artist": "거미",
+    "date": "2019-09-14T10:59:23.910Z"
+  },
+  {
+    "query": "볼빨간사춘기 - 낮 (Day off)",
+    "title": "낮 (Day off)",
+    "artist": "볼빨간사춘기",
+    "date": "2019-09-14T10:59:24.588Z"
+  },
+  {
+    "query": "선미 - 날라리 (LALALAY)",
+    "title": "날라리 (LALALAY)",
+    "artist": "선미",
+    "date": "2019-09-14T10:59:25.370Z"
+  },
+  {
+    "query": "마크툽(Maktub) - 오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "title": "오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
+    "artist": "마크툽(Maktub)",
+    "date": "2019-09-14T10:59:26.226Z"
+  },
+  {
+    "query": "Anne-Marie(앤 마리) - 2002",
+    "title": "2002",
+    "artist": "Anne-Marie(앤 마리)",
+    "date": "2019-09-14T10:59:27.048Z"
+  },
+  {
+    "query": "Shawn Mendes(션 멘데스)\nShawn Mendes(션 멘데스) - Señorita",
+    "title": "Señorita",
+    "artist": "Shawn Mendes(션 멘데스)\nShawn Mendes(션 멘데스)",
+    "date": "2019-09-14T10:59:27.883Z"
+  },
+  {
+    "query": "Crush - 나빠(NAPPA)",
+    "title": "나빠(NAPPA)",
+    "artist": "Crush",
+    "date": "2019-09-14T10:59:28.560Z"
+  },
+  {
+    "query": "펀치 (Punch) - Done For Me",
+    "title": "Done For Me",
+    "artist": "펀치 (Punch)",
+    "date": "2019-09-14T10:59:29.321Z"
+  },
+  {
+    "query": "송하예 - 니 소식",
+    "title": "니 소식",
+    "artist": "송하예",
+    "date": "2019-09-14T10:59:29.973Z"
+  },
+  {
+    "query": "Red Velvet (레드벨벳) - 음파음파 (Umpah Umpah)",
+    "title": "음파음파 (Umpah Umpah)",
+    "artist": "Red Velvet (레드벨벳)",
+    "date": "2019-09-14T10:59:30.786Z"
+  },
+  {
+    "query": "황인욱 - 포장마차",
+    "title": "포장마차",
+    "artist": "황인욱",
+    "date": "2019-09-14T10:59:31.529Z"
+  },
+  {
+    "query": "10cm(십센치) - 나의 어깨에 기대어요",
+    "title": "나의 어깨에 기대어요",
+    "artist": "10cm(십센치)",
+    "date": "2019-09-14T10:59:32.443Z"
+  },
+  {
+    "query": "ITZY (있지) - ICY",
+    "title": "ICY",
+    "artist": "ITZY (있지)",
+    "date": "2019-09-14T10:59:33.277Z"
+  },
+  {
+    "query": "벤 - 내 목소리 들리니",
+    "title": "내 목소리 들리니",
+    "artist": "벤",
+    "date": "2019-09-14T10:59:34.074Z"
+  },
+  {
+    "query": "장혜진\n장혜진 - 술이 문제야",
+    "title": "술이 문제야",
+    "artist": "장혜진\n장혜진",
+    "date": "2019-09-14T10:59:34.947Z"
+  },
+  {
+    "query": "Billie Eilish(빌리 아일리시) - bad guy",
+    "title": "bad guy",
+    "artist": "Billie Eilish(빌리 아일리시)",
+    "date": "2019-09-14T10:59:35.668Z"
+  },
+  {
+    "query": "윤비(YunB)\n윤비(YunB) - 트루먼 쇼",
+    "title": "트루먼 쇼",
+    "artist": "윤비(YunB)\n윤비(YunB)",
+    "date": "2019-09-14T10:59:36.361Z"
+  },
+  {
+    "query": "임재현 - 사랑에 연습이 있었다면 (Prod. 2soo)",
+    "title": "사랑에 연습이 있었다면 (Prod. 2soo)",
+    "artist": "임재현",
+    "date": "2019-09-14T10:59:37.169Z"
+  },
+  {
+    "query": "헤이즈(HEIZE) - 내 맘을 볼 수 있나요",
+    "title": "내 맘을 볼 수 있나요",
+    "artist": "헤이즈(HEIZE)",
+    "date": "2019-09-14T10:59:37.935Z"
+  },
+  {
+    "query": "방탄소년단\n방탄소년단 - 작은 것들을 위한 시 (Boy With Luv) (feat. Halsey)",
+    "title": "작은 것들을 위한 시 (Boy With Luv) (feat. Halsey)",
+    "artist": "방탄소년단\n방탄소년단",
+    "date": "2019-09-14T10:59:38.745Z"
+  },
+  {
+    "query": "폴킴(Paul Kim) - 모든 날, 모든 순간 (Every day, Every Moment)",
+    "title": "모든 날, 모든 순간 (Every day, Every Moment)",
+    "artist": "폴킴(Paul Kim)",
+    "date": "2019-09-14T10:59:39.467Z"
+  },
+  {
+    "query": "Naomi Scott - Speechless (Full)",
+    "title": "Speechless (Full)",
+    "artist": "Naomi Scott",
+    "date": "2019-09-14T10:59:40.301Z"
+  },
+  {
+    "query": "먼데이 키즈(Monday Kiz)\n먼데이 키즈(Monday Kiz) - Another Day",
+    "title": "Another Day",
+    "artist": "먼데이 키즈(Monday Kiz)\n먼데이 키즈(Monday Kiz)",
+    "date": "2019-09-14T10:59:41.189Z"
+  },
+  {
+    "query": "송하예 - Say Goodbye",
+    "title": "Say Goodbye",
+    "artist": "송하예",
+    "date": "2019-09-14T10:59:41.982Z"
+  },
+  {
+    "query": "벤 - 헤어져줘서 고마워",
+    "title": "헤어져줘서 고마워",
+    "artist": "벤",
+    "date": "2019-09-14T10:59:42.749Z"
+  },
+  {
+    "query": "먼데이 키즈(Monday Kiz) - 사랑이 식었다고 말해도 돼",
+    "title": "사랑이 식었다고 말해도 돼",
+    "artist": "먼데이 키즈(Monday Kiz)",
+    "date": "2019-09-14T10:59:43.600Z"
+  },
+  {
+    "query": "전상근 - 사랑이란 멜로는 없어",
+    "title": "사랑이란 멜로는 없어",
+    "artist": "전상근",
+    "date": "2019-09-14T10:59:44.332Z"
+  },
+  {
+    "query": "태연 (TAEYEON) - 사계 (Four Seasons)",
+    "title": "사계 (Four Seasons)",
+    "artist": "태연 (TAEYEON)",
+    "date": "2019-09-14T10:59:45.129Z"
+  },
+  {
+    "query": "오마이걸(OH MY GIRL) - BUNGEE (Fall in Love)",
+    "title": "BUNGEE (Fall in Love)",
+    "artist": "오마이걸(OH MY GIRL)",
+    "date": "2019-09-14T10:59:45.966Z"
+  },
+  {
+    "query": "Lauv(라우브)\nLauv(라우브) - fuck, i'm lonely",
+    "title": "fuck, i'm lonely",
+    "artist": "Lauv(라우브)\nLauv(라우브)",
+    "date": "2019-09-14T10:59:46.764Z"
+  },
+  {
+    "query": "청하 - Snapping",
+    "title": "Snapping",
+    "artist": "청하",
+    "date": "2019-09-14T10:59:47.516Z"
+  },
+  {
+    "query": "장범준 - 노래방에서",
+    "title": "노래방에서",
+    "artist": "장범준",
+    "date": "2019-09-14T10:59:48.289Z"
+  },
+  {
+    "query": "닐로(Nilo) - 벗",
+    "title": "벗",
+    "artist": "닐로(Nilo)",
+    "date": "2019-09-14T10:59:49.080Z"
+  },
+  {
+    "query": "김나영 - 솔직하게 말해서 나",
+    "title": "솔직하게 말해서 나",
+    "artist": "김나영",
+    "date": "2019-09-14T10:59:49.915Z"
+  },
+  {
+    "query": "스윙스(Swings)\n스윙스(Swings) - 담아 (Feat. 염따, pH-1) (Prod. BOYCOLD)",
+    "title": "담아 (Feat. 염따, pH-1) (Prod. BOYCOLD)",
+    "artist": "스윙스(Swings)\n스윙스(Swings)",
+    "date": "2019-09-14T10:59:50.712Z"
+  },
+  {
+    "query": "폴킴(Paul Kim) - 너를 만나",
+    "title": "너를 만나",
+    "artist": "폴킴(Paul Kim)",
+    "date": "2019-09-14T10:59:51.483Z"
+  },
+  {
+    "query": "청하 - 그 끝에 그대",
+    "title": "그 끝에 그대",
+    "artist": "청하",
+    "date": "2019-09-14T10:59:52.297Z"
+  },
+  {
+    "query": "V.O.S. - 다시 만날까 봐",
+    "title": "다시 만날까 봐",
+    "artist": "V.O.S.",
+    "date": "2019-09-14T10:59:53.057Z"
+  },
+  {
+    "query": "윤하(Younha/ユンナ) - 비가 내리는 날에는",
+    "title": "비가 내리는 날에는",
+    "artist": "윤하(Younha/ユンナ)",
+    "date": "2019-09-14T10:59:53.836Z"
   }
 ]
