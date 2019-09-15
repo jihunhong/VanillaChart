@@ -4,12 +4,12 @@ const fs = require('fs');
 
 const Chart = require('../Object/Chart.js');
 
-const melon = new Chart('melon', 'https://www.melon.com/chart/', 'div.wrap_song_info', 'div.rank01 a', 'div.rank02 span');
-const genie = new Chart('genie', 'https://www.genie.co.kr/chart/top200', 'td.info', 'a.title', 'a.artist');
-const bugs  = new Chart('bugs' ,  'https://music.bugs.co.kr/chart', 'tbody tr', 'p.title a', 'p.artist a');
+const melon = new Chart('melon', 'https://www.melon.com/chart/', '.ellipsis.rank01 > span > a', '.ellipsis.rank02 > span > a', '.image_typeAll');
+// const genie = new Chart('genie', 'https://www.genie.co.kr/chart/top200','a.title', 'a.artist', 'a.cover');
+// const bugs  = new Chart('bugs' ,  'https://music.bugs.co.kr/chart', 'p.title a', 'p.artist a', 'a.thumbnail');
 
 melon.getData();
-genie.getData();
-bugs.getData();
+// genie.getData();
+// bugs.getData();
 
 module.exports = melon.getData();

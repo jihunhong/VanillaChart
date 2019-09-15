@@ -5,13 +5,12 @@ const path = require('path');
 
 
 class Chart{
-    constructor(name, url, list, title, artist, thumb){
+    constructor(name, url, title, artist, img){
         this.name     = name;
         this.url      = url;
-        this.list     = list;
         this.title    = title;
         this.artist   = artist;
-        // this.thumb    = thumb;
+        this.img      = img;
     }
 
     getData(){
@@ -26,16 +25,16 @@ class Chart{
         getHTML().then(html => {
             let array = [];
             const $ = cheerio.load(html.data);
-            const $musicList = $(this.list);
+
             const title = this.title;
-            // const thumb = this.thumb;
             const artist = this.artist;
+            const img = this.img;
 
             for(let i=0; i < 50; i++){
                 array[i] = {
-                    title: $($musicList[i]).find(title).text().trim(),
-                    // $('tr > td > div.wrap > a > img')[1] : melon
-                    artist: $($musicList[i]).find(artist).text().trim()
+                    title: $(title)[i].firstChild.data,
+                    artist: $(artist)[i].firstChild.data,
+                    img: $(img).find('img')[i].attribs.src
                 };
             }
         

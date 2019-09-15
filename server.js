@@ -3,7 +3,6 @@ const path = require('path');
 const app = express();
 const chartRouter = require('./router/chartDataRouter.js')(app);
 const youtubeRouter = require('./router/youtubeRouter.js')(app);
-const crawl = require('./modules/crawl');
 
 const bodyParser = require('body-parser');
 

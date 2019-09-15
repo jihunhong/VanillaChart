@@ -31,7 +31,7 @@ class Chart extends Component {
                                 <MDBListGroupItem key={v.rank}>
                                 <span className="music_rank col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">{v.rank}</span>
                                 <span className="albug_img">
-                                    <img src=""
+                                    <img src={v.img}
                                         width="58" height="58" />    
                                 </span>
                                 <span className="music_info   col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
