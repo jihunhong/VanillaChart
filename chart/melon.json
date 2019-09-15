@@ -2,133 +2,111 @@
   {
     "title": "워커홀릭",
     "artist": "볼빨간사춘기",
-    "rank": 1,
-    "video_id": "mrAIqeULUL0"
+    "rank": 1
   },
   {
     "title": "안녕",
     "artist": "폴킴",
-    "rank": 2,
-    "video_id": "UidhQTm1ulw"
+    "rank": 2
   },
   {
     "title": "가을밤 떠난 너",
     "artist": "케이시 (Kassy)",
-    "rank": 3,
-    "video_id": "X3_BHL8yK9I"
+    "rank": 3
   },
   {
     "title": "헤어지자 (Prod. 정키)",
     "artist": "휘인 (Whee In)",
-    "rank": 4,
-    "video_id": "U_dpIqCDcZk"
+    "rank": 4
   },
   {
     "title": "오늘도 빛나는 너에게 (To You My Light) (Feat.이라온)",
     "artist": "마크툽 (MAKTUB)",
-    "rank": 5,
-    "video_id": "kNYA3H1jSSs"
-  },
-  {
-    "title": "기억해줘요 내 모든 날과 그때를",
-    "artist": "거미",
-    "rank": 6,
-    "video_id": "RM33KOMNsaI"
+    "rank": 5
   },
   {
     "title": "시든 꽃에 물을 주듯",
     "artist": "HYNN(박혜원)",
-    "rank": 7,
-    "video_id": "4qtTZAcaVlQ"
+    "rank": 6
+  },
+  {
+    "title": "기억해줘요 내 모든 날과 그때를",
+    "artist": "거미",
+    "rank": 7
   },
   {
     "title": "포장마차",
     "artist": "황인욱",
-    "rank": 8,
-    "video_id": "Hi0skksGeRk"
-  },
-  {
-    "title": "니 소식",
-    "artist": "송하예",
-    "rank": 9,
-    "video_id": "5IWx3MfqbdU"
-  },
-  {
-    "title": "그대라는 시",
-    "artist": "태연 (TAEYEON)",
-    "rank": 10,
-    "video_id": "uy4e63edV_k"
+    "rank": 8
   },
   {
     "title": "흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야",
     "artist": "장범준",
-    "rank": 11,
-    "video_id": "wlxTHLK_W5E"
+    "rank": 9
   },
   {
-    "title": "술이 문제야",
-    "artist": "장혜진, 윤민수(바이브)",
-    "rank": 12,
-    "video_id": "XcbEM7j_ARQ"
+    "title": "니 소식",
+    "artist": "송하예",
+    "rank": 10
   },
   {
-    "title": "Done For Me",
-    "artist": "펀치 (Punch)",
-    "rank": 13,
-    "video_id": "tD5aik9BqOI"
-  },
-  {
-    "title": "2002",
-    "artist": "Anne-Marie",
-    "rank": 14,
-    "video_id": "Il-an3K9pjg"
-  },
-  {
-    "title": "내 목소리 들리니",
-    "artist": "벤",
-    "rank": 15,
-    "video_id": "2Zki-6vbWq8"
-  },
-  {
-    "title": "사랑에 연습이 있었다면 (Prod. 2soo)",
-    "artist": "임재현",
-    "rank": 16,
-    "video_id": "kXAvbHPdTZ0"
-  },
-  {
-    "title": "날라리 (LALALAY)",
-    "artist": "선미",
-    "rank": 17,
-    "video_id": "LrggmyDhWBo"
+    "title": "그대라는 시",
+    "artist": "태연 (TAEYEON)",
+    "rank": 11
   },
   {
     "title": "사랑이란 멜로는 없어",
     "artist": "전상근",
-    "rank": 18,
-    "video_id": "txofagPZhnI"
+    "rank": 12
+  },
+  {
+    "title": "술이 문제야",
+    "artist": "장혜진, 윤민수(바이브)",
+    "rank": 13
+  },
+  {
+    "title": "Done For Me",
+    "artist": "펀치 (Punch)",
+    "rank": 14
+  },
+  {
+    "title": "2002",
+    "artist": "Anne-Marie",
+    "rank": 15
+  },
+  {
+    "title": "날라리 (LALALAY)",
+    "artist": "선미",
+    "rank": 16
+  },
+  {
+    "title": "내 목소리 들리니",
+    "artist": "벤",
+    "rank": 17
+  },
+  {
+    "title": "사랑에 연습이 있었다면 (Prod. 2soo)",
+    "artist": "임재현",
+    "rank": 18
   },
   {
     "title": "나빠(NAPPA)",
     "artist": "Crush",
-    "rank": 19,
-    "video_id": "OoMIAo0a2TA"
+    "rank": 19
+  },
+  {
+    "title": "FLASH",
+    "artist": "X1 (엑스원)",
+    "rank": 20
   },
   {
     "title": "사랑이 식었다고 말해도 돼",
     "artist": "먼데이 키즈 (Monday Kiz)",
-    "rank": 20,
-    "video_id": "tlHTOlnPcbs"
-  },
-  {
-    "title": "헤어져줘서 고마워",
-    "artist": "벤",
-    "rank": 21,
-    "video_id": "jMl1egI6lsM"
+    "rank": 21
   },
   {
     "title": "Señorita",
     "artist": "Shawn Mendes, Camila Cabello",
-    "rank": 22,
-    "video_id": "Pkh8UtuejGw"
+    "rank": 22
   }
 ]

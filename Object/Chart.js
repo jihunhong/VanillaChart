@@ -34,7 +34,7 @@ class Chart{
             for(let i=0; i < 50; i++){
                 array[i] = {
                     title: $($musicList[i]).find(title).text().trim(),
-                    // thumb: $($musicList[i]).find(thumb).attr("src"),
+                    // $('tr > td > div.wrap > a > img')[1] : melon
                     artist: $($musicList[i]).find(artist).text().trim()
                 };
             }
@@ -52,6 +52,9 @@ class Chart{
         .then(res => fs.writeFileSync( path.join('../chart/'+ this.name + '.json')  , JSON.stringify(res, null, 2)));
 
     }
+
+
+
 }
 
 module.exports = Chart

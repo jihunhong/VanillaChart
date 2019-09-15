@@ -11,3 +11,5 @@ const bugs  = new Chart('bugs' ,  'https://music.bugs.co.kr/chart', 'tbody tr', 
 melon.getData();
 genie.getData();
 bugs.getData();
+
+module.exports = melon.getData();
