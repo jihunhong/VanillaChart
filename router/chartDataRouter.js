@@ -24,9 +24,5 @@ module.exports = function (app) {
 
         res.json(result.judge(music));
     })
-
-    // list 정렬 코드 
-    // 순위 시작부터 끝까지 query로 처리하는 코드 해야함
-
     
 }
