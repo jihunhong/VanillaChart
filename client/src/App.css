@@ -2,6 +2,24 @@
 body{
   background-color: #f0f0f0;
 }
+
+.cherry_color{
+  color:#e97cb2;
+}
+
+.melon_color{
+  color:#61dd85;
+}
+
+.genie_color{
+  color:#6dd4f5;
+}
+
+.bugs_color{
+  color:#e3695d;
+}
+
+
 div.App > div.row{
   margin: 0px;
   background-image: url(./chart_bg.svg);
@@ -142,6 +160,16 @@ span.music_rank {
   span.album_img{
       display:none;
   }
+}
+
+.albug_img{
+  width: 58px;
+  height: 58px;
+  border-radius: 4px;
+}
+
+h1.header{
+  font-variant: small-caps;
 }
 
 p.music_title{
