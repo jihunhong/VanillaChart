@@ -29,11 +29,11 @@ class Topchart extends Component{
                             when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                     </strong>
                     </p>
-                    <a target="_blank" href="#" class="btn btn-outline-white waves-effect waves-light">Sample Button
-                        <i class="fab fa-youtube red-text ml-2"></i>
+                    <a href="/" className="btn btn-outline-white waves-effect waves-light">Sample Button
+                        <i className="fab fa-youtube red-text ml-2"></i>
                     </a>
-                    <a target="_blank" href="#" class="btn btn-outline-white waves-effect waves-light">Sample Button
-                        <i class="fas fa-download red-text ml-2"></i>
+                    <a href="/" className="btn btn-outline-white waves-effect waves-light">Sample Button
+                        <i className="fas fa-download red-text ml-2"></i>
                     </a>
                 </MDBCol>
             </MDBRow>
