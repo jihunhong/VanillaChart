@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import Nav from './components/Nav/Nav.jsx';
 import Chart from './components/Chart/Chart.jsx';
+import Player from './components/Player/Player.jsx';
 
 
 function App() {
@@ -23,7 +24,9 @@ function App() {
             <Route key="root" path="/" exact  render={props => <Chart chartname="melon"/>} />
           </Switch>
           </div>
+          <Player />
         </Router>
+        
     );
 }
 
