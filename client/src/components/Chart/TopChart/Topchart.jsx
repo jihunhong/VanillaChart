@@ -5,16 +5,35 @@ import { MDBRow, MDBCol } from "mdbreact";
 import First from './First/First.jsx';
 import Second from './Second/Second.jsx';
 import Third from './Third/Third.jsx';
+import AllPlayer from '../../Player/AllPlayer.jsx';
 
 class Topchart extends Component{
 
     state = {
-        chartname: this.props.chartname
+        chartname: this.props.chartname,
+        chart : [],
+        videoIds : ""
+    }
+
+    onClick = () =>{
+        fetch(`/api/chart/${this.props.chartname}`)
+            .then(res => res.json())
+                .then(json => this.setState({chart: json.data}, 
+                        () => this.setState({videoIds: this.appendVideoId(this.state.chart)})));
+    };
+
+    appendVideoId = (array) =>{
+
+        const video_ids = array.map((v) => v.video_id);
+        const result = video_ids.join(",");
+
+        return result;
     }
 
     render(){
         return (
             <>
+            
             <MDBRow>
             <MDBRow className="preview_header d-flex h-100 justify-content-center align-items-center wow fadeIn">
                 <MDBCol md="10" className="mb-4 white-text text-center text-md-left">
@@ -29,15 +48,16 @@ class Topchart extends Component{
                             when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                     </strong>
                     </p>
-                    <a href="/" className="btn btn-outline-white waves-effect waves-light">Sample Button
+                    <button className="btn btn-outline-white waves-effect waves-light" onClick={this.onClick}>차트 재생
                         <i className="fab fa-youtube red-text ml-2"></i>
-                    </a>
-                    <a href="/" className="btn btn-outline-white waves-effect waves-light">Sample Button
+                    </button>
+                    {/* <button className="btn btn-outline-white waves-effect waves-light">Sample Button
                         <i className="fas fa-download red-text ml-2"></i>
-                    </a>
+                    </button> */}
                 </MDBCol>
             </MDBRow>
             </MDBRow>
+            {this.state.videoIds === "" ? null : <AllPlayer video_id={this.state.videoIds} first={this.state.chart[0].video_id}/>}
             </>
         );
     }
