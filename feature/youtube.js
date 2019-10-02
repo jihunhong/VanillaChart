@@ -41,7 +41,7 @@ function searching(music, name) {
             youtubeAPI.push(json);
 
             fs.writeFileSync( path.join('../logs/youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
-            fs.writeFileSync( path.join('../apikeys.json')  , JSON.stringify(apiKeys, null, 2));
+            fs.writeFileSync( path.join('../apiKeys.json')  , JSON.stringify(apiKeys, null, 2));
             let responseItems = [];
 
             try{
