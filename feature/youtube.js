@@ -52,7 +52,8 @@ function searching(music, name) {
 
                 officialItem == undefined ? res(responseItems[0].id.videoId) : res(officialItem.id.videoId);
             }catch(e){
-                res('none');
+                res('cdwal5Kw3Fc');
+                // shortest video ever
             }
         })
     }) 
