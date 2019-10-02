@@ -12,7 +12,7 @@ class First extends Component{
         fetch(`/api/chart/${this.props.chartname}/1`)
             .then(res => res.json())
             .then(json => this.setState({music: json.data}, 
-                () => console.log('1st Data api fetched...', json)));
+                /**() => console.log('1st Data api fetched...', json)**/));
     }
 
     render(){

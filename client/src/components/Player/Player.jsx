@@ -14,10 +14,9 @@ class Player extends Component {
     }
     
     render() {
-        console.log(this.state.video_id);
-        console.log(this.props.video_id);
-        const video_url = 'https://www.youtube.com/watch?v=' + this.props.video_id;
 
+        const video_url = 'https://www.youtube.com/watch?v=' + this.props.video_id;
+        
         return (
             <>
             <ReactPlayer url={video_url}

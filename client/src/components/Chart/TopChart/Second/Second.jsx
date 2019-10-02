@@ -12,7 +12,7 @@ class Second extends Component{
         fetch(`/api/chart/${this.props.chartname}/2`)
             .then(res => res.json())
             .then(json => this.setState({music: json.data}, 
-                () => console.log('2nd Data api fetched...', json)));
+                /**() => console.log('2nd Data api fetched...', json)**/));
     }
 
     render(){

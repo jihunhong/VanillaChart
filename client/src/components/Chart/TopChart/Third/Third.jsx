@@ -12,7 +12,7 @@ class Third extends Component{
         fetch(`/api/chart/${this.props.chartname}/3`)
             .then(res => res.json())
             .then(json => this.setState({music: json.data}, 
-                () => console.log('3rd Data api fetched...', json)));
+                /**() => console.log('3rd Data api fetched...', json)**/));
     }
 
     render(){

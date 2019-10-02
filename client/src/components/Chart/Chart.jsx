@@ -18,7 +18,7 @@ class Chart extends Component {
     componentDidMount = () => {
         fetch(`/api/chart/${this.props.chartname}`)
         .then(res => res.json())
-        .then(json => this.setState({chart: json.data}, () => console.log(`${this.props.chartname} Data api fetched...`, json)));
+        .then(json => this.setState({chart: json.data}, /** () => console.log(`${this.props.chartname} Data api fetched...`, json) **/));
     }
 
     render(){
