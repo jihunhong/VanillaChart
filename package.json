@@ -8,7 +8,10 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd client && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "crawl": "cd feature && node crawl.js",
+    "search": "cd feature && node youtube.js",
+    "restart": "forever stop 0 && forever start server.js"
   },
   "repository": {
     "type": "git",
