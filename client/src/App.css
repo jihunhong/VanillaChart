@@ -282,6 +282,13 @@ span.music_link, .add_button{
   }
 }
 
+@media (max-width: 992px){
+  .first, .second, .third {
+      width:0px;
+      display:none;
+  }
+}
+
 .music_link a i{
   font-size: 25px;
   color:red;

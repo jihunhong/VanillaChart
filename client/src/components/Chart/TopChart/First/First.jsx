@@ -22,7 +22,7 @@ class First extends Component{
 
         return (
             <>
-                <MDBCol xl="7" className="top_music">
+                <MDBCol xl="7" className="top_music first">
                     <div className="font-box">
                         <p className="top_title">{this.state.music.title}</p>
                         <p className="top_artist">{this.state.music.artist}</p>

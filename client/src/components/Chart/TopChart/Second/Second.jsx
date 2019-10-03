@@ -22,7 +22,7 @@ class Second extends Component{
 
         return (
             <>
-                <MDBCol xl="5" className="top_music">
+                <MDBCol size="0" xl="5" className="top_music second">
                     <div className="sm-logo" style={coverBackground} xl="12"></div>
                     <div className="sm-font-box">
                         <p className="top_title">{this.state.music.title}</p>
