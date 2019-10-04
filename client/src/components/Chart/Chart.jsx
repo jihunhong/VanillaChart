@@ -41,7 +41,7 @@ class Chart extends Component {
                                     <img src={v.img}
                                         width="58" height="58" alt={v.title}/>    
                                 </span>
-                                <span className="music_info   offset-1 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-9">
+                                <span className="music_info   col-xl-6 col-lg-6 col-md-6 col-sm-6 col-9">
                                     <p className="music_title" >{v.title}</p>
                                     <p className="music_artist">{v.artist}</p>
                                 </span>

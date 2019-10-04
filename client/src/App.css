@@ -276,6 +276,12 @@ span.music_link, .add_button{
 }
 
 @media (max-width: 992px){
+  .music_info {
+      margin-left: 8.333333%;
+  }
+}
+
+@media (max-width: 992px){
   .music_link, .album_img, .add_button {
       width:0px;
       display:none;
