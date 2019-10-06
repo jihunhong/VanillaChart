@@ -234,6 +234,13 @@ span.music_link, .add_button{
   padding:15px;
 }
 
+.player{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1500;
+}
+
 
 .chart{
   margin: 71px auto 40px auto !important;
