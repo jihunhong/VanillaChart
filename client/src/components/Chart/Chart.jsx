@@ -28,7 +28,7 @@ class Chart extends Component {
             <TopChart chartname={this.props.chartname}/>
 
             {this.state.selectedVideo ? <Player video_id={this.state.selectedVideo}/> : null}
-            {/* 선택된 ( 유튜브 버튼을 누르지 않을 경우 player 창을 표시하지 않음 ) */}
+            {/* 유튜브 버튼을 누르지 않을 경우 player 창을 표시하지 않음 */}
             
             <MDBCol size="12" xl="10" lg="9" md="11" sm="11" className="chart">
                 <MDBRow>
@@ -47,7 +47,6 @@ class Chart extends Component {
                                 </span>
                                 <span className="music_link   offset-xl-2 offset-lg-2 offset-md-3 col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
                                     <a className="youtube" onClick={()=>{this.setState({selectedVideo: v.video_id})}}>
-                                        {/* 리팩토링 필요함 */}
                                         <MDBIcon fab icon="youtube" />
                                     </a>
                                 </span>

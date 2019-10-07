@@ -12,23 +12,15 @@ class Topchart extends Component{
     state = {
         chartname: this.props.chartname,
         chart : [],
-        videoIds : ""
+        idArray : ""
     }
 
     onClick = () =>{
         fetch(`/api/chart/${this.props.chartname}`)
             .then(res => res.json())
                 .then(json => this.setState({chart: json.data}, 
-                        () => this.setState({videoIds: this.appendVideoId(this.state.chart)})));
+                        () => this.setState({idArray: this.state.chart})));
     };
-
-    appendVideoId = (array) =>{
-
-        const video_ids = array.map((v) => v.video_id);
-        const result = video_ids.join(",");
-
-        return result;
-    }
 
     render(){
         return (
@@ -57,7 +49,7 @@ class Topchart extends Component{
                 </MDBCol>
             </MDBRow>
             </MDBRow>
-            {this.state.videoIds === "" ? null : <AllPlayer video_id={this.state.videoIds} first={this.state.chart[0].video_id}/>}
+            {this.state.idArray === "" ? null : <AllPlayer idArray={this.state.idArray}/>}
             </>
         );
     }
