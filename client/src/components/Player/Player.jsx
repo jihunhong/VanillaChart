@@ -4,27 +4,23 @@ import ReactPlayer from 'react-player'
 class Player extends Component {
     state = {
         controls: true,
-        loop: true,
-        pip: false,
-        video_id: this.props.video_id
+        loop: true
     }
 
     handleEnded = () => {
-        console.log('onEnded')
+
     }
     
     render() {
-
         const video_url = 'https://www.youtube.com/watch?v=' + this.props.video_id;
-        
+
         return (
-            <>
+            <div className="player">
             <ReactPlayer url={video_url}
                 playing
                 controls={this.state.controls}
-                onEnded={this.handleEnded} 
-                pip={this.state.pip}/>
-            </>
+                onEnded={this.handleEnded}/>
+            </div>
         )
     }
   }

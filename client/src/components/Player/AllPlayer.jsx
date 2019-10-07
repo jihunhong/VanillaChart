@@ -1,24 +1,31 @@
 import React, {Component} from 'react';
+import ReactPlayer from 'react-player';
   
 class AllPlayer extends Component {
     state = {
-        first : this.props.first,
-        video_id: this.props.video_id
+        idArray: this.props.idArray,
+        playing: ''
+    }
+
+    componentDidMount = () => {
+        this.setState({playing: this.props.idArray[0].video_id});
     }
 
     handleEnded = () => {
-        console.log('onEnded')
+        this.state.idArray.shift();
+        this.setState({playing: this.props.idArray[0].video_id});
     }
     
-    
     render() {
-        const src = `http://www.youtube.com/embed/${this.state.first}?playlist=${this.state.video_id}`;
-        
+
+        const video_url = 'https://www.youtube.com/watch?v=' + this.state.playing;
+
         return (
             <div className="player">
-                <iframe title="Embeds Page" className="youtube-player" type="text/html" width="640" height="385" 
-                    src={src} frameBorder="0" allowFullScreen>
-                </iframe>
+            <ReactPlayer url={video_url}
+                playing
+                controls={true}
+                onEnded={this.handleEnded} />
             </div>
         )
     }
