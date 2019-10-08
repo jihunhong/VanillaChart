@@ -234,12 +234,6 @@ span.music_link, .add_button{
   padding:15px;
 }
 
-.player{
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 1500;
-}
 
 
 .chart{
@@ -312,6 +306,20 @@ span.music_link, .add_button{
   font-size: 24px;
 }
 
+.modal{
+  position: fixed;
+  top: unset;
+  left: unset;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
+  display: none;
+  width: 665px;
+  height: 450px;
+  overflow: hidden;
+  outline: 0;
+}
+
 @media (min-width: 992px){
   .modal .modal-side {
     position: absolute;
@@ -322,6 +330,20 @@ span.music_link, .add_button{
   }
 }
 
+.modal-title{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.6rem;
+}
+
+artist{
+  display: block;
+  font-size: 1.1rem;
+  color: #646363;
+}
 
 
 @keyframes gradientBG {

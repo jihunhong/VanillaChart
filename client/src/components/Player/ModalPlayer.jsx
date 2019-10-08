@@ -7,7 +7,9 @@ class ModalPlayer extends Component {
     modal: this.props.modal,
     idArray: this.props.idArray,
     playing: '',
-    index: 0,
+    title: '',
+    artist:'',
+    index: 0
   };
 
   toggle = () => {
@@ -18,35 +20,45 @@ class ModalPlayer extends Component {
 
   componentDidMount = () =>{
     
+    const current = this.props.idArray[this.state.index]
+    
       this.setState({
-        playing: this.props.idArray[this.state.index].video_id,
-        title:   this.props.idArray[this.state.index].title
+        playing: current.video_id,
+        title:   current.title,
+        artist:  current.artist
       });
 
   }
 
   handleEnded = () => {
     this.setState({index: this.state.index+1});
+
+    const current = this.state.idArray[this.state.index];
+
     this.setState({
-      playing: this.props.idArray[this.state.index].video_id,
-      title: this.props.idArray[this.state.index].title
+      playing: current.video_id,
+      title: current.title,
+      artist: current.artist
     });
   }
 
   render() {
 
     const video_url = 'https://www.youtube.com/watch?v=' + this.state.playing;
-
+    
     return (
       
-        <div className="modal">
+        <MDBModal isOpen={this.state.modal} toggle={this.toggle} backdrop={false}  size="lg"  side  position="bottom-right">
           
           <ReactPlayer url={video_url}
                 playing
-                controls={true}
+                controls
                 onEnded={this.handleEnded} />
-          <MDBModalHeader toggle={this.toggle}>{this.state.title}</MDBModalHeader>
-        </div>
+          <MDBModalHeader toggle={this.toggle}>
+            {this.state.title} 
+            <artist>{this.state.artist}</artist>
+          </MDBModalHeader>
+        </MDBModal>
       
     );
   }
