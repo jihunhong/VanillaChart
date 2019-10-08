@@ -4,6 +4,7 @@ import {MDBCol, MDBRow, MDBListGroup, MDBListGroupItem, MDBIcon
 } from "mdbreact";
 import TopChart from './TopChart/Topchart';
 import Player from '../Player/Player';
+import ModalPlayer from '../Player/ModalPlayer';
 
 
 class Chart extends Component {

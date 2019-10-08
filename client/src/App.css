@@ -312,9 +312,16 @@ span.music_link, .add_button{
   font-size: 24px;
 }
 
-.modal-title{
-  font-weight:bold;
+@media (min-width: 992px){
+  .modal .modal-side {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    margin: 0;
+    width: 640px;
+  }
 }
+
 
 
 @keyframes gradientBG {

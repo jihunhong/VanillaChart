@@ -4,16 +4,17 @@ import ReactPlayer from 'react-player';
 class AllPlayer extends Component {
     state = {
         idArray: this.props.idArray,
-        playing: ''
+        playing: '',
+        index: 0
     }
 
     componentDidMount = () => {
-        this.setState({playing: this.props.idArray[0].video_id});
+        this.setState({playing: this.props.idArray[this.state.index].video_id});
     }
 
     handleEnded = () => {
-        this.state.idArray.shift();
-        this.setState({playing: this.props.idArray[0].video_id});
+        this.setState({index: this.state.index+1});
+        this.setState({playing: this.props.idArray[this.state.index].video_id});
     }
     
     render() {
