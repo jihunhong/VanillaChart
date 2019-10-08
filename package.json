@@ -7,10 +7,10 @@
     "client-install": "cd client && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "cd client && npm start",
+    "client": "cd client && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "crawl": "cd feature && node crawl.js",
-    "search": "cd feature && node youtube.js",
+    "product": "git pull && npm run client && npm run crawl && npm run restart",
+    "crawl": "cd feature && node crawl.js && node youtube.js",
     "restart": "forever stop 0 && forever start server.js"
   },
   "repository": {
