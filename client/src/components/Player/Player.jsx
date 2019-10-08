@@ -6,12 +6,18 @@ class Player extends Component {
     state = {
         controls: true,
         loop: true,
-        modal: this.props.modal
+        modal: this.props.modal,
+        title: this.props.title,
+        artist: this.props.artist
     }
 
-    handleEnded = () => {
-
+    toggle = () => {
+        this.setState({ 
+          modal: !this.state.modal
+        });
     }
+
+    
     
     render() {
         const video_url = 'https://www.youtube.com/watch?v=' + this.props.video_id;
@@ -21,8 +27,11 @@ class Player extends Component {
             <ReactPlayer url={video_url}
                 playing
                 controls={true}
-                onEnded={this.handleEnded} />
-            <MDBModalHeader toggle={this.toggle}>{this.state.title}</MDBModalHeader>
+                />
+            <MDBModalHeader toggle={this.toggle}>
+            {this.state.title} 
+            <artist>{this.state.artist}</artist>
+          </MDBModalHeader>
             </MDBModal>
         )
     }

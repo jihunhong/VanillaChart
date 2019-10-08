@@ -13,7 +13,8 @@ class Chart extends Component {
         chart: [],
         chartName: this.props.chartname || 'melon',
         selectedVideo: '',
-        // video 아이디 값으로 구분
+        title: '',
+        aritst: ''
     };
 
     componentDidMount = () => {
@@ -28,7 +29,7 @@ class Chart extends Component {
             <>
             <TopChart chartname={this.props.chartname}/>
 
-            {this.state.selectedVideo ? <Player modal={true} video_id={this.state.selectedVideo}/> : null}
+            {this.state.selectedVideo ? <Player modal={true} video_id={this.state.selectedVideo} title={this.state.title} artist={this.state.artist} /> : null}
             {/* 유튜브 버튼을 누르지 않을 경우 player 창을 표시하지 않음 */}
             
             <MDBCol size="12" xl="10" lg="9" md="11" sm="11" className="chart">
@@ -47,7 +48,11 @@ class Chart extends Component {
                                     <p className="music_artist">{v.artist}</p>
                                 </span>
                                 <span className="music_link   offset-xl-2 offset-lg-2 offset-md-3 col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
-                                    <a className="youtube" onClick={()=>{this.setState({selectedVideo: v.video_id})}}>
+                                    <a className="youtube" onClick={()=>{this.setState({
+                                                                            selectedVideo: v.video_id,
+                                                                            title: v.title,
+                                                                            artist: v.artist
+                                                                        })}}>
                                         <MDBIcon fab icon="youtube" />
                                     </a>
                                 </span>
