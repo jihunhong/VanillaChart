@@ -7,6 +7,7 @@
     "client-install": "cd client && npm install",
     "start": "node server.js",
     "server": "nodemon server.js",
+    "client": "cd client && npm start",
     "client-build": "cd client && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "product": "git pull && npm run client && npm run crawl && npm run restart",
