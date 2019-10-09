@@ -330,6 +330,10 @@ span.music_link, .add_button{
   }
 }
 
+.modal-content{
+  background-color: #ffffff85;
+}
+
 .modal-title{
   text-overflow: ellipsis;
   overflow: hidden;
