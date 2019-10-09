@@ -14,7 +14,7 @@ class ModalPlayer extends Component {
 
   toggle = () => {
     this.setState({ 
-      modal: !this.state.modal
+      modal: false
     });
   }
 
