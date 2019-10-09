@@ -4,7 +4,7 @@ import {MDBCol, MDBRow, MDBListGroup, MDBListGroupItem, MDBIcon
 } from "mdbreact";
 import TopChart from './TopChart/Topchart';
 import Player from '../Player/Player';
-import ModalPlayer from '../Player/ModalPlayer';
+
 
 
 class Chart extends Component {
@@ -29,7 +29,7 @@ class Chart extends Component {
             <>
             <TopChart chartname={this.props.chartname}/>
 
-            {this.state.selectedVideo ? <Player modal={true} video_id={this.state.selectedVideo} title={this.state.title} artist={this.state.artist} /> : null}
+            {this.state.selectedVideo ? <Player _visible={true} video_id={this.state.selectedVideo} title={this.state.title} artist={this.state.artist} /> : null}
             {/* 유튜브 버튼을 누르지 않을 경우 player 창을 표시하지 않음 */}
             
             <MDBCol size="12" xl="10" lg="9" md="11" sm="11" className="chart">

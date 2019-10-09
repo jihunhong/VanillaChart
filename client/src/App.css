@@ -339,7 +339,7 @@ span.music_link, .add_button{
   line-height: 1.6rem;
 }
 
-artist{
+.modal-title p.artistName{
   display: block;
   font-size: 1.1rem;
   color: #646363;

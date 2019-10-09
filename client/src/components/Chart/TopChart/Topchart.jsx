@@ -6,7 +6,6 @@ import First from './First/First.jsx';
 import Second from './Second/Second.jsx';
 import Third from './Third/Third.jsx';
 import AllPlayer from '../../Player/AllPlayer.jsx';
-import ModalPlayer from '../../Player/ModalPlayer.jsx';
 
 class Topchart extends Component{
 
@@ -50,7 +49,7 @@ class Topchart extends Component{
                 </MDBCol>
             </MDBRow>
             </MDBRow>
-            {this.state.idArray === "" ? null : <ModalPlayer modal={true} idArray={this.state.idArray}/>}
+            {this.state.idArray === "" ? null : <AllPlayer _visible={false} visible={true} idArray={this.state.idArray}/>}
             </>
         );
     }
