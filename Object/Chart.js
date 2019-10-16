@@ -14,6 +14,30 @@ class Chart{
         this.img      = img;
     }
 
+    setName(name){
+        this.name = name;
+    }
+
+    setUrl(url){
+        this.url = url;
+    }
+
+    setParent(parent){
+        this.parent = parent;
+    }
+
+    setTitle(title){
+        this.title = title;
+    }
+
+    setArtist(artist){
+        this.artist = artist;
+    }
+
+    setImg(img){
+        this.img = img;
+    }
+
     getData(){
         const getHTML = async () =>{
             try {
