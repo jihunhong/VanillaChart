@@ -1,3 +1,6 @@
 /node_modules
 apiKeys.json
 /chart
+chart/bugs.json
+chart/genie.json
+chart/melon.json
