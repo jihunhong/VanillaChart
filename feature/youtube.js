@@ -91,7 +91,7 @@ async function insertVideoId(){
     await iterateSearch(bugs, 'bugs');
 }
 
-// insertVideoId();
+insertVideoId();
 
 // Use connect method to connect to the server
 MongoClient.connect(url, function(err, client) {
