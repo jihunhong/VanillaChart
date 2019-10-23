@@ -315,7 +315,7 @@ span.music_link, .add_button{
   z-index: 1050;
   display: none;
   width: 665px;
-  height: 450px;
+  max-height: 52%;
   overflow: hidden;
   outline: 0;
 }
@@ -331,7 +331,7 @@ span.music_link, .add_button{
 }
 
 .modal-content{
-  background-color: #ffffff85;
+  background-color: #fff;
 }
 
 .modal-title{
@@ -349,6 +349,10 @@ span.music_link, .add_button{
   color: #646363;
 }
 
+.playlist-panel{
+  overflow: auto;
+  height: 150px;
+}
 
 @keyframes gradientBG {
 	0% {
