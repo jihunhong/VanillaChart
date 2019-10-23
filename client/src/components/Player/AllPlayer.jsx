@@ -55,8 +55,9 @@ class AllPlayer extends Component {
 
   openList = () => {
     this.setState({
-      playlist: true
-    })
+      playlist: !this.state.playlist
+    });
+    document.querySelector(".modal").style.maxHeight = "67%";
   }
 
   render() {
@@ -81,9 +82,10 @@ class AllPlayer extends Component {
 
             <p className="artistName mb-0">{this.state.artist}</p>
             
-            {isPlaylist ? 
-              (<PlayList idArray={this.state.idArray} index={this.state.index} />) : null}
+            
           </MDBModalHeader>
+          {isPlaylist ? 
+              (<PlayList idArray={this.state.idArray} index={this.state.index} />) : null}
         </MDBModal>
       
     );
