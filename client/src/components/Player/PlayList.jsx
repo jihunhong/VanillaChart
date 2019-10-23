@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { MDBListGroupItem, MDBAnimation } from 'mdbreact';
 
 class PlayList extends Component {
   state = {
@@ -14,9 +15,13 @@ class PlayList extends Component {
   render() {
 
     return (
-      <div>
-
-      </div>
+      <MDBAnimation className="playlist-panel" type="slideInUp">
+          {this.state.idArray.map(el =>
+          <MDBListGroupItem key={el.rank}>
+          <p>{el.title}</p>
+          </MDBListGroupItem>
+          )}
+      </MDBAnimation>
     );
   }
 }
