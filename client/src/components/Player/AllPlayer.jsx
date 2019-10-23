@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { MDBModal, MDBModalHeader} from 'mdbreact';
+import { MDBModal, MDBModalHeader, MDBIcon } from 'mdbreact';
 import ReactPlayer from 'react-player';
+
+import PlayList from './PlayList.jsx';
 
 class AllPlayer extends Component {
   state = {
@@ -9,7 +11,8 @@ class AllPlayer extends Component {
     playing: '',
     title: '',
     artist:'',
-    index: 0
+    index: 0,
+    playlist: false
   };
 
   toggle = () => {
@@ -49,21 +52,37 @@ class AllPlayer extends Component {
     });
   }
 
+
+  openList = () => {
+    this.setState({
+      playlist: true
+    })
+  }
+
   render() {
 
     const video_url = 'https://www.youtube.com/watch?v=' + this.state.playing;
+    const isPlaylist  = this.state.playlist ;
     
     return (
       
         <MDBModal isOpen={this.state.visible} toggle={this.toggle} backdrop={false}  size="lg"  side  position="bottom-right">
           
           <ReactPlayer url={video_url}
-                playing
+                playing={false}
                 controls
                 onEnded={this.handleEnded} />
           <MDBModalHeader toggle={this.toggle}>
-            {this.state.title} 
+            {this.state.title}
+
+            <a className="youtube" onClick={this.openList}>
+              <MDBIcon fab icon="youtube" />
+            </a>
+
             <p className="artistName mb-0">{this.state.artist}</p>
+            
+            {isPlaylist ? 
+              (<PlayList idArray={this.state.idArray} index={this.state.index} />) : null}
           </MDBModalHeader>
         </MDBModal>
       
