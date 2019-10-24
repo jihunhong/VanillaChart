@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBListGroupItem, MDBAnimation } from 'mdbreact';
+import { MDBListGroup, MDBListGroupItem, MDBAnimation } from 'mdbreact';
 
 class PlayList extends Component {
   state = {
@@ -13,14 +13,19 @@ class PlayList extends Component {
   }
 
   render() {
+    const thumbnail = 'https://i.ytimg.com/vi/';
+    const imgQuaility = '/default.jpg';
 
     return (
       <MDBAnimation className="playlist-panel" type="slideInUp">
+        <MDBListGroup>
           {this.state.idArray.map(el =>
           <MDBListGroupItem key={el.rank}>
-          <p>{el.title}</p>
+            <span className="thumbnails"><img src={thumbnail + el.video_id + imgQuaility} /></span>
+            <span className="music_info col-xl-6 col-lg-6 col-md-6 col-sm-6 col-9"><p className="music_title">{el.title}</p></span>
           </MDBListGroupItem>
           )}
+        </MDBListGroup>
       </MDBAnimation>
     );
   }

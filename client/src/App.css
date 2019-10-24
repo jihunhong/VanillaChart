@@ -354,6 +354,10 @@ span.music_link, .add_button{
   height: 150px;
 }
 
+.thumbnails{
+  border-radius: 4px;
+}
+
 @keyframes gradientBG {
 	0% {
 		background-position: 0% 50%;
