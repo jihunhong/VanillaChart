@@ -24,11 +24,10 @@ div.App > div.row{
   margin: 0;
 	width: 100%;
 	height: 100vh;
-	font-family: "Exo", sans-serif;
 	color: #fff;
-	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradientBG 15s ease infinite;
+	background-image: url(./chart_bg.svg);
+  background-size: cover;
+  
 }
 div.row > .row{
   margin: 0px;
@@ -45,6 +44,7 @@ div.font-box{
 }
 
 div.font-box > .top_title{
+  max-width: 90%;
   padding: 5px;
   background-color: #00000073;
   color: white;
