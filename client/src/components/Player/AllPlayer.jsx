@@ -60,6 +60,16 @@ class AllPlayer extends Component {
     document.querySelector(".modal").style.maxHeight = "67%";
   }
 
+  itemSelected = (index) => {
+    const el = this.state.idArray[index];
+
+    this.setState({
+      playing: el.video_id,
+      title: el.title,
+      artist: el.artist
+    });
+  }
+
   render() {
 
     const video_url = 'https://www.youtube.com/watch?v=' + this.state.playing;
@@ -70,14 +80,14 @@ class AllPlayer extends Component {
         <MDBModal isOpen={this.state.visible} toggle={this.toggle} backdrop={false}  size="lg"  side  position="bottom-right">
           
           <ReactPlayer url={video_url}
-                playing={false}
+                playing={true}
                 controls
                 onEnded={this.handleEnded} />
           <MDBModalHeader toggle={this.toggle}>
             {this.state.title}
 
-            <a className="youtube" onClick={this.openList}>
-              <MDBIcon fab icon="youtube" />
+            <a className="playlist" onClick={this.openList}>
+              <MDBIcon fas icon="list" />
             </a>
 
             <p className="artistName mb-0">{this.state.artist}</p>
@@ -85,7 +95,7 @@ class AllPlayer extends Component {
             
           </MDBModalHeader>
           {isPlaylist ? 
-              (<PlayList idArray={this.state.idArray} index={this.state.index} />) : null}
+              (<PlayList idArray={this.state.idArray} index={this.state.index} itemSelected={this.itemSelected} />) : null}
         </MDBModal>
       
     );
