@@ -81,7 +81,7 @@ class AllPlayer extends Component {
           
           <ReactPlayer url={video_url}
                 playing={true}
-                controls
+                controls={false}
                 onEnded={this.handleEnded} />
           <MDBModalHeader toggle={this.toggle}>
             {this.state.title}
