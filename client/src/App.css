@@ -197,6 +197,7 @@ p.music_artist{
   text-overflow: ellipsis;
   font-weight: 800;
   margin: 0px;
+  color: #646363;
 }
 
 span.music_link, .add_button{
@@ -353,6 +354,7 @@ span.music_link, .add_button{
   overflow: auto;
   height: 150px;
 }
+
 
 .thumbnails{
   border-radius: 4px;
