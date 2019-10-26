@@ -81,14 +81,22 @@ class AllPlayer extends Component {
           
           <ReactPlayer url={video_url}
                 playing={true}
-                controls={false}
-                onEnded={this.handleEnded} />
+                controls={true}
+                onEnded={this.handleEnded}
+                color={"red"} />
           <MDBModalHeader toggle={this.toggle}>
             {this.state.title}
 
-            <a className="playlist" onClick={this.openList}>
-              <MDBIcon fas icon="list" />
-            </a>
+            {!isPlaylist ? 
+                (<a className="playlist" onClick={this.openList}>
+                  <MDBIcon fas icon="chevron-up" />
+                </a>)
+                :
+                (<a className="playlist" onClick={this.openList}>
+                  <MDBIcon fas icon="chevron-down" />
+                </a>)
+            }
+            
 
             <p className="artistName mb-0">{this.state.artist}</p>
             
