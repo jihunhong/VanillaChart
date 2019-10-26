@@ -355,6 +355,10 @@ span.music_link, .add_button{
   height: 150px;
 }
 
+.playlist{
+  position: absolute;
+  right: 46px;
+}
 
 .thumbnails{
   border-radius: 4px;
