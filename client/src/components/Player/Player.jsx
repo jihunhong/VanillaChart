@@ -14,8 +14,9 @@ class Player extends Component {
 
     toggle = () => {
         this.setState({ 
-            visible: false
+            visible: !this.state.visible
         });
+        console.log(this.state.visible);
     }
 
     componentDidUpdate(prevProps, prevState){

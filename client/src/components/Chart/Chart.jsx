@@ -14,22 +14,31 @@ class Chart extends Component {
         chartName: this.props.chartname || 'melon',
         selectedVideo: '',
         title: '',
-        aritst: ''
+        aritst: '',
+        idArray: "",
+        select: false
     };
 
     componentDidMount = () => {
         fetch(`/api/chart/${this.props.chartname}`)
-        .then(res => res.json())
-        .then(json => this.setState({chart: json.data}, /** () => console.log(`${this.props.chartname} Data api fetched...`, json) **/));
+            .then(res => res.json())
+                .then(json => this.setState({chart: json.data}, 
+                        () => this.setState({idArray: this.state.chart})));
     }
 
     render(){
-
+        
         return (
             <>
-            <TopChart chartname={this.props.chartname}/>
+            <TopChart chartname={this.props.chartname} selectedVideo={this.state.selectedVideo} select={this.state.select}/>
 
-            {this.state.selectedVideo ? <Player _visible={true} video_id={this.state.selectedVideo} title={this.state.title} artist={this.state.artist} /> : null}
+            {this.state.selectedVideo ?
+            (<Player _visible={true} video_id={this.state.selectedVideo} title={this.state.title} artist={this.state.artist} />)
+            :
+            (null)
+            }
+            
+            
             {/* 유튜브 버튼을 누르지 않을 경우 player 창을 표시하지 않음 */}
             
             <MDBCol size="12" xl="10" lg="9" md="11" sm="11" className="chart">
@@ -51,7 +60,8 @@ class Chart extends Component {
                                     <a className="youtube" onClick={()=>{this.setState({
                                                                             selectedVideo: v.video_id,
                                                                             title: v.title,
-                                                                            artist: v.artist
+                                                                            artist: v.artist,
+                                                                            select: true
                                                                         })}}>
                                         <MDBIcon fab icon="youtube" />
                                     </a>

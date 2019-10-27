@@ -17,15 +17,16 @@ class AllPlayer extends Component {
 
   toggle = () => {
     this.setState({ 
-      visible: false
+      visible: !this.state.visible
     });
+    
   }
 
   componentDidMount = () =>{
     
     const current = this.props.idArray[this.state.index]
-    
-      this.setState({
+
+    this.setState({
         playing: current.video_id,
         title:   current.title,
         artist:  current.artist
@@ -33,11 +34,9 @@ class AllPlayer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-
-    if(prevProps.visible !== prevState.visible){
-      this.setState({visible: true});
+    if(prevState.visible !== this.props.visible){
+      this.setState({visible: this.props.visible});
     }
-    
   }
 
   handleEnded = () => {

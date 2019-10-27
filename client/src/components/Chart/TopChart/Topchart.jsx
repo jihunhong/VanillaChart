@@ -6,23 +6,31 @@ import First from './First/First.jsx';
 import Second from './Second/Second.jsx';
 import Third from './Third/Third.jsx';
 import AllPlayer from '../../Player/AllPlayer.jsx';
+import Player from '../../Player/Player.jsx';
 
 class Topchart extends Component{
 
     state = {
         chartname: this.props.chartname,
         chart : [],
-        idArray : ""
+        idArray : "",
+        isOpen : false,
+        select: !this.props.select
     }
 
-    onClick = () =>{
+    componentDidMount = () =>{
         fetch(`/api/chart/${this.props.chartname}`)
             .then(res => res.json())
                 .then(json => this.setState({chart: json.data}, 
                         () => this.setState({idArray: this.state.chart})));
     };
 
+    onClick = () => {
+        this.setState({isOpen : true})
+    }
+
     render(){
+
         return (
             <>
             
@@ -43,13 +51,15 @@ class Topchart extends Component{
                     <button className="btn btn-outline-white waves-effect waves-light" onClick={this.onClick}>차트 재생
                         <i className="fab fa-youtube red-text ml-2"></i>
                     </button>
-                    {/* <button className="btn btn-outline-white waves-effect waves-light">Sample Button
-                        <i className="fas fa-download red-text ml-2"></i>
-                    </button> */}
+                    
                 </MDBCol>
             </MDBRow>
             </MDBRow>
-            {this.state.idArray === "" ? null : <AllPlayer _visible={false} visible={true} idArray={this.state.idArray}/>}
+            {this.state.isOpen ?
+                (<AllPlayer visible={this.state.select} idArray={this.state.idArray}/>)
+                :
+                (null)
+            }
             </>
         );
     }
