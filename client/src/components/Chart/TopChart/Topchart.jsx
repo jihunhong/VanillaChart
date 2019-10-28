@@ -14,8 +14,9 @@ class Topchart extends Component{
         chartname: this.props.chartname,
         chart : [],
         idArray : "",
-        isOpen : false,
-        select: !this.props.select
+        isOpen : this.props.isOpen,
+        video_id: this.props.video_id,
+        playlist: this.props.playlist
     }
 
     componentDidMount = () =>{
@@ -25,8 +26,42 @@ class Topchart extends Component{
                         () => this.setState({idArray: this.state.chart})));
     };
 
+    componentDidUpdate = (prevState, prevProps) => {
+        if(prevProps.isOpen !== this.props.isOpen){
+            this.setState({
+                isOpen: this.props.isOpen
+            })
+        }
+
+        if(prevState.video_id !== this.props.video_id){
+            this.setState({
+                video_id: this.props.video_id
+            })
+        }
+    }
+
     onClick = () => {
-        this.setState({isOpen : true})
+
+        this.setState({
+            isOpen : true,
+            playlist: true
+        })
+    }
+
+    multiple = (status) => {
+        this.setState({
+            isOpen: false,
+            video_id: '',
+            playlist: status
+        })
+    }
+
+    single = (video_id) => {
+        this.setState({
+            isOpen: false,
+            video_id: '',
+            playlist: false,
+        })
     }
 
     render(){
@@ -55,8 +90,14 @@ class Topchart extends Component{
                 </MDBCol>
             </MDBRow>
             </MDBRow>
-            {this.state.isOpen ?
-                (<AllPlayer visible={this.state.select} idArray={this.state.idArray}/>)
+            
+            {this.state.isOpen && this.state.video_id && !this.state.playlist?
+                (<Player _visible={true} video_id={this.props.video_id} title={this.props.title} artist={this.props.artist} single={this.single} />)
+                :
+                (null)
+            }
+            {this.state.isOpen && !this.state.video_id && this.state.playlist ?
+                (<AllPlayer visible={this.state.isOpen} idArray={this.state.idArray} multiple={this.multiple} />)
                 :
                 (null)
             }

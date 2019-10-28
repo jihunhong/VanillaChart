@@ -13,10 +13,11 @@ class Player extends Component {
     }
 
     toggle = () => {
+        this.props.single(this.state.video_id);
+        
         this.setState({ 
             visible: !this.state.visible
         });
-        console.log(this.state.visible);
     }
 
     componentDidUpdate(prevProps, prevState){

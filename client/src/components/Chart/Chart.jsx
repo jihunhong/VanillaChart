@@ -12,11 +12,12 @@ class Chart extends Component {
     state = {
         chart: [],
         chartName: this.props.chartname || 'melon',
-        selectedVideo: '',
+        video_id: '',
         title: '',
-        aritst: '',
+        artist: '',
         idArray: "",
-        select: false
+        isOpen: false,
+        playlist: false,
     };
 
     componentDidMount = () => {
@@ -30,16 +31,14 @@ class Chart extends Component {
         
         return (
             <>
-            <TopChart chartname={this.props.chartname} selectedVideo={this.state.selectedVideo} select={this.state.select}/>
+            <TopChart chartname={this.props.chartname} 
+            video_id={this.state.video_id}  
+            title={this.state.title} 
+            artist={this.state.artist}
+            _visible={true}
+            isOpen={this.state.isOpen}
+            playlist={this.state.playlist}/>
 
-            {this.state.selectedVideo ?
-            (<Player _visible={true} video_id={this.state.selectedVideo} title={this.state.title} artist={this.state.artist} />)
-            :
-            (null)
-            }
-            
-            
-            {/* 유튜브 버튼을 누르지 않을 경우 player 창을 표시하지 않음 */}
             
             <MDBCol size="12" xl="10" lg="9" md="11" sm="11" className="chart">
                 <MDBRow>
@@ -58,10 +57,11 @@ class Chart extends Component {
                                 </span>
                                 <span className="music_link   offset-xl-2 offset-lg-2 offset-md-3 col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
                                     <a className="youtube" onClick={()=>{this.setState({
-                                                                            selectedVideo: v.video_id,
+                                                                            video_id: v.video_id,
                                                                             title: v.title,
                                                                             artist: v.artist,
-                                                                            select: true
+                                                                            isOpen: true,
+                                                                            playlist: false
                                                                         })}}>
                                         <MDBIcon fab icon="youtube" />
                                     </a>

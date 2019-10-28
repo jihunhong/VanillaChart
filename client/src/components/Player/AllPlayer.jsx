@@ -12,14 +12,14 @@ class AllPlayer extends Component {
     title: '',
     artist:'',
     index: 0,
-    playlist: false
+    isOpen: false
   };
 
   toggle = () => {
+    this.props.multiple(false);
     this.setState({ 
       visible: !this.state.visible
     });
-    
   }
 
   componentDidMount = () =>{
@@ -31,12 +31,6 @@ class AllPlayer extends Component {
         title:   current.title,
         artist:  current.artist
       });
-  }
-
-  componentDidUpdate(prevProps, prevState){
-    if(prevState.visible !== this.props.visible){
-      this.setState({visible: this.props.visible});
-    }
   }
 
   handleEnded = () => {
@@ -54,7 +48,7 @@ class AllPlayer extends Component {
 
   openList = () => {
     this.setState({
-      playlist: !this.state.playlist
+      isOpen: !this.state.isOpen
     });
     document.querySelector(".modal").style.maxHeight = "67%";
   }
@@ -72,7 +66,7 @@ class AllPlayer extends Component {
   render() {
 
     const video_url = 'https://www.youtube.com/watch?v=' + this.state.playing;
-    const isPlaylist  = this.state.playlist ;
+    const isOpen  = this.state.isOpen ;
     
     return (
       
@@ -86,7 +80,7 @@ class AllPlayer extends Component {
           <MDBModalHeader toggle={this.toggle}>
             {this.state.title}
 
-            {!isPlaylist ? 
+            {!isOpen ? 
                 (<a className="playlist" onClick={this.openList}>
                   <MDBIcon fas icon="chevron-up" />
                 </a>)
@@ -101,7 +95,7 @@ class AllPlayer extends Component {
             
             
           </MDBModalHeader>
-          {isPlaylist ? 
+          {isOpen ? 
               (<PlayList idArray={this.state.idArray} index={this.state.index} itemSelected={this.itemSelected} />) : null}
         </MDBModal>
       
