@@ -81,6 +81,7 @@ class Topchart extends Component{
 
     play = (music) => {
         this.setState({
+            isOpen: true,
             video_id: music.video_id,
             title: music.title,
             artist: music.artist
