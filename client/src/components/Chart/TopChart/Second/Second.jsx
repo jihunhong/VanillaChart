@@ -24,7 +24,7 @@ class Second extends Component{
             <>
                 <MDBCol size="0" xl="5" className="top_music second">
                     <div className="sm-logo" style={coverBackground} xl="12"></div>
-                    <div className="sm-font-box">
+                    <div className="sm-font-box" onClick={() => this.play(this.state.music.video_id)}>
                         <p className="top_title">{this.state.music.title}</p>
                         <p className="top_artist">{this.state.music.artist}</p>
                     </div>

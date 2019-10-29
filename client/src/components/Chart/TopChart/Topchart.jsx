@@ -64,6 +64,10 @@ class Topchart extends Component{
         })
     }
 
+    play = (video_id) => {
+        console.log(video_id)
+    }
+
     render(){
 
         return (
@@ -74,9 +78,9 @@ class Topchart extends Component{
                 <MDBCol md="10" className="mb-4 white-text text-center text-md-left">
                     <h1 className="display-4 font-weight-bold header">Today on <strong className={this.props.chartname+"_color"}> {this.props.chartname}</strong> Chart</h1>
                     <hr className="hr-light" />
-                    <First chartname={this.props.chartname}/>
-                    <Second chartname={this.props.chartname}/>
-                    <Third chartname={this.props.chartname}/>
+                    <First chartname={this.props.chartname}  play={this.play}/>
+                    <Second chartname={this.props.chartname} play={this.play}/>
+                    <Third chartname={this.props.chartname}  play={this.play}/>
                     <p className="mb-4 d-none d-md-block dummy_text">
                     <strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
                             industry's standard dummy text ever since the 1500s,
@@ -92,7 +96,7 @@ class Topchart extends Component{
             </MDBRow>
             
             {this.state.isOpen && this.state.video_id && !this.state.playlist?
-                (<Player _visible={true} video_id={this.props.video_id} title={this.props.title} artist={this.props.artist} single={this.single} />)
+                (<Player _visible={true} video_id={this.state.video_id} title={this.props.title} artist={this.props.artist} single={this.single} />)
                 :
                 (null)
             }
