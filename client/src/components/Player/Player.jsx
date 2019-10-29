@@ -13,7 +13,7 @@ class Player extends Component {
     }
 
     toggle = () => {
-        this.props.single(this.state.video_id);
+        this.props.singleClose(this.state.video_id);
         
         this.setState({ 
             visible: !this.state.visible

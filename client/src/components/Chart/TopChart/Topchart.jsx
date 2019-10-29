@@ -16,7 +16,9 @@ class Topchart extends Component{
         idArray : "",
         isOpen : this.props.isOpen,
         video_id: this.props.video_id,
-        playlist: this.props.playlist
+        playlist: this.props.playlist,
+        title: this.props.title,
+        artist: this.props.artist
     }
 
     componentDidMount = () =>{
@@ -27,6 +29,7 @@ class Topchart extends Component{
     };
 
     componentDidUpdate = (prevState, prevProps) => {
+        
         if(prevProps.isOpen !== this.props.isOpen){
             this.setState({
                 isOpen: this.props.isOpen
@@ -36,6 +39,18 @@ class Topchart extends Component{
         if(prevState.video_id !== this.props.video_id){
             this.setState({
                 video_id: this.props.video_id
+            })
+        }
+
+        if(prevState.title !== this.props.title){
+            this.setState({
+                title: this.props.title
+            })
+        }
+
+        if(prevState.artist !== this.props.artist){
+            this.setState({
+                artist: this.props.artist
             })
         }
     }
@@ -48,7 +63,7 @@ class Topchart extends Component{
         })
     }
 
-    multiple = (status) => {
+    multipleClose = (status) => {
         this.setState({
             isOpen: false,
             video_id: '',
@@ -56,7 +71,7 @@ class Topchart extends Component{
         })
     }
 
-    single = (video_id) => {
+    singleClose = (video_id) => {
         this.setState({
             isOpen: false,
             video_id: '',
@@ -64,8 +79,12 @@ class Topchart extends Component{
         })
     }
 
-    play = (video_id) => {
-        console.log(video_id)
+    play = (music) => {
+        this.setState({
+            video_id: music.video_id,
+            title: music.title,
+            artist: music.artist
+        })
     }
 
     render(){
@@ -96,12 +115,12 @@ class Topchart extends Component{
             </MDBRow>
             
             {this.state.isOpen && this.state.video_id && !this.state.playlist?
-                (<Player _visible={true} video_id={this.state.video_id} title={this.props.title} artist={this.props.artist} single={this.single} />)
+                (<Player _visible={true} video_id={this.state.video_id} title={this.state.title} artist={this.state.artist} singleClose={this.singleClose} />)
                 :
                 (null)
             }
             {this.state.isOpen && !this.state.video_id && this.state.playlist ?
-                (<AllPlayer visible={this.state.isOpen} idArray={this.state.idArray} multiple={this.multiple} />)
+                (<AllPlayer visible={this.state.isOpen} idArray={this.state.idArray} multipleClose={this.multipleClose} />)
                 :
                 (null)
             }

@@ -16,7 +16,7 @@ class AllPlayer extends Component {
   };
 
   toggle = () => {
-    this.props.multiple(false);
+    this.props.multipleClose(false);
     this.setState({ 
       visible: !this.state.visible
     });

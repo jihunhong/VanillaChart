@@ -15,6 +15,10 @@ class Second extends Component{
                 /**() => console.log('2nd Data api fetched...', json)**/));
     }
 
+    play = () => {
+        this.props.play(this.state.music)
+    }
+
     render(){
         const coverBackground = {
             backgroundImage: "url('https://i.ytimg.com/vi/" + this.state.music.video_id + "/maxresdefault.jpg')"
@@ -24,7 +28,7 @@ class Second extends Component{
             <>
                 <MDBCol size="0" xl="5" className="top_music second">
                     <div className="sm-logo" style={coverBackground} xl="12"></div>
-                    <div className="sm-font-box" onClick={() => this.play(this.state.music.video_id)}>
+                    <div className="sm-font-box" onClick={this.play}>
                         <p className="top_title">{this.state.music.title}</p>
                         <p className="top_artist">{this.state.music.artist}</p>
                     </div>
