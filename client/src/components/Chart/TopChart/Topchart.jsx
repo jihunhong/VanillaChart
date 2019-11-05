@@ -102,12 +102,11 @@ class Topchart extends Component{
                     <Second chartname={this.props.chartname} play={this.play}/>
                     <Third chartname={this.props.chartname}  play={this.play}/>
                     <p className="mb-4 d-none d-md-block dummy_text">
-                    <strong>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    </strong>
+                    <strong>
+                        K-POP 실시간 음반/음원 차트와 팬덤 기반의 스타 차트를 제공하는 커뮤니케이션 플랫폼입니다.
+                    </strong> 
                     </p>
-                    <button className="btn btn-outline-white waves-effect waves-light" onClick={this.onClick}>차트 재생
+                    <button className="btn btn-outline-white waves-effect waves-light" onClick={this.onClick}>전체 재생
                         <i className="fab fa-youtube red-text ml-2"></i>
                     </button>
                     
