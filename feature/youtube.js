@@ -93,33 +93,32 @@ async function insertVideoId(){
 
 insertVideoId();
 
-// Use connect method to connect to the server
 MongoClient.connect(url, function(err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
    
     const db = client.db(dbName);
     
-    insertDocuments(db, function() {}, genie);
+    insertDocuments(db, function() {}, genie, 'genie');
 
-    insertDocuments(db, function() {}, melon);
+    insertDocuments(db, function() {}, melon, 'melon');
 
     insertDocuments(db, function() {
         client.close();
-    }, bugs);
+    }, bugs, 'bugs');
    
   });
   
-const insertDocuments = function(db, callback, chart) {
-    // Get the documents collection
-    const collection = db.collection('documents');
-    // Insert some documents
+const insertDocuments = function(db, callback, chart, name) {
+
+    const collection = db.collection(name);
+    
     collection.insert( 
         chart , function(err, result) {
       assert.equal(err, null);
       
       assert.equal(50 , result.ops.length);
-      console.log("Inserted 3 documents into the collection");
+      console.log(`Inserted ${result.ops.length} documents into the ${name} collection`);
       callback(result);
     });
 }
