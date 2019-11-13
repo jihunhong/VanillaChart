@@ -34,7 +34,9 @@ function searching(music, name) {
         const q = `${music.artist} - ${music.title}`;
 
         youtube.search(q, limit, function (err, result) {
+            
             currentKey.quota++;
+
             if(err) { console.log(err);}
             
 
@@ -50,6 +52,8 @@ function searching(music, name) {
 
             fs.writeFileSync( path.join('../logs/youtubeAPI.json')  , JSON.stringify(youtubeAPI, null, 2));
             fs.writeFileSync( path.join('../apiKeys.json')  , JSON.stringify(apiKeys, null, 2));
+            // youtubeAPI를 통해 검색되는 쿼리와 할당량을 확인하기 위한 코드
+
             
             let responseItems = [];
 
@@ -57,9 +61,12 @@ function searching(music, name) {
                 responseItems = result.items.slice(0);
 
                 const officialItem = responseItems.find((v) => 
-                    v.snippet.title.includes('MV') || v.snippet.title.includes('M/V') || v.snippet.title.includes('Official') );
+                    ['MV', 'M/V', 'Official'].includes(v.snippet.title) );
+                    // 검색된 결과들중 우선순위를 따져 반환하기 위한 코드
 
-                officialItem == undefined ? res(responseItems[0].id.videoId) : res(officialItem.id.videoId);
+
+                officialItem === undefined ? res(responseItems[0].id.videoId) : res(officialItem.id.videoId);
+
             }catch(e){
                 res('cdwal5Kw3Fc');
                 // shortest video ever
@@ -93,32 +100,33 @@ async function insertVideoId(){
 
 insertVideoId();
 
-MongoClient.connect(url, function(err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
+// Use connect method to connect to the server
+// MongoClient.connect(url, function(err, client) {
+//     assert.equal(null, err);
+//     console.log("Connected successfully to server");
    
-    const db = client.db(dbName);
+//     const db = client.db(dbName);
     
-    insertDocuments(db, function() {}, genie, 'genie');
+//     insertDocuments(db, function() {}, genie);
 
-    insertDocuments(db, function() {}, melon, 'melon');
+//     insertDocuments(db, function() {}, melon);
 
-    insertDocuments(db, function() {
-        client.close();
-    }, bugs, 'bugs');
+//     insertDocuments(db, function() {
+//         client.close();
+//     }, bugs);
    
-  });
+//   });
   
-const insertDocuments = function(db, callback, chart, name) {
-
-    const collection = db.collection(name);
-    
-    collection.insert( 
-        chart , function(err, result) {
-      assert.equal(err, null);
+// const insertDocuments = function(db, callback, chart) {
+//     // Get the documents collection
+//     const collection = db.collection('documents');
+//     // Insert some documents
+//     collection.insert( 
+//         chart , function(err, result) {
+//       assert.equal(err, null);
       
-      assert.equal(50 , result.ops.length);
-      console.log(`Inserted ${result.ops.length} documents into the ${name} collection`);
-      callback(result);
-    });
-}
+//       assert.equal(50 , result.ops.length);
+//       console.log("Inserted 3 documents into the collection");
+//       callback(result);
+//     });
+// }
