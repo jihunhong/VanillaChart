@@ -20,7 +20,7 @@ const assert = require('assert');
 const url = 'mongodb://localhost:27017';
  
 // Database Name
-const dbName = 'myproject';
+const dbName = 'VanillaChart';
 
 function searching(music, name) {
     

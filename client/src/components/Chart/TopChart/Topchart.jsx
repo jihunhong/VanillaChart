@@ -103,7 +103,7 @@ class Topchart extends Component{
                     <Third chartname={this.props.chartname}  play={this.play}/>
                     <p className="mb-4 d-none d-md-block dummy_text">
                     <strong>
-                        K-POP 실시간 음반/음원 차트와 팬덤 기반의 스타 차트를 제공하는 커뮤니케이션 플랫폼입니다.
+                        K-POP 실시간 음반/음원 차트를 제공하는 플랫폼입니다.
                     </strong> 
                     </p>
                     <button className="btn btn-outline-white waves-effect waves-light" onClick={this.onClick}>전체 재생

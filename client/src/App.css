@@ -315,11 +315,25 @@ span.music_link, .add_button{
   right: 0;
   z-index: 1050;
   display: none;
+
   width: 665px;
-  max-height: 52%;
+  height: 50%;
+
+  max-height: calc(100% - 260px);
   overflow: hidden;
   outline: 0;
 }
+
+.modal-open .modal{
+  overflow-y: hidden;
+}
+
+.modal .modal-side {
+  width: 90%;
+  height: 95%;
+}
+
+
 
 @media (min-width: 992px){
   .modal .modal-side {
@@ -327,13 +341,20 @@ span.music_link, .add_button{
     bottom: 10px;
     right: 10px;
     margin: 0;
-    width: 640px;
   }
 }
 
 .modal-content{
   background-color: #fff;
+  width: 100%;
+  height: 100%;
 }
+
+.modal-content ~ div {
+  width: 100% !important;
+  height: 360px;
+}
+
 
 .modal-title{
   text-overflow: ellipsis;

@@ -6,6 +6,7 @@ const JSONResult = require('../Object/JSONResult.js');
 
 const result = new JSONResult();
 
+const assert = require('assert');
 const MongoClient = require('mongodb').MongoClient;
 // Connection URL
 const url = 'mongodb://localhost:27017';
@@ -26,8 +27,6 @@ const charts = {
 
 module.exports = function (app) {
     app.get('/api/chart/:chart', function (req, res) {
-           
-        const db = client.db(dbName);
         
         // readChart(db, function() {}, genie, 'genie');
 
