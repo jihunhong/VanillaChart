@@ -11,7 +11,7 @@ const bugs  = require('../chart/bugs.json');
 
 const youtubeAPI = require('../logs/youtubeAPI.json');
 
-const limit = 3;
+const limit = 5;
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
