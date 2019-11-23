@@ -107,32 +107,32 @@ async function insertVideoId(){
 insertVideoId();
 
 // Use connect method to connect to the server
-MongoClient.connect(url, function(err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
+// MongoClient.connect(url, function(err, client) {
+//     assert.equal(null, err);
+//     console.log("Connected successfully to server");
    
-    const db = client.db(dbName);
+//     const db = client.db(dbName);
     
-    insertDocuments(db, function() {}, genie, 'genie');
+//     insertDocuments(db, function() {}, genie, 'genie');
 
-    insertDocuments(db, function() {}, melon, 'melon');
+//     insertDocuments(db, function() {}, melon, 'melon');
 
-    insertDocuments(db, function() {
-        client.close();
-    }, bugs, 'bugs');
+//     insertDocuments(db, function() {
+//         client.close();
+//     }, bugs, 'bugs');
    
-  });
+//   });
   
-const insertDocuments = function(db, callback, chart, chartName) {
-    // Get the documents collection
-    const collection = db.collection(chartName);
-    // Insert some documents
-    collection.insert( 
-        chart , function(err, result) {
-      assert.equal(err, null);
+// const insertDocuments = function(db, callback, chart, chartName) {
+//     // Get the documents collection
+//     const collection = db.collection(chartName);
+//     // Insert some documents
+//     collection.insert( 
+//         chart , function(err, result) {
+//       assert.equal(err, null);
       
-      assert.equal(50 , result.ops.length);
-      console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
-      callback(result);
-    });
-}
+//       assert.equal(50 , result.ops.length);
+//       console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
+//       callback(result);
+//     });
+// }
