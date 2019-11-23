@@ -81,9 +81,10 @@ async function insertVideoId(){
         for(let i=0; i<chart.length; i++){
             const music = chart[i];
 
-            if(chart.find((v) => v.video_id === music.video_id)){
+            if(chart.find((v) => v.video_id === music.video_id) !== undefined){
                 console.log(`[${music.title} - ${music.artist}] 은 검색을 스킵합니다`)
-                break;
+                music.video_id = chart.find((v) => v.video_id === music.video_id)
+                continue;
             }
 
             await searching(music, name).then(function(video_id){
