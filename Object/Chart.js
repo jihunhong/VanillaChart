@@ -39,6 +39,9 @@ class Chart{
     }
 
     getData(){
+        const old = require(path.join('../chart/old_'+this.name + '.json' ));
+        fs.writeFileSync(path.join('../chart/old_'+this.name + '.json'), JSON.stringify(old, null, 2));
+
         const getHTML = async () =>{
             try {
                 return await axios.get(this.url);
@@ -74,7 +77,9 @@ class Chart{
 
             return chart;
         })
-        .then(res => fs.writeFileSync( path.join('../chart/'+ this.name + '.json')  , JSON.stringify(res, null, 2)));
+        .then(res => 
+            fs.writeFileSync( path.join('../chart/'+ this.name + '.json')
+                , JSON.stringify(res, null, 2)));
 
     }
 
