@@ -9,22 +9,19 @@ const genie = require('../chart/genie.json');
 const melon = require('../chart/melon.json');
 const bugs  = require('../chart/bugs.json');
 
-const og = require('../chart/old_genie.json');
-const om = require('../chart/old_melon.json');
-const ob  = require('../chart/old_bugs.json');
-
 const youtubeAPI = require('../logs/youtubeAPI.json');
 
 const limit = 5;
 
 const MongoClient = require('mongodb').MongoClient;
+
 const assert = require('assert');
  
 // Connection URL
-const url = 'mongodb://localhost:27017';
- 
-// Database Name
-const dbName = 'VanillaChart';
+
+
+const client = new MongoClient(uri, { useNewUrlParser: true, 
+                                     useUnifiedTopology: true });
 
 function searching(music, name) {
     
@@ -81,7 +78,7 @@ function searching(music, name) {
 
 
 async function insertVideoId(){
-    const iterateSearch = async function(chart, old, name){
+    const iterateSearch = async function(chart, name){
         
         let skip = 0
 
@@ -105,40 +102,40 @@ async function insertVideoId(){
         console.log(`\n\n-------------${skip}/50 ${name} 완료----------`);
     }
 
-    await iterateSearch(melon, om, 'melon');
-    await iterateSearch(genie, og, 'genie');
-    await iterateSearch(bugs,  ob, 'bugs');
+    await iterateSearch(melon, 'melon');
+    await iterateSearch(genie, 'genie');
+    await iterateSearch(bugs,  'bugs');
 }
 
 insertVideoId();
 
-// Use connect method to connect to the server
-// MongoClient.connect(url, function(err, client) {
-//     assert.equal(null, err);
-//     console.log("Connected successfully to server");
+
+client.connect(err => {
+    assert.equal(null, err);
+    console.log("Connected successfully to server");
    
-//     const db = client.db(dbName);
+    const db = client.db("VanillaChart");
     
-//     insertDocuments(db, function() {}, genie, 'genie');
+    insertDocuments(db, function() {}, genie, 'genie');
 
-//     insertDocuments(db, function() {}, melon, 'melon');
+    insertDocuments(db, function() {}, melon, 'melon');
 
-//     insertDocuments(db, function() {
-//         client.close();
-//     }, bugs, 'bugs');
+    insertDocuments(db, function() {
+        client.close();
+    }, bugs, 'bugs');
    
-//   });
+  });
   
-// const insertDocuments = function(db, callback, chart, chartName) {
-//     // Get the documents collection
-//     const collection = db.collection(chartName);
-//     // Insert some documents
-//     collection.insert( 
-//         chart , function(err, result) {
-//       assert.equal(err, null);
+const insertDocuments = function(db, callback, chart, chartName) {
+
+    const collection = db.collection(chartName);
+
+    collection.insert( 
+        chart , (err, result) =>{
+      assert.equal(err, null);
       
-//       assert.equal(50 , result.ops.length);
-//       console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
-//       callback(result);
-//     });
-// }
+      assert.equal(50 , result.ops.length);
+      console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
+      callback(result);
+    });
+}

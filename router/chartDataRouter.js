@@ -7,17 +7,17 @@ const JSONResult = require('../Object/JSONResult.js');
 const result = new JSONResult();
 
 const assert = require('assert');
-const MongoClient = require('mongodb').MongoClient;
-// Connection URL
-const url = 'mongodb://localhost:27017';
+// const MongoClient = require('mongodb').MongoClient;
+// // Connection URL
+// const url = 'mongodb://localhost:27017';
  
 // Database Name
 const dbName = 'VanillaChart';
 
-MongoClient.connect(url, function(err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-});
+// MongoClient.connect(url, function(err, client) {
+//     assert.equal(null, err);
+//     console.log("Connected successfully to server");
+// });
 
 const charts = {
     'genie': genie,
