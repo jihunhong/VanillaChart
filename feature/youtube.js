@@ -9,6 +9,10 @@ const genie = require('../chart/genie.json');
 const melon = require('../chart/melon.json');
 const bugs  = require('../chart/bugs.json');
 
+const og = require('../chart/old_genie.json');
+const om = require('../chart/old_melon.json');
+const ob = require('../chart/old_bugs.json');
+
 const youtubeAPI = require('../logs/youtubeAPI.json');
 
 const limit = 5;
@@ -18,7 +22,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
  
 // Connection URL
-
+const uri = "mongodb+srv://chart:<password>@cluster0-v0qur.mongodb.net/test?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri, { useNewUrlParser: true, 
                                      useUnifiedTopology: true });
@@ -78,33 +82,32 @@ function searching(music, name) {
 
 
 async function insertVideoId(){
-    const iterateSearch = async function(chart, name){
+    const iterateSearch = async function(chart, old, name){
         
         let skip = 0
 
         for(let i=0; i<chart.length; i++){
             const music = chart[i];
 
-            if(old.find((v) => music.title === v.title) !== undefined){
-                console.log(`* ${music.title} 은 검색을 스킵합니다`)
+            if(old.find((v) => music.title === v.title && v.video_id) !== undefined){
+                console.log(`* ${music.title} 스킵`)
                 skip++;
                 music.video_id = old.find((v) => music.title === v.title).video_id
             }else{
                 await searching(music, name).then(function(video_id){
                     music.video_id = video_id;
                     chart[i] = music;
-                    console.log(`${music.rank} : ${music.title} 검색 완료`);
+                    console.warn(`+ ${music.rank} : ${music.title} 검색 완료`);
                 });    
             }
- 
             fs.writeFileSync( path.join('../chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
         }
         console.log(`\n\n-------------${skip}/50 ${name} 완료----------`);
     }
 
-    await iterateSearch(melon, 'melon');
-    await iterateSearch(genie, 'genie');
-    await iterateSearch(bugs,  'bugs');
+    await iterateSearch(melon, om ,'melon');
+    await iterateSearch(genie, og ,'genie');
+    await iterateSearch(bugs,  ob ,'bugs');
 }
 
 insertVideoId();

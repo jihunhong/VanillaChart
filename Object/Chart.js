@@ -39,7 +39,7 @@ class Chart{
     }
 
     getData(){
-        const old = require(path.join('../chart/old_'+this.name + '.json' ));
+        const old = require(path.join('../chart/'+this.name + '.json' ));
         fs.writeFileSync(path.join('../chart/old_'+this.name + '.json'), JSON.stringify(old, null, 2));
 
         const getHTML = async () =>{
