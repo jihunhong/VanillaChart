@@ -81,8 +81,8 @@ function searching(music, name) {
 };
 
 
-async function insertVideoId(){
-    const iterateSearch = async function(chart, old, name){
+const insertVideoId = async () => {
+    const iterateSearch = async (chart, old, name) => {
         
         let skip = 0
 
@@ -97,7 +97,7 @@ async function insertVideoId(){
                 await searching(music, name).then(function(video_id){
                     music.video_id = video_id;
                     chart[i] = music;
-                    console.warn(`+ ${music.rank} : ${music.title} 검색 완료`);
+                    console.log(`+ ${music.rank} : ${music.title} 검색`);
                 });    
             }
             fs.writeFileSync( path.join('../chart/'+ name + '.json')  , JSON.stringify(chart, null, 2));
@@ -108,37 +108,45 @@ async function insertVideoId(){
     await iterateSearch(melon, om ,'melon');
     await iterateSearch(genie, og ,'genie');
     await iterateSearch(bugs,  ob ,'bugs');
+
+    return [melon, genie, bugs];
 }
 
-insertVideoId();
+insertVideoId().then( chart => {
+    const melon = chart.shift();
+    const genie = chart.shift();
+    const bugs  = chart.shift();
 
-
-client.connect(err => {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-   
-    const db = client.db("VanillaChart");
+    client.connect(err => {
+        assert.equal(null, err);
+        console.log("Connected successfully to server");
+       
+        const db = client.db("VanillaChart");
+        
+        insertDocuments(db, function() {}, genie, 'genie');
     
-    insertDocuments(db, function() {}, genie, 'genie');
-
-    insertDocuments(db, function() {}, melon, 'melon');
-
-    insertDocuments(db, function() {
-        client.close();
-    }, bugs, 'bugs');
-   
-  });
-  
-const insertDocuments = function(db, callback, chart, chartName) {
-
-    const collection = db.collection(chartName);
-
-    collection.insert( 
-        chart , (err, result) =>{
-      assert.equal(err, null);
+        insertDocuments(db, function() {}, melon, 'melon');
+    
+        insertDocuments(db, function() {
+            client.close();
+        }, bugs, 'bugs');
+       
+      });
       
-      assert.equal(50 , result.ops.length);
-      console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
-      callback(result);
-    });
-}
+    const insertDocuments = function(db, callback, chart, chartName) {
+    
+        const collection = db.collection(chartName);
+    
+        collection.insert( 
+            chart , (err, result) =>{
+          assert.equal(err, null);
+          
+          assert.equal(50 , result.ops.length);
+          console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
+          callback(result);
+        });
+    }
+
+} )
+
+
