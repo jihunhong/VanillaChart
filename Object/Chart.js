@@ -3,6 +3,16 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
 
+const MongoClient = require('mongodb').MongoClient;
+
+const assert = require('assert');
+ 
+// Connection URL
+const uri = "mongodb+srv://chart:<password>@cluster0-v0qur.mongodb.net/test?retryWrites=true&w=majority";
+
+const client = new MongoClient(uri, { useNewUrlParser: true, 
+                                     useUnifiedTopology: true });
+
 
 class Chart{
     constructor(name, url, parent, title, artist, img){
@@ -83,6 +93,42 @@ class Chart{
 
     }
 
+    saveOldChart(){
+        client.connect(err => {
+            assert.equal(null, err);
+            console.log("Connected successfully to server for save old chart data");
+           
+            const db = client.db("VanillaChart");
+            
+            findCollection(db, this.name)
+                .then(collection => {
+                    insertDocuments(db, () => {client.close();} , collection, this.name)
+                })
+        
+            
+           
+          });
+          
+        const findCollection = async(db, chartName) => {
+        
+            const collection = db.collection(chartName);
+
+            return await collection.find().sort({rank : 1}).toArray();
+        }
+       
+        const insertDocuments = function(db, callback, chart, chartName) {
+    
+            const collection = db.collection(new Date().toUTCString());
+        
+            collection.insert( 
+                chart , (err, result) =>{
+              assert.equal(err, null);
+
+              console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
+              callback(result);
+            });
+        }
+    }
 
 
 }
