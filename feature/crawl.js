@@ -6,31 +6,48 @@ const Chart = require('../Object/Chart.js');
 
 const melon = new Chart();
 
-melon.setName('melon');
-melon.setUrl('https://www.melon.com/chart/');
-melon.setParent('tr.lst50');
-melon.setTitle('div.rank01 a');
-melon.setArtist('.ellipsis.rank02 > span');
-melon.setImg('.image_typeAll');
+melon.Builder(
+    {
+        name   : 'melon', 
+        url    : 'https://www.melon.com/chart/', 
+        parent : 'tr.lst50', 
+        title  : 'div.rank01 a',
+        artist : '.ellipsis.rank02 > span',
+        img    : '.image_typeAll'
+    }
+);
 
 const genie = new Chart();
 
-genie.setName('genie');
-genie.setUrl('https://www.genie.co.kr/chart/top200');
-genie.setParent('td.info');
-genie.setTitle('a.title');
-genie.setArtist('a.artist');
-genie.setImg('a.cover');
+genie.Builder(
+    {
+        name   : 'genie', 
+        url    : 'https://www.genie.co.kr/chart/top200', 
+        parent : 'td.info', 
+        title  : 'a.title',
+        artist : 'a.artist',
+        img    : 'a.cover'
+    }
+);
 
 const bugs  = new Chart();
 
-bugs.setName('bugs');
-bugs.setUrl('https://music.bugs.co.kr/chart')
-bugs.setParent('tbody tr')
-bugs.setTitle('p.title a')
-bugs.setArtist('p.artist a')
-bugs.setImg('a.thumbnail')
+bugs.Builder(
+    {
+        name   : 'bugs', 
+        url    : 'https://music.bugs.co.kr/chart', 
+        parent : 'tbody tr', 
+        title  : 'p.title a',
+        artist : 'p.artist a',
+        img    : 'a.thumbnail'
+    }
+);
 
+melon.saveOldChart();
 melon.getData();
+
+genie.saveOldChart();
 genie.getData();
+
+bugs.saveOldChart();
 bugs.getData();

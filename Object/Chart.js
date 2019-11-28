@@ -8,7 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
  
 // Connection URL
-const uri = "mongodb+srv://chart:<password>@cluster0-v0qur.mongodb.net/test?retryWrites=true&w=majority";
+const uri = require('../DBInfo.json').uri;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, 
                                      useUnifiedTopology: true });
@@ -22,6 +22,15 @@ class Chart{
         this.title    = title;
         this.artist   = artist;
         this.img      = img;
+    }
+
+    Builder(obj){
+        this.setName(obj.name)
+        this.setUrl(obj.url)   
+        this.setParent(obj.parent)
+        this.setTitle(obj.title)
+        this.setArtist(obj.artist)
+        this.setImg(obj.img)
     }
 
     setName(name){
@@ -49,9 +58,6 @@ class Chart{
     }
 
     getData(){
-        const old = require(path.join('../chart/'+this.name + '.json' ));
-        fs.writeFileSync(path.join('../chart/old_'+this.name + '.json'), JSON.stringify(old, null, 2));
-
         const getHTML = async () =>{
             try {
                 return await axios.get(this.url);
@@ -87,9 +93,31 @@ class Chart{
 
             return chart;
         })
-        .then(res => 
-            fs.writeFileSync( path.join('../chart/'+ this.name + '.json')
-                , JSON.stringify(res, null, 2)));
+        .then(res => {
+            client.connect(err => {
+                assert.equal(null, err);
+                console.log("Connected successfully to server for save new chart data");
+               
+                const db = client.db("VanillaChart");
+                
+                insertDocuments(db, function() {client.close();} , res, this.name)
+                
+               
+              });
+            
+           
+            const insertDocuments = function(db, callback, chart, chartName) {
+        
+                const collection = db.collection(chartName);
+                collection.remove({});
+
+                collection.insert( 
+                    chart , (err, result) =>{
+
+                  callback();
+                });
+            }
+        });
 
     }
 
@@ -102,7 +130,7 @@ class Chart{
             
             findCollection(db, this.name)
                 .then(collection => {
-                    insertDocuments(db, () => {client.close();} , collection, this.name)
+                    insertDocuments(db, function() {client.close();} , collection, this.name)
                 })
         
             
@@ -118,13 +146,12 @@ class Chart{
        
         const insertDocuments = function(db, callback, chart, chartName) {
     
-            const collection = db.collection(new Date().toUTCString());
+            const collection = db.collection('old_'+chartName);
         
             collection.insert( 
                 chart , (err, result) =>{
               assert.equal(err, null);
 
-              console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
               callback(result);
             });
         }

@@ -22,7 +22,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
  
 // Connection URL
-const uri = "mongodb+srv://chart:<password>@cluster0-v0qur.mongodb.net/test?retryWrites=true&w=majority";
+const uri = require('../DBInfo.json').uri;;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, 
                                      useUnifiedTopology: true });
