@@ -22,7 +22,11 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
  
 // Connection URL
-const uri = require('../DBInfo.json').uri;;
+const uri = require('../DBInfo.json').uri;
+
+const Query = require('../Object/Query.js');
+
+const query = new Query();
 
 const client = new MongoClient(uri, { useNewUrlParser: true, 
                                      useUnifiedTopology: true });
