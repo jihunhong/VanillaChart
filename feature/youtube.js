@@ -136,6 +136,7 @@ insertVideoId().then( chart => {
     const insertDocuments = function(db, callback, chart, chartName) {
     
         const collection = db.collection(chartName);
+        collection.remove({});
     
         collection.insert( 
             chart , (err, result) =>{
