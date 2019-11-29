@@ -13,6 +13,9 @@ const uri = require('../DBInfo.json').uri;
 const client = new MongoClient(uri, { useNewUrlParser: true, 
                                      useUnifiedTopology: true });
 
+const Query = require('../Object/Query.js');
+
+const query = new Query();
 
 class Chart{
     constructor(name, url, parent, title, artist, img){
@@ -100,23 +103,11 @@ class Chart{
                
                 const db = client.db("VanillaChart");
                 
-                insertDocuments(db, function() {client.close();} , res, this.name)
+                query.insertDocuments(db, function() {client.close();} , res, this.name)
                 
                
               });
             
-           
-            const insertDocuments = function(db, callback, chart, chartName) {
-        
-                const collection = db.collection(chartName);
-                collection.remove({});
-
-                collection.insert( 
-                    chart , (err, result) =>{
-
-                  callback();
-                });
-            }
         });
 
     }
@@ -128,33 +119,16 @@ class Chart{
            
             const db = client.db("VanillaChart");
             
-            findCollection(db, this.name)
+            query.findCollection(db, this.name)
                 .then(collection => {
-                    insertDocuments(db, function() {client.close();} , collection, this.name)
+                    query.insertOldDocuments(db, function() {client.close();} , collection, this.name)
                 })
         
             
            
           });
           
-        const findCollection = async(db, chartName) => {
         
-            const collection = db.collection(chartName);
-
-            return await collection.find().sort({rank : 1}).toArray();
-        }
-       
-        const insertDocuments = function(db, callback, chart, chartName) {
-    
-            const collection = db.collection('old_'+chartName);
-        
-            collection.insert( 
-                chart , (err, result) =>{
-              assert.equal(err, null);
-
-              callback(result);
-            });
-        }
     }
 
 

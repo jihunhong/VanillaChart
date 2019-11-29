@@ -123,30 +123,17 @@ insertVideoId().then( chart => {
        
         const db = client.db("VanillaChart");
         
-        insertDocuments(db, function() {}, genie, 'genie');
+        query.insertDocuments(db, function() {}, genie, 'genie');
     
-        insertDocuments(db, function() {}, melon, 'melon');
+        query.insertDocuments(db, function() {}, melon, 'melon');
     
-        insertDocuments(db, function() {
+        query.insertDocuments(db, function() {
             client.close();
         }, bugs, 'bugs');
        
       });
       
-    const insertDocuments = function(db, callback, chart, chartName) {
     
-        const collection = db.collection(chartName);
-        collection.remove({});
-    
-        collection.insert( 
-            chart , (err, result) =>{
-          assert.equal(err, null);
-          
-          assert.equal(50 , result.ops.length);
-          console.log(`Inserted ${result.ops.length} documents into the ${chartName} collection`);
-          callback(result);
-        });
-    }
 
 } )
 
