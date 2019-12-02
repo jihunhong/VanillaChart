@@ -1,15 +1,19 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const chartRouter = require('./router/chartDataRouter.js')(app);
-const youtubeRouter = require('./router/youtubeRouter.js')(app);
+const chartRouter = require('./router/chartApi');
+const youtubeRouter = require('./router/youtubeApi');
 
 const bodyParser = require('body-parser');
 
-app.use(express.json());
+const mongoose = require('mongoose');
+
+
 app.use(bodyParser.json());
+app.use('/api/chart', chartRouter);
 
 if( process.env.NODE_ENV == 'production'){
+    // deploy server setting
 
     console.log('Production MODE resolved');
 
@@ -19,6 +23,12 @@ if( process.env.NODE_ENV == 'production'){
         res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'))
     })
 }
+
+mongoose.connect(
+    'mongodb+srv://<NAME>:<PASSWORD>@cluster0-v0qur.mongodb.net/VanillaChart?retryWrites=true&w=majority', 
+    { useNewUrlParser: true },
+    () =>   console.log('connected')
+)
 
 const PORT = process.env.PORT || 8080;
 
