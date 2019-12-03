@@ -6,12 +6,11 @@ const mongoose = require('mongoose');
 
 router.get('/:chart', async(req, res) => {
     
-    const chart = mongoose.model('Chart', chartSchema, req.params.chart)
+    const collection = mongoose.model('Chart', chartSchema, req.params.chart)
 
     try{
-        const collection = await chart.find();
-        // 차트 이름 별로 모든 데이터 조회
-        res.json(collection);
+        const chart = await collection.find();
+        res.json(chart);
     }catch(err){
         res.json({message : err});
     }
