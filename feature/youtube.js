@@ -96,7 +96,7 @@ insertVideoId().then( chart => {
         }
     }
     
-
+    mongoose.disconnect();
 } )
 
 
