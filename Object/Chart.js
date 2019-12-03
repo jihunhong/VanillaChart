@@ -11,7 +11,7 @@ require('dotenv/config');
 const chartSchema = require('../models/Chart');
 
 mongoose.connect(
-    'mongodb+srv://chart:02021202@cluster0-v0qur.mongodb.net/VanillaChart?retryWrites=true&w=majority', 
+    process.env.DB_CONNECTION, 
     { useNewUrlParser: true,
       useUnifiedTopology: true,
       poolSize: 10},
