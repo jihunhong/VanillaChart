@@ -7,6 +7,7 @@ const youtubeRouter = require('./router/youtubeApi');
 const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
+require('dotenv/config');
 
 
 app.use(bodyParser.json());
@@ -25,8 +26,9 @@ if( process.env.NODE_ENV == 'production'){
 }
 
 mongoose.connect(
-    'mongodb+srv://<NAME>:<PASSWORD>@cluster0-v0qur.mongodb.net/VanillaChart?retryWrites=true&w=majority', 
-    { useNewUrlParser: true },
+    process.env.DB_CONNECTION, 
+    {useNewUrlParser: true,
+     useUnifiedTopology: true},
     () =>   console.log('connected')
 )
 
