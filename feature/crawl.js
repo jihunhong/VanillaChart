@@ -43,11 +43,56 @@ bugs.Builder(
     }
 );
 
-melon.saveOldChart();
-melon.getData();
 
-genie.saveOldChart();
-genie.getData();
+// melon.saveOldChart()
+//     .then(res => {
+//         melon.getData();
+//         console.log('getData 멜론')
+//     })
+//     .catch((err) => {
+//         console.log('에러!');
+//         console.log(err);
+//     });
 
-bugs.saveOldChart();
-bugs.getData();
+// genie.saveOldChart()
+//     .then(res => {
+//         genie.getData();
+//         console.log('getData 지니')
+//     })
+//     .catch((err) => {
+//         console.log('에러!');
+//         console.log(err);
+//     });
+
+
+// bugs.saveOldChart()
+//     .then(res => {
+//         bugs.getData();
+//         console.log('getData 벅스')
+//     })
+//     .catch((err) => {
+//         console.log('에러!');
+//         console.log(err);
+//     });
+
+const crawl = async() => {
+    await melon.saveOldChart();
+    await melon.getData();
+
+    await genie.saveOldChart();
+    await genie.getData();
+    
+    await bugs.saveOldChart();
+    await bugs.getData();
+
+    return '완료';
+}
+
+crawl()
+    .then(res => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.log('에러!')
+        console.log(err);
+    })
