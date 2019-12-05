@@ -6,17 +6,16 @@ const path = require('path');
 const assert = require('assert');
 
 const mongoose = require('mongoose');
-require('dotenv/config');
-
-const chartSchema = require('../models/Chart');
-
 mongoose.connect(
-    process.env.DB_CONNECTION, 
+    'uri', 
     { useNewUrlParser: true,
       useUnifiedTopology: true,
       poolSize: 10},
     () => console.log('connected')
 )
+
+const chartSchema = require('../models/Chart');
+
 
 class Chart{
     constructor(name, url, parent, title, artist, img){
@@ -95,12 +94,10 @@ class Chart{
 
         try{
             const collection = mongoose.model('Chart', chartSchema, this.name);
-            await collection.remove();
+            await collection.deleteMany();
             await collection.insertMany(chart);
 
             console.log('get')
-
-            mongoose.disconnect();
         }catch(err){
             console.log(err);
         }
@@ -112,12 +109,11 @@ class Chart{
               const oldCollection = mongoose.model('Chart', chartSchema, 'old_'+this.name);
 
               const existChart = await existCollection.find();
-              await oldCollection.remove();
+              await oldCollection.deleteMany();
               await oldCollection.insertMany(existChart);
 
               console.log('save')
 
-              mongoose.disconnect();
           }catch(err){
               console.log(err);
           }
