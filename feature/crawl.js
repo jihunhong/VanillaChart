@@ -6,6 +6,12 @@ const Chart = require('../Object/Chart.js');
 
 const melon = new Chart();
 
+const mongoose = require('mongoose');
+
+
+const chartSchema = require('../models/Chart');
+
+
 melon.Builder(
     {
         name   : 'melon', 
@@ -43,56 +49,24 @@ bugs.Builder(
     }
 );
 
-
-// melon.saveOldChart()
-//     .then(res => {
-//         melon.getData();
-//         console.log('getData 멜론')
-//     })
-//     .catch((err) => {
-//         console.log('에러!');
-//         console.log(err);
-//     });
-
-// genie.saveOldChart()
-//     .then(res => {
-//         genie.getData();
-//         console.log('getData 지니')
-//     })
-//     .catch((err) => {
-//         console.log('에러!');
-//         console.log(err);
-//     });
-
-
-// bugs.saveOldChart()
-//     .then(res => {
-//         bugs.getData();
-//         console.log('getData 벅스')
-//     })
-//     .catch((err) => {
-//         console.log('에러!');
-//         console.log(err);
-//     });
-
 const crawl = async() => {
+    
     await melon.saveOldChart();
     await melon.getData();
 
     await genie.saveOldChart();
     await genie.getData();
-    
+
     await bugs.saveOldChart();
     await bugs.getData();
-
-    return '완료';
 }
 
 crawl()
     .then(res => {
-        console.log(res);
+        console.log('[crawl.js 완료]' + new Date().toLocaleDateString('ko-KR'));
+        mongoose.disconnect();
     })
     .catch((err) => {
-        console.log('에러!')
+        console.log('[에러] crawl.js 에러')
         console.log(err);
     })
