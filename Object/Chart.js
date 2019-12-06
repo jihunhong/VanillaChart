@@ -5,9 +5,11 @@ const path = require('path');
 
 const assert = require('assert');
 
+const db = require('../DB.json');
+
 const mongoose = require('mongoose');
 mongoose.connect(
-    'uri', 
+    db.uri, 
     { useNewUrlParser: true,
       useUnifiedTopology: true,
       poolSize: 10},
@@ -97,7 +99,7 @@ class Chart{
             await collection.deleteMany();
             await collection.insertMany(chart);
 
-            console.log('get')
+            console.log(`[${this.name} 저장 완료]`)
         }catch(err){
             console.log(err);
         }
@@ -112,7 +114,7 @@ class Chart{
               await oldCollection.deleteMany();
               await oldCollection.insertMany(existChart);
 
-              console.log('save')
+              console.log(`[${this.name} 백업 완료]`)
 
           }catch(err){
               console.log(err);
