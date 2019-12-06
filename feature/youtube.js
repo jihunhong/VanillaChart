@@ -92,10 +92,6 @@ insertVideoId().then( chart => {
     const genie = chart.shift();
     const bugs  = chart.shift();
 
-    insertDocuments(melon, 'melon');
-    insertDocuments(genie, 'genie');
-    insertDocuments(bugs, 'bugs');
-
     const insertDocuments = async(data, name) => {
         try{
             const collection = mongoose.model('Chart', chartSchema, name)
@@ -107,7 +103,11 @@ insertVideoId().then( chart => {
             console.log(err);
         }
     }
-    
+
+    insertDocuments(melon, 'melon');
+    insertDocuments(genie, 'genie');
+    insertDocuments(bugs, 'bugs');
+
     mongoose.disconnect();
 } )
 
