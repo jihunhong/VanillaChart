@@ -67,6 +67,6 @@ crawl()
         mongoose.disconnect();
     })
     .catch((err) => {
-        console.log('[에러] crawl.js 에러')
+        console.log('[crawl.js 에러] crawl.js 에러')
         console.log(err);
     })
