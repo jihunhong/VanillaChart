@@ -85,7 +85,8 @@ class Chart{
                 {
                     title: $(parent[i]).find(title).text().trim(),
                     artist: $(parent[i]).find(artist).text().trim(),
-                    img: $(img).find('img')[i].attribs.src
+                    img: $(img).find('img')[i].attribs.src,
+                    video_id: 'none'
                 }
                       );
         }
