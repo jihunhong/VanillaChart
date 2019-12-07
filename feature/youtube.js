@@ -63,7 +63,7 @@ const insertVideoId = async () => {
         const old   = await oldCollection.find();
 
         for (const v of chart){
-            const exist = await old.find((music) => v.title === music.title && music.video_id);
+            const exist = await old.find((music) => v.title === music.title && music.video_id !== 'none');
 
             if(exist){
                 v.video_id = exist.video_id;
@@ -73,8 +73,6 @@ const insertVideoId = async () => {
                 console.log(`+ ${v.title} 검색 => ${video_id}`);
             }
         }
-
-        console.log(chart[0].video_id);
         return chart;
     }
 
