@@ -31,7 +31,7 @@ const searching = (music, name) => {
 
         youtube.search(query, limit, function (err, result) {
 
-            if(err) { console.log(err); res('none');}
+            if(err) { console.log(err);}
 
             let response = [];
             try{
@@ -46,6 +46,7 @@ const searching = (music, name) => {
 
             }catch(e){
                 console.log(`[ youtube.search() 에러] : ${e}`);
+                res('none');
             }
         })
     }) 
@@ -73,7 +74,7 @@ const insertVideoId = async () => {
             }
         }
 
-        console.log(chart[0].video_id);
+        console.log(name + '완료');
         return chart;
     }
 
@@ -82,14 +83,17 @@ const insertVideoId = async () => {
     const genie = await iterateSearch('genie');
     const bugs  = await iterateSearch('bugs');
 
-    return [bugs];
+    return [melon, genie, bugs];
 }
 
 const youtube_Matching = async() => {
-        insertVideoId().then( chart => {
+        const chart = await insertVideoId();
+        
         const melon = chart.shift();
         const genie = chart.shift();
         const bugs  = chart.shift();
+
+        
 
         const insertDocument = async(data, name) => {
             try{
@@ -114,6 +118,5 @@ const youtube_Matching = async() => {
             console.log('[insertDocuments() 완료]');
             mongoose.disconnect();
         })
-    })
 }
 youtube_Matching();
