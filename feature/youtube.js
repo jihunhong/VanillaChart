@@ -31,7 +31,7 @@ const searching = (music, name) => {
 
         youtube.search(query, limit, function (err, result) {
 
-            if(err) { console.log(err);}
+            if(err) { console.log(err); res('none');}
 
             let response = [];
             try{
@@ -61,21 +61,19 @@ const insertVideoId = async () => {
         const chart = await collection.find();
         const old   = await oldCollection.find();
 
-        chart.forEach((v) => {
-            const exist = old.find((music) => v.title === music.title && music.video_id);
+        for (const v of chart){
+            const exist = await old.find((music) => v.title === music.title && music.video_id);
 
             if(exist){
                 v.video_id = exist.video_id;
             }else{
-                searching(v, name)
-                    .then(res => {
-                        const video_id = res;
-                        v.video_id = video_id;
-                        console.log(`+ ${v.title} 검색 => ${video_id}`);
-                    })
+                const video_id = await searching(v, name);
+                v.video_id = video_id;
+                console.log(`+ ${v.title} 검색 => ${video_id}`);
             }
-        })
+        }
 
+        console.log(chart[0].video_id);
         return chart;
     }
 
@@ -84,31 +82,38 @@ const insertVideoId = async () => {
     const genie = await iterateSearch('genie');
     const bugs  = await iterateSearch('bugs');
 
-    return [melon, genie, bugs];
+    return [bugs];
 }
 
-insertVideoId().then( chart => {
-    const melon = chart.shift();
-    const genie = chart.shift();
-    const bugs  = chart.shift();
+const youtube_Matching = async() => {
+        insertVideoId().then( chart => {
+        const melon = chart.shift();
+        const genie = chart.shift();
+        const bugs  = chart.shift();
 
-    insertDocuments(melon, 'melon');
-    insertDocuments(genie, 'genie');
-    insertDocuments(bugs, 'bugs');
+        const insertDocument = async(data, name) => {
+            try{
+                const collection = mongoose.model('Chart', chartSchema, name)
+                await collection.remove();
+                await collection.insertMany(data)
 
-    const insertDocuments = async(data, name) => {
-        try{
-            const collection = mongoose.model('Chart', chartSchema, name)
-            await collection.deleteMany();
-            await collection.insertMany(data)
-
-            console.log(`[${name} youtube.js 완료]`)
-        }catch(err){
-            console.log(err);
+                console.log(`[${name} youtube.js 완료]`)
+            }catch(err){
+                console.log(err);
+            }
         }
-    }
-    
-    mongoose.disconnect();
-} )
 
+        
+        const insertDocuments = async() => {
+            await insertDocument(melon, 'melon');
+            await insertDocument(genie, 'genie');
+            await insertDocument(bugs, 'bugs');
+        }
 
+        insertDocuments().then(res => {
+            console.log('[insertDocuments() 완료]');
+            mongoose.disconnect();
+        })
+    })
+}
+youtube_Matching();
