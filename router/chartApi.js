@@ -22,7 +22,7 @@ router.get('/:chart/:rank',  async(req, res) => {
 
     try{
         const music = await chart.find({rank: req.params.rank});
-        res.json(music);
+        res.json(music[0]);
     }catch(err){
         res.json({message : err});
     }
