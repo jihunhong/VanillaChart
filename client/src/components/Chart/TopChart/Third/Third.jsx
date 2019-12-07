@@ -11,7 +11,7 @@ class Third extends Component{
     componentDidMount = () => {
         fetch(`/api/chart/${this.props.chartname}/3`)
             .then(res => res.json())
-            .then(json => this.setState({music: json.data}, 
+            .then(json => this.setState({music: json}, 
                 /**() => console.log('3rd Data api fetched...', json)**/));
     }
 

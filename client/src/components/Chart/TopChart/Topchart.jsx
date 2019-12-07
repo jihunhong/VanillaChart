@@ -24,7 +24,7 @@ class Topchart extends Component{
     componentDidMount = () =>{
         fetch(`/api/chart/${this.props.chartname}`)
             .then(res => res.json())
-                .then(json => this.setState({chart: json.data}, 
+                .then(json => this.setState({chart: json}, 
                         () => this.setState({idArray: this.state.chart})));
     };
 
