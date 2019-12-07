@@ -3,23 +3,23 @@ const mongoose = require('mongoose');
 const chartSchema = mongoose.Schema({
     rank: {
         type: Number,
-        require: true
+        required: true
     },
     title : {
         type: String,
-        require: true
+        required: true
     },
     artist: {
         type: String,
-        require: true
+        required: true
     },
     img : {
         type: String,
-        require: true
+        required: true
     },
     video_id: {
         type: String,
-        require: false
+        required: false
     }
 });
 
