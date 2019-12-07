@@ -92,23 +92,19 @@ insertVideoId().then( chart => {
     const genie = chart.shift();
     const bugs  = chart.shift();
 
-    const insertDocuments = async(data, name) => {
-        try{
-            const collection = mongoose.model('Chart', chartSchema, name)
-            await collection.deleteMany();
-            await collection.insertMany(data)
+        
 
-            console.log(`[${name} youtube.js 완료]`)
-        }catch(err){
-            console.log(err);
+        const insertDocument = async(data, name) => {
+            try{
+                const collection = mongoose.model('Chart', chartSchema, name)
+                await collection.remove();
+                await collection.insertMany(data)
+
+                console.log(`[${name} youtube.js 완료]`)
+            }catch(err){
+                console.log(err);
+            }
         }
-    }
 
-    insertDocuments(melon, 'melon');
-    insertDocuments(genie, 'genie');
-    insertDocuments(bugs, 'bugs');
-
-    mongoose.disconnect();
-} )
 
 
