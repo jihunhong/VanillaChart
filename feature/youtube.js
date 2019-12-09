@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const db = require('../DB.json');
 
 const chartSchema = require('../models/Chart');
+const searchScehma = require('../models/SearchLog');
 
 
 mongoose.connect(
@@ -27,7 +28,7 @@ const searching = (music, name) => {
 
     return new Promise(function(res, rej){
        
-        const query = `${music.artist} - ${music.title}`;
+        const query = `${music.artist} ${music.title}`;
 
         youtube.search(query, limit, function (err, result) {
 
@@ -69,6 +70,14 @@ const insertVideoId = async () => {
                 v.video_id = exist.video_id;
             }else{
                 const video_id = await searching(v, name);
+                const searchCollection = mongoose.model('SearchLog', searchScehma, 'search');
+                await searchCollection.insertMany({ 
+                                                    query: `${v.title}  ${v.artist}`,
+                                                    title: v.title,
+                                                    artist: v.artist,
+                                                    video_id: video_id,
+                                                    result: new Boolean(video_id)
+                                                   });
                 v.video_id = video_id;
                 console.log(`+ ${v.title} 검색 => ${video_id}`);
             }
