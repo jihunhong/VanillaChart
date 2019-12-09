@@ -32,7 +32,7 @@ const searching = (music, name) => {
 
         youtube.search(query, limit, function (err, result) {
 
-            if(err) { console.log(err); res('none');}
+            if(err) { console.log(err);}
 
             let response = [];
             try{
@@ -47,7 +47,7 @@ const searching = (music, name) => {
 
             }catch(e){
                 console.log(`[ youtube.search() 에러] : ${e}`);
-                res('none');
+                res(undefined);
             }
         })
     }) 
