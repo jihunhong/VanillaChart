@@ -76,7 +76,9 @@ class AllPlayer extends Component {
                 playing={true}
                 controls={true}
                 onEnded={this.handleEnded}
-                color={"red"} />
+                color={"red"}
+                width='100%'
+                 />
           <MDBModalHeader toggle={this.toggle}>
             {this.state.title}
 
