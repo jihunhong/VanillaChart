@@ -127,6 +127,11 @@ class Chart{
                                             $match: {
                                                 score : {$gt : 1.0}
                                             }
+                                        },
+                                        {
+                                            $sort: {
+                                                score : -1
+                                            }
                                         }
                 ])
                 
