@@ -27,6 +27,9 @@ class Chart{
         this.title    = title;
         this.artist   = artist;
         this.img      = img;
+        this.standard   = 'genie';
+        // 타이틀, 아티스트 데이터를 통합할 기준이 되는 컬렉션 이름 
+        // default는 genie 차트에 존자하는 음원의 제목과 아티스트 이름으로 통합한다.
     }
 
     Builder(obj){
@@ -92,6 +95,58 @@ class Chart{
         }
 
         const chart = array.filter((v) => v.title !== '')
+
+        for( let data of chart ){
+            // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
+            
+            if(this.standard === this.name) { break }
+
+            try{
+                const query = `${data.title} ${data.artist}`;
+
+                const standard = mongoose.model('Chart', chartSchema, this.standard);
+
+                const result = await standard.aggregate([
+                                        {
+                                            $match: {
+                                                $text : {
+                                                    $search: query
+                                                }
+                                            }
+                                        },
+                                        {
+                                            $project: {
+                                                title : 1,
+                                                artist: 1,
+                                                score:{
+                                                    $meta : "textScore"
+                                                }
+                                            }
+                                        },
+                                        {
+                                            $match: {
+                                                score : {$gt : 1.0}
+                                            }
+                                        }
+                ])
+                
+                const matchedData = result.shift();
+
+                if( matchedData === undefined ) { continue }
+                else if ( data.title === matchedData.title && data.artist === matchedData.artist ) { continue }
+
+                console.log(`[${data.title}] => [${matchedData.title}] 변경되었습니다.`)
+                console.log(`[${data.artist}] => [${matchedData.artist}] 변경되었습니다.
+                `);
+
+                data.title = matchedData.title;
+                data.aritst = matchedData.artist;
+
+            }catch(e){
+                console.log(data.title);
+                console.log(e);
+            }
+        }
         
         chart.forEach((v, i) => v.rank = i+1);
 
