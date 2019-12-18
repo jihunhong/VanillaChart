@@ -102,7 +102,7 @@ class Chart{
             if(this.standard === this.name) { break }
 
             try{
-                const query = `${data.title} ${data.artist}`;
+                const query = `${data.title}`;
 
                 const standard = mongoose.model('Chart', chartSchema, this.standard);
 
