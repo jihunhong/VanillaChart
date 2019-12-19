@@ -10,7 +10,6 @@ class PlayList extends Component {
   };
 
   componentDidMount(prevProps, prevState){
-    console.log(this.state.idArray);
   }
 
   render() {
