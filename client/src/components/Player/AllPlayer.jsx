@@ -50,6 +50,7 @@ class AllPlayer extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
+    document.querySelector(".modal").style.height = "67%";
     document.querySelector(".modal").style.maxHeight = "67%";
   }
 
