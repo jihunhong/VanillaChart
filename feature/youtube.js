@@ -1,11 +1,11 @@
 const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
-const apiKeys = require('../apiKeys.json');
+const apiKeys = require('../keys.js').apiKeys;
 const limit = 3;
 
 const mongoose = require('mongoose');
-const db = require('../DB.json');
+const db = require('../keys.js').db;
 
 const chartSchema = require('../models/Chart');
 const searchScehma = require('../models/SearchLog');
