@@ -14,12 +14,10 @@ router.get('/logout', (req, res) => {
 })
 
 // auth with google
-router.get('/google', passport.authenticate('google', {
-    scope: ['youtube']
-}))
+router.get('/google', passport.authenticate('youtube'));
 
 // callback route for google to redirect to
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+router.get('/google/redirect', passport.authenticate('youtube'), (req, res) => {
     res.send('you reached the callback URL')
 })
 

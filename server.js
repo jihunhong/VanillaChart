@@ -4,6 +4,8 @@ const app = express();
 const chartRoutes = require('./routes/chart-routes');
 const authRoutes = require('./routes/auth-routes');
 
+const passportSetup = require('./config/passport-setup');
+
 const keys = require('./keys');
 
 const bodyParser = require('body-parser');
