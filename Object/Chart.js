@@ -5,7 +5,7 @@ const path = require('path');
 
 const assert = require('assert');
 
-const db = require('../DB.json');
+const db = require('../keys.js').db;
 
 const mongoose = require('mongoose');
 mongoose.connect(
