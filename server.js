@@ -1,17 +1,19 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const chartRouter = require('./router/chartApi');
-const youtubeRouter = require('./router/youtubeApi');
+const chartRoutes = require('./routes/chart-routes');
+const authRoutes = require('./routes/auth-routes');
+
+const keys = require('./keys');
 
 const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
-require('dotenv/config');
 
 
 app.use(bodyParser.json());
-app.use('/api/chart', chartRouter);
+app.use('/api/chart', chartRoutes);
+app.use('/auth', authRoutes);
 
 if( process.env.NODE_ENV == 'production'){
     // deploy server setting
@@ -26,7 +28,7 @@ if( process.env.NODE_ENV == 'production'){
 }
 
 mongoose.connect(
-    process.env.DB_CONNECTION, 
+    keys.db.uri, 
     {useNewUrlParser: true,
      useUnifiedTopology: true},
     () =>   console.log('connected')
