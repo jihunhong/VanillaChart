@@ -1,17 +1,28 @@
 const express = require('express');
 const path = require('path');
+
 const app = express();
+
 const chartRoutes = require('./routes/chart-routes');
 const authRoutes = require('./routes/auth-routes');
 
 const passportSetup = require('./config/passport-setup');
 
+const mongoose = require('mongoose');
 const keys = require('./keys');
+
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 
 const bodyParser = require('body-parser');
 
-const mongoose = require('mongoose');
 
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 *1000,
+    keys: ['asdasdsadsadd']
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(bodyParser.json());
 app.use('/api/chart', chartRoutes);
