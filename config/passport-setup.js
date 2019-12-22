@@ -1,7 +1,18 @@
 const passport = require('passport');
 const YoutubeV3Strategy = require('passport-youtube-v3').Strategy;
-const fs = require('fs');
+
 const keys = require('../keys');
+const User = require('../models/User');
+
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+})
+
+passport.deserializeUser((id, done) => {
+    User.findById(id).then((user) => {
+        done(null, user);
+    })
+})
 
 passport.use(
     new YoutubeV3Strategy({
@@ -9,14 +20,29 @@ passport.use(
         callbackURL: '/auth/google/redirect',
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret,
-        scope: ['https://www.googleapis.com/auth/youtube'],
-        profileURL: 'https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true'
+        scope: ['https://www.googleapis.com/auth/youtube']
 
-    }, (accessToken, refreshToken, profile, done) => {
+    }, async (accessToken, refreshToken, profile, done) => {
 
-        console.log('passport callback function fired');
-        console.log(profile);
-        fs.writeFileSync('mine.json', JSON.stringify(profile));
+        const currentUser = await User.findOne({googleId : profile.id});
+
+        if(currentUser){
+
+            // 이미 유저가 존재하는 경우
+            done(null, currentUser);
+
+        }else{
+
+            // 새로운 유저를 db에 저장
+
+            const newUser = await new User({
+                                            username : profile.displayName,
+                                            googleId : profile.id
+                                        }).save();
+
+            done(null, newUser);
+            
+        }
 
     })
 )
