@@ -3,16 +3,20 @@ const path = require('path');
 
 const app = express();
 
+
+//  Router 
 const chartRoutes = require('./routes/chart-routes');
 const authRoutes = require('./routes/auth-routes');
+const personalRoutes = require('./routes/personal-routes');
 
+const passport = require('passport');
 const passportSetup = require('./config/passport-setup');
 
 const mongoose = require('mongoose');
 const keys = require('./keys');
 
 const cookieSession = require('cookie-session');
-const passport = require('passport');
+
 
 const bodyParser = require('body-parser');
 
@@ -27,6 +31,7 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use('/api/chart', chartRoutes);
 app.use('/auth', authRoutes);
+app.use('/personal', personalRoutes);
 
 if( process.env.NODE_ENV == 'production'){
     // deploy server setting
