@@ -3,6 +3,8 @@ const path = require('path');
 
 const app = express();
 
+const https = require('https');
+const http = require('http');
 
 //  Router 
 const chartRoutes = require('./routes/chart-routes');
@@ -43,6 +45,26 @@ if( process.env.NODE_ENV == 'production'){
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, './client', 'build', 'index.html'))
     })
+
+    const lex = require('greenlock-express').create({
+        version: 'draft-11',
+        configDir: '/etc/letsencrypt',
+        server: 'https://acme-v02.api.letsencrypt.org/directory',
+        approveDomains: (opts, certs, cb) => {
+          if (certs) {
+            opts.domains = ['cherrychart.com', 'www.cherrychart.com'];
+          } else {
+            opts.email = 'redgee49@gmail.com';
+            opts.agreeTos = true;
+          }
+          cb(null, { options: opts, certs });
+        },
+        renewWithin: 81 * 24 * 60 * 60 * 1000,
+        renewBy: 80 * 24 * 60 * 60 * 1000,
+    });
+    
+    https.createServer(lex.httpsOptions, lex.middleware(server)).listen(443);
+    http.createServer(lex.middleware(require('redirect-https')())).listen(prod ? process.env.PORT : 8080);
 }
 
 mongoose.connect(
@@ -57,4 +79,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => 
     console.log("Express server has started on port 8080")
 );
+
 
