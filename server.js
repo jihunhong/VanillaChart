@@ -6,6 +6,8 @@ const app = express();
 const https = require('https');
 const http = require('http');
 
+const redirection = require('redirect-https');
+
 //  Router 
 const chartRoutes = require('./routes/chart-routes');
 const authRoutes = require('./routes/auth-routes');
@@ -63,8 +65,8 @@ if( process.env.NODE_ENV == 'production'){
         renewBy: 80 * 24 * 60 * 60 * 1000,
     });
     
+    http.createServer(lex.middleware(redirection())).listen(80);
     https.createServer(lex.httpsOptions, lex.middleware(server)).listen(443);
-    http.createServer(lex.middleware(require('redirect-https')())).listen(prod ? process.env.PORT : 8080);
 }
 
 mongoose.connect(
