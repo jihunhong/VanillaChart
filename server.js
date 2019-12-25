@@ -65,7 +65,7 @@ if( process.env.NODE_ENV == 'production'){
         renewBy: 80 * 24 * 60 * 60 * 1000,
     });
     
-    http.createServer(lex.middleware(redirection())).listen(80);
+    http.createServer(lex.middleware(redirection())).listen(8080);
     https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
 }
 
