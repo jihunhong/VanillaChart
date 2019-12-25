@@ -66,7 +66,7 @@ if( process.env.NODE_ENV == 'production'){
     });
     
     http.createServer(lex.middleware(redirection())).listen(80);
-    https.createServer(lex.httpsOptions, lex.middleware(server)).listen(443);
+    https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
 }
 
 mongoose.connect(
