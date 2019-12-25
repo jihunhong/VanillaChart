@@ -65,21 +65,18 @@ if( process.env.NODE_ENV == 'production'){
         renewBy: 80 * 24 * 60 * 60 * 1000,
     });
     
-    http.createServer(lex.middleware(redirection())).listen(8080);
+    http.createServer(lex.middleware(redirection())).listen(process.env.PORT || 8080);
     https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
+}else{
+  console.log('UnResolved process.env.NODE_ENV')
 }
 
 mongoose.connect(
     keys.db.uri, 
     {useNewUrlParser: true,
      useUnifiedTopology: true},
-    () =>   console.log('connected')
+    () =>   console.log('MongoDB connected')
 )
 
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => 
-    console.log("Express server has started on port 8080")
-);
 
 
