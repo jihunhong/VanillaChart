@@ -27,7 +27,7 @@ const bodyParser = require('body-parser');
 
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 *1000,
-    keys: ['asdasdsadsadd']
+    keys: [keys.cookieSession.key]
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -68,7 +68,10 @@ if( process.env.NODE_ENV == 'production'){
     http.createServer(lex.middleware(redirection())).listen(process.env.PORT || 8080);
     https.createServer(lex.httpsOptions, lex.middleware(app)).listen(process.env.SSL_PORT || 443);
 }else{
-  console.log('UnResolved process.env.NODE_ENV')
+  
+  app.listen(8080, () => {
+    console.log('LOCAL DEV SETTING app.listen port 8080')
+  })
 }
 
 mongoose.connect(

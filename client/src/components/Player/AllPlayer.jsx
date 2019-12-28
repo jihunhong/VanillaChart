@@ -45,6 +45,10 @@ class AllPlayer extends Component {
     });
   }
 
+  dragElement = () => {
+    
+  }
+
 
   openList = () => {
     this.setState({
