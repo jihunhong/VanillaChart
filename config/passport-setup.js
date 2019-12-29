@@ -18,13 +18,15 @@ passport.use(
     new YoutubeV3Strategy({
 
         callbackURL: '/auth/google/redirect',
-        clientID: keys.google.clientID,
-        clientSecret: keys.google.clientSecret,
+        clientID: keys.google.local.clientID,
+        clientSecret: keys.google.local.clientSecret,
         scope: ['https://www.googleapis.com/auth/youtube']
 
     }, async (accessToken, refreshToken, profile, done) => {
 
         const currentUser = await User.findOne({googleId : profile.id});
+
+        console.log(accessToken);
 
         if(currentUser){
 
@@ -37,7 +39,8 @@ passport.use(
 
             const newUser = await new User({
                                             username : profile.displayName,
-                                            googleId : profile.id
+                                            googleId : profile.id,
+                                            accessToken: accessToken
                                         }).save();
 
             done(null, newUser);
