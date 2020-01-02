@@ -96,13 +96,13 @@ class Chart{
 
         const chart = array.filter((v) => v.title !== '')
 
-        for( const i in chart ){
+        for( let music of chart ){
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
             
             if(this.standard === this.name) { break }
 
             try{
-                const query = `${chart[i].title}`;
+                const query = `${music.title}`;
 
                 const standard = mongoose.model('Chart', chartSchema, this.standard);
 
@@ -138,17 +138,17 @@ class Chart{
                 const matchedData = result.shift();
 
                 if( matchedData === undefined ) { continue }
-                else if ( chart[i].title === matchedData.title && chart[i].artist === matchedData.artist ) { continue }
+                else if ( music.title === matchedData.title && music.artist === matchedData.artist ) { continue }
 
-                console.log(`[${chart[i].title}] => [${matchedData.title}] 변경되었습니다.`)
-                console.log(`[${chart[i].artist}] => [${matchedData.artist}] 변경되었습니다.
+                console.log(`[${music.title}] => [${matchedData.title}] 변경되었습니다.`)
+                console.log(`[${music.artist}] => [${matchedData.artist}] 변경되었습니다.
                 `);
 
-                chart[i].title = matchedData.title;
-                chart[i].artist = matchedData.artist;
+                music.title = matchedData.title;
+                music.artist = matchedData.artist;
 
             }catch(e){
-                console.log(chart[i].title);
+                console.log(music.title);
                 console.log(e);
             }
         }
