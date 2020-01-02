@@ -11,8 +11,7 @@ class First extends Component{
     componentDidMount = () => {
         fetch(`/api/chart/${this.props.chartname}/1`)
             .then(res => res.json())
-            .then(json => this.setState({music: json}, 
-                /**() => console.log('1st Data api fetched...', json)**/));
+            .then(json => this.setState({music: json}));
     }
 
     play = () => {

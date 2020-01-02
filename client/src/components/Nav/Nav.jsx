@@ -48,7 +48,7 @@ class Navbar extends Component{
                                 <MDBNavItem>
                                 </MDBNavItem>
                                 <MDBNavItem>
-                                <MDBNavLink className="waves-effect waves-light" to="#!">
+                                <MDBNavLink className="waves-effect waves-light" onClick={() => window.location = 'https://cherrychart.com/auth/google'}>
                                     <MDBIcon fab icon="google-plus-g" />
                                 </MDBNavLink>
                                 </MDBNavItem>
