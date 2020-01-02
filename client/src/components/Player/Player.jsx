@@ -45,6 +45,7 @@ class Player extends Component {
             <ReactPlayer url={video_url}
                 playing
                 controls={true}
+                width='100%'
                 />
             <MDBModalHeader toggle={this.toggle}>
             {this.state.title} 

@@ -2,7 +2,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-const Chart = require('../Object/Chart.js');
+const Chart = require('../class/Chart.js');
 
 const melon = new Chart();
 

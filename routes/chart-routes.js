@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 
 const chartSchema = require('../models/Chart');
 const mongoose = require('mongoose');

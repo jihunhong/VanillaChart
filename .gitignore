@@ -1,6 +1,2 @@
 /node_modules
-apiKeys.json
-client_id.json
-client_secret.json
-.env
-DB.json
+keys.js
