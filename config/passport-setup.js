@@ -20,17 +20,18 @@ passport.use(
         callbackURL: '/auth/google/redirect',
         clientID: keys.google.local.clientID,
         clientSecret: keys.google.local.clientSecret,
-        scope: ['https://www.googleapis.com/auth/youtube']
+        scope: ['https://www.googleapis.com/auth/youtube.readonly'],
+        authorizationParams: {
+            access_type: 'offline'
+        }
 
-    }, async (accessToken, refreshToken, profile, done) => {
-
+    }, async (accessToken, refreshToken, params,  profile, done) => {
+        console.log(params);
+        
         const currentUser = await User.findOne({googleId : profile.id});
-
-        console.log(accessToken);
 
         if(currentUser){
 
-            // 이미 유저가 존재하는 경우
             done(null, currentUser);
 
         }else{
