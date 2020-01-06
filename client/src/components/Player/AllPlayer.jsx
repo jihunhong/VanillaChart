@@ -56,6 +56,12 @@ class AllPlayer extends Component {
     });
     document.querySelector(".modal").style.height = "67%";
     document.querySelector(".modal").style.maxHeight = "67%";
+
+    const height = this.state.isOpen ? "49%" : "67%";
+
+    document.querySelector(".modal").style.height = height;
+    document.querySelector(".modal").style.maxHeight = height;
+    
   }
 
   itemSelected = (index) => {
