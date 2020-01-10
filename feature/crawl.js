@@ -63,7 +63,7 @@ const crawl = async() => {
 
 crawl()
     .then(res => {
-        console.log('[crawl.js 완료]' + new Date().toLocaleDateString('ko-KR'));
+        console.log('[crawl.js 완료]' + new Date().toLocaleTimeString());
         mongoose.disconnect();
     })
     .catch((err) => {

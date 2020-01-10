@@ -119,7 +119,7 @@ const youtube_Matching = async() => {
         }
 
         insertDocuments().then(res => {
-            console.log('[insertDocuments() 완료]');
+            console.log(new Date().toLocaleTimeString() + '[insertDocuments() 완료]');
             mongoose.disconnect();
         })
     })
