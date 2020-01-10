@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 
@@ -7,6 +8,8 @@ const https = require('https');
 const http = require('http');
 
 const redirection = require('redirect-https');
+
+const morgan = require('morgan');
 
 //  Router 
 const chartRoutes = require('./routes/chart-routes');
@@ -31,6 +34,12 @@ app.use(cookieSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+const logStream = fs.createWriteStream(path.join(__dirname, 'server.log'), {flags : 'a'})
+app.use(morgan('combined', {stream : logStream}));
+
+
 
 app.use(bodyParser.json());
 app.use('/api/chart', chartRoutes);
