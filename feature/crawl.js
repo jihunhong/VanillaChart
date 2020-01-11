@@ -1,15 +1,9 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const fs = require('fs');
-
 const Chart = require('../class/Chart.js');
 
 const melon = new Chart();
 
 const mongoose = require('mongoose');
 
-
-const chartSchema = require('../models/Chart');
 
 
 melon.Builder(
