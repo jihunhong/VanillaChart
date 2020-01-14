@@ -66,8 +66,11 @@ const insertVideoId = async () => {
         for (const v of chart){
             const exist = await old.find((music) => v.title === music.title && music.video_id !== 'none');
 
+
             if(exist){
                 v.video_id = exist.video_id;
+            }else if( !exist  && v.video_id){
+                  continue;
             }else{
                 const video_id = await searching(v, name);
                 const searchCollection = mongoose.model('SearchLog', searchScehma, 'search');
