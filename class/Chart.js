@@ -5,64 +5,66 @@ const db = require('../keys.js').db;
 
 const mongoose = require('mongoose');
 mongoose.connect(
-    db.uri, 
-    { useNewUrlParser: true,
-      useUnifiedTopology: true,
-      poolSize: 10},
+    db.uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        poolSize: 10
+    },
     () => console.log('connected')
 )
 
+const Log = require('../models/Log');
 const chartSchema = require('../models/Chart');
 
 
-class Chart{
-    constructor(name, url, parent, title, artist, img){
-        this.name     = name;
-        this.url      = url;
-        this.parent   = parent;
-        this.title    = title;
-        this.artist   = artist;
-        this.img      = img;
-        this.standard   = 'genie';
+class Chart {
+    constructor(name, url, parent, title, artist, img) {
+        this.name = name;
+        this.url = url;
+        this.parent = parent;
+        this.title = title;
+        this.artist = artist;
+        this.img = img;
+        this.standard = 'genie';
         // 타이틀, 아티스트 데이터를 통합할 기준이 되는 컬렉션 이름 
         // default는 genie 차트에 존자하는 음원의 제목과 아티스트 이름으로 통합한다.
     }
 
-    Builder(obj){
+    Builder(obj) {
         this.setName(obj.name)
-        this.setUrl(obj.url)   
+        this.setUrl(obj.url)
         this.setParent(obj.parent)
         this.setTitle(obj.title)
         this.setArtist(obj.artist)
         this.setImg(obj.img)
     }
 
-    setName(name){
+    setName(name) {
         this.name = name;
     }
 
-    setUrl(url){
+    setUrl(url) {
         this.url = url;
     }
 
-    setParent(parent){
+    setParent(parent) {
         this.parent = parent;
     }
 
-    setTitle(title){
+    setTitle(title) {
         this.title = title;
     }
 
-    setArtist(artist){
+    setArtist(artist) {
         this.artist = artist;
     }
 
-    setImg(img){
+    setImg(img) {
         this.img = img;
     }
 
-    async getData(){
-        const getHTML = async () =>{
+    async getData() {
+        const getHTML = async () => {
             try {
                 return await axios.get(this.url);
             } catch (e) {
@@ -70,7 +72,7 @@ class Chart{
             }
         }
         const html = await getHTML();
-        
+
         let array = [];
         const $ = cheerio.load(html.data);
         const parent = $(this.parent);
@@ -79,62 +81,66 @@ class Chart{
         const artist = this.artist;
         const img = this.img;
 
-        for(let i=0; i < 50; i++){
-            array.push(
-                {
-                    title: $(parent[i]).find(title).text().trim(),
-                    artist: $(parent[i]).find(artist).text().trim(),
-                    img: $(img).find('img')[i].attribs.src,
-                    video_id: 'none'
-                }
-                      );
+        for (let i = 0; i < 50; i++) {
+            array.push({
+                title: $(parent[i]).find(title).text().trim(),
+                artist: $(parent[i]).find(artist).text().trim(),
+                img: $(img).find('img')[i].attribs.src,
+                video_id: 'none'
+            });
         }
 
         const chart = array.filter((v) => v.title !== '')
 
-        for( let [i, v] of chart.entries() ){
+        for (let [i, v] of chart.entries()) {
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
-            
-            if(this.standard === this.name) { break }
 
-            try{
+            if (this.standard === this.name) {
+                break
+            }
+
+            try {
                 const query = `${v.title}`;
 
                 const standard = mongoose.model('Chart', chartSchema, this.standard);
 
-                const result = await standard.aggregate([
-                                        {
-                                            $match: {
-                                                $text : {
-                                                    $search: query
-                                                }
-                                            }
-                                        },
-                                        {
-                                            $project: {
-                                                title : 1,
-                                                artist: 1,
-                                                score:{
-                                                    $meta : "textScore"
-                                                }
-                                            }
-                                        },
-                                        {
-                                            $match: {
-                                                score : {$gt : 1.0}
-                                            }
-                                        },
-                                        {
-                                            $sort: {
-                                                score : -1
-                                            }
-                                        }
+                const result = await standard.aggregate([{
+                        $match: {
+                            $text: {
+                                $search: query
+                            }
+                        }
+                    },
+                    {
+                        $project: {
+                            title: 1,
+                            artist: 1,
+                            score: {
+                                $meta: "textScore"
+                            }
+                        }
+                    },
+                    {
+                        $match: {
+                            score: {
+                                $gt: 1.0
+                            }
+                        }
+                    },
+                    {
+                        $sort: {
+                            score: -1
+                        }
+                    }
                 ])
-                
+
                 const matchedData = result.shift();
 
-                if( matchedData === undefined ) { continue }
-                else if ( v.title === matchedData.title && v.artist === matchedData.artist ) { continue }
+                if (matchedData === undefined) {
+                    continue
+                } else if (v.title === matchedData.title && v.artist === matchedData.artist) {
+                    continue
+                }
 
                 console.log(`[${v.title}] => [${matchedData.title}] 변경되었습니다.`)
                 console.log(`[${v.artist}] => [${matchedData.artist}] 변경되었습니다.
@@ -143,39 +149,55 @@ class Chart{
                 chart[i].title = matchedData.title;
                 chart[i].artist = matchedData.artist;
 
-            }catch(e){
+
+
+            } catch (e) {
                 console.log(v.title);
                 console.log(e);
             }
         }
-        
-        chart.forEach((v, i) => v.rank = i+1);
 
-        try{
+        chart.forEach((v, i) => v.rank = i + 1);
+
+        try {
             const collection = mongoose.model('Chart', chartSchema, this.name);
             await collection.deleteMany();
             await collection.insertMany(chart);
 
-            console.log(`[${this.name} 저장 완료]`)
-        }catch(err){
-            console.log(err);
+            await new Log({
+                result: true,
+                message: `[${this.name} 저장 완료]`
+            }).save();
+
+        } catch (err) {
+
+            await new Log({
+                result: false,
+                message: `${err}`,
+            }).save();
         }
     }
 
-    async saveOldChart(){
-          try{
-              const existCollection = mongoose.model('Chart', chartSchema, this.name);
-              const oldCollection = mongoose.model('Chart', chartSchema, 'old_'+this.name);
+    async saveOldChart() {
+        try {
+            const existCollection = mongoose.model('Chart', chartSchema, this.name);
+            const oldCollection = mongoose.model('Chart', chartSchema, 'old_' + this.name);
 
-              const existChart = await existCollection.find();
-              await oldCollection.deleteMany();
-              await oldCollection.insertMany(existChart);
+            const existChart = await existCollection.find();
+            await oldCollection.deleteMany();
+            await oldCollection.insertMany(existChart);
 
-              console.log(`[${this.name} 백업 완료]`)
+            await new Log({
+                result: true,
+                message: `[${this.name} 백업 완료]`
+            }).save();
 
-          }catch(err){
-              console.log(err);
-          }
+        } catch (err) {
+            await new Log({
+                result: false,
+                message: `${err}`,
+            }).save();
+        }
     }
 
 
