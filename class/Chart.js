@@ -1,6 +1,4 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-
+const puppeteer = require('puppeteer');
 const db = require('../keys.js').db;
 
 const mongoose = require('mongoose');
@@ -63,34 +61,26 @@ class Chart {
         this.img = img;
     }
 
-    async getData() {
-        const getHTML = async () => {
-            try {
-                return await axios.get(this.url);
-            } catch (e) {
-                console.error(e);
-            }
-        }
-        const html = await getHTML();
 
-        let array = [];
-        const $ = cheerio.load(html.data);
-        const parent = $(this.parent);
+    async getData(){
+        const browser = await puppeteer.launch({headless : true});
 
-        const title = this.title;
-        const artist = this.artist;
-        const img = this.img;
+        const page = await browser.newPage();
 
-        for (let i = 0; i < 50; i++) {
-            array.push({
-                title: $(parent[i]).find(title).text().trim(),
-                artist: $(parent[i]).find(artist).text().trim(),
-                img: $(img).find('img')[i].attribs.src,
-                video_id: 'none'
+        await page.goto(this.url);
+        
+        const _this = this;
+
+        const chart = await page.evaluate(({_this}) => {
+            const titles = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.title).textContent);
+            const artists = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.artist).textContent);
+            
+            return titles.map(function(v, i){
+                return {title : v, artist : artists[i]};
             });
-        }
+        }, {_this});
 
-        const chart = array.filter((v) => v.title !== '')
+        await browser.close();
 
         for (let [i, v] of chart.entries()) {
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
