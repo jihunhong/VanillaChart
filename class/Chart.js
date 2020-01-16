@@ -82,6 +82,52 @@ class Chart {
 
         await browser.close();
 
+        
+
+        chart.forEach((v, i) => v.rank = i + 1);
+
+        try {
+            const collection = mongoose.model('Chart', chartSchema, this.name);
+            await collection.deleteMany();
+            await collection.insertMany(chart);
+
+            await new Log({
+                result: true,
+                message: `[${this.name} 저장 완료]`
+            }).save();
+
+        } catch (err) {
+
+            await new Log({
+                result: false,
+                message: `${err}`,
+            }).save();
+        }
+    }
+
+    async saveOldChart() {
+        try {
+            const existCollection = mongoose.model('Chart', chartSchema, this.name);
+            const oldCollection = mongoose.model('Chart', chartSchema, 'old_' + this.name);
+
+            const existChart = await existCollection.find();
+            await oldCollection.deleteMany();
+            await oldCollection.insertMany(existChart);
+
+            await new Log({
+                result: true,
+                message: `[${this.name} 백업 완료]`
+            }).save();
+
+        } catch (err) {
+            await new Log({
+                result: false,
+                message: `${err}`,
+            }).save();
+        }
+    }
+
+    async integrateByFTS(){
         for (let [i, v] of chart.entries()) {
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
 
@@ -145,48 +191,6 @@ class Chart {
                 console.log(v.title);
                 console.log(e);
             }
-        }
-
-        chart.forEach((v, i) => v.rank = i + 1);
-
-        try {
-            const collection = mongoose.model('Chart', chartSchema, this.name);
-            await collection.deleteMany();
-            await collection.insertMany(chart);
-
-            await new Log({
-                result: true,
-                message: `[${this.name} 저장 완료]`
-            }).save();
-
-        } catch (err) {
-
-            await new Log({
-                result: false,
-                message: `${err}`,
-            }).save();
-        }
-    }
-
-    async saveOldChart() {
-        try {
-            const existCollection = mongoose.model('Chart', chartSchema, this.name);
-            const oldCollection = mongoose.model('Chart', chartSchema, 'old_' + this.name);
-
-            const existChart = await existCollection.find();
-            await oldCollection.deleteMany();
-            await oldCollection.insertMany(existChart);
-
-            await new Log({
-                result: true,
-                message: `[${this.name} 백업 완료]`
-            }).save();
-
-        } catch (err) {
-            await new Log({
-                result: false,
-                message: `${err}`,
-            }).save();
         }
     }
 
