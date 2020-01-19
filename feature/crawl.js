@@ -13,7 +13,7 @@ melon.Builder(
         parent : 'tr.lst50', 
         title  : 'div.rank01 a',
         artist : '.ellipsis.rank02 > span',
-        img    : '.image_typeAll'
+        img    : '.image_typeAll > img'
     }
 );
 
@@ -23,10 +23,10 @@ genie.Builder(
     {
         name   : 'genie', 
         url    : 'https://www.genie.co.kr/chart/top200', 
-        parent : 'td.info', 
+        parent : 'tr.list', 
         title  : 'a.title',
         artist : 'a.artist',
-        img    : 'a.cover'
+        img    : 'a.cover > img'
     }
 );
 
@@ -36,10 +36,10 @@ bugs.Builder(
     {
         name   : 'bugs', 
         url    : 'https://music.bugs.co.kr/chart', 
-        parent : 'tbody tr', 
-        title  : 'p.title a',
-        artist : 'p.artist a',
-        img    : 'a.thumbnail'
+        parent : 'table.list >  tbody > tr', 
+        title  : 'p.title > a',
+        artist : 'p.artist > a',
+        img    : 'a.thumbnail > img'
     }
 );
 
