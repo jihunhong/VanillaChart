@@ -63,13 +63,16 @@ const insertVideoId = async () => {
         const chart = await collection.find();
         const old   = await oldCollection.find();
 
-        for (const v of chart){
+        for (const [i, v] of chart.entries()){
             const exist = await old.find((music) => v.title === music.title && music.video_id !== 'none');
 
 
-            if(exist){
+            if(exist && exist.video_id){
+                // 같은 노래가 존재할경우
                 v.video_id = exist.video_id;
+
             }else if( !exist  && v.video_id){
+                // 같은노래가 없지만 video_id가 비어있지 않은 경우
                   continue;
             }else{
                 const video_id = await searching(v, name);
@@ -81,9 +84,10 @@ const insertVideoId = async () => {
                                                     video_id: video_id,
                                                     result: new Boolean(video_id)
                                                    });
-                v.video_id = video_id;
+                chart[i].video_id = video_id;
                 console.log(`+ ${v.title} 검색 => ${video_id}`);
             }
+
         }
         return chart;
     }
