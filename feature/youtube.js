@@ -77,13 +77,16 @@ const insertVideoId = async () => {
             }else{
                 const video_id = await searching(v, name);
                 const searchCollection = mongoose.model('SearchLog', searchScehma, 'search');
-                await searchCollection.insertMany({ 
-                                                    query: `${v.title}  ${v.artist}`,
-                                                    title: v.title,
-                                                    artist: v.artist,
-                                                    video_id: video_id,
-                                                    result: new Boolean(video_id)
-                                                   });
+                await searchCollection.findOneAndUpdate({
+                                                            title: v.title,
+                                                            artist: v.artist
+                                                        }, { 
+                                                            query: `${v.title}  ${v.artist}`,
+                                                            title: v.title,
+                                                            artist: v.artist,
+                                                            video_id: video_id,
+                                                            result: new Boolean(video_id)
+                                                           }, {upsert: true});
                 chart[i].video_id = video_id;
                 console.log(`+ ${v.title} 검색 => ${video_id}`);
             }
