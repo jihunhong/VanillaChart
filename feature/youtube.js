@@ -65,7 +65,7 @@ const insertVideoId = async () => {
 
         for (const [i, v] of chart.entries()){
             const exist = await old.find((music) => v.title === music.title && music.video_id !== 'none');
-
+            // const exist = await searchCollection.find().all([{title : v.title}, {artist: v.artist}, {video_id}]);
 
             if(exist && exist.video_id){
                 // 같은 노래가 존재할경우
