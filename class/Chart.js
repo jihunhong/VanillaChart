@@ -63,7 +63,8 @@ class Chart {
 
 
     async getData(){
-        const browser = await puppeteer.launch({headless : true});
+        const browser = await puppeteer.launch({headless : true, 
+                                                args: ['--no-sandbox']});
 
         const page = await browser.newPage();
 
@@ -72,17 +73,22 @@ class Chart {
         const _this = this;
 
         const chart = await page.evaluate(({_this}) => {
-            const titles = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.title).textContent);
-            const artists = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.artist).textContent);
+            const titles = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.title).textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
+            const artists = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.artist).textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim());
+            const img = Array.from(document.querySelectorAll(_this.parent), el => el.querySelector(_this.img).src);
             
             return titles.map(function(v, i){
-                return {title : v, artist : artists[i]};
+                return {
+                            title  : v, 
+                            artist : artists[i],
+                            img    : img[i]
+                        };
             });
         }, {_this});
 
         await browser.close();
 
-        
+        await this.integrateByFTS(chart);
 
         chart.forEach((v, i) => v.rank = i + 1);
 
@@ -127,7 +133,7 @@ class Chart {
         }
     }
 
-    async integrateByFTS(){
+    async integrateByFTS(chart){
         for (let [i, v] of chart.entries()) {
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
 
