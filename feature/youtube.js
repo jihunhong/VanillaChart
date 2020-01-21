@@ -96,7 +96,7 @@ const insertVideoId = async () => {
     return [melon, genie, bugs];
 }
 
-const youtube_Matching = async() => {
+(async() => {
         insertVideoId().then( chart => {
         const melon = chart.shift();
         const genie = chart.shift();
@@ -126,5 +126,4 @@ const youtube_Matching = async() => {
             mongoose.disconnect();
         })
     })
-}
-youtube_Matching();
+})();
