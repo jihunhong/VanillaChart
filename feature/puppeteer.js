@@ -11,16 +11,13 @@ const puppeteer = require('puppeteer');
 
   const titles = await page.evaluate(() => {
       const array = Array.from(document.querySelectorAll('td.t_left > div.wrap > .ellipsis > a.fc_gray'));
-      return array.map(anchor => anchor.textContent);
+      return array.map(title => title.textContent);
   })
 
   const artists = await page.evaluate(() => {
       const array = Array.from(document.querySelectorAll('td.t_left > div.wrap > #artistName > a.fc_mgray'));
-      return array.map(anchor => anchor.textContent);
+      return array.map(artist => artist.textContent);
   })
-
-  console.log(titles);
-  console.log(artists);
-
+  
   await browser.close();
 })();
