@@ -24,9 +24,10 @@ router.get('/', (req,  res) => {
 router.get('/:chart', authCheck, (req, res) => {
     userPlaylist.Builder(
         {
-            
+            url: req.params.url
         }
     )
     userPlaylist.getList()
                         .then((res) => {res.json(res)});
 })
+
