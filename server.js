@@ -15,6 +15,7 @@ const morgan = require('morgan');
 const chartRoutes = require('./routes/chart-routes');
 const authRoutes = require('./routes/auth-routes');
 const personalRoutes = require('./routes/personal-routes');
+const adminRoutes = require('./routes/admin-routes');
 
 const passport = require('passport');
 const passportSetup = require('./config/passport-setup');
@@ -45,6 +46,7 @@ app.use(bodyParser.json());
 app.use('/api/chart', chartRoutes);
 app.use('/auth', authRoutes);
 app.use('/personal', personalRoutes);
+app.use('/admin', adminRoutes);
 
 if( process.env.NODE_ENV == 'production'){
     // deploy server setting
