@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const passport = require('passport');
 
 const keys = require('../keys');
+const apiKey = keys.apiKeys.shift();
 
 const User = require('../models/User');
 
@@ -33,19 +34,19 @@ const refreshToken = (req, res) => {
                         { $set : { accessToken: json.access_token }}
             )
             
-            res.redirect('/personal/playlist');
+            res.redirect('/personal');
         })
 }
 
 router.get('/', authCheck, (req, res) => {
     res.json(req.user);
+    
 })
 
-router.get('/playlist', authCheck,  (req, res) => {
-
+router.get('/playlist', (req, res) => {
     // read playlist
 
-    fetch('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true', {
+    fetch('https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&key=' + apiKey, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',
@@ -67,15 +68,13 @@ router.post('/playlist', (req, res) => {
 
     // create playlist
 
-    fetch('https://www.googleapis.com/youtube/v3/playlists', {
+    fetch('https://www.googleapis.com/youtube/v3/playlists?part=snippet,status&key=' + apiKey, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
             'Authorization': 'Bearer ' + req.user.accessToken,
         },
         body : JSON.stringify({
-            part: 'snippet,status',
-            resource: {
               snippet: {
                 title: req.body.title || '재생목록',
                 description: req.body.description || 'cherrychart.com 에서 생성된 재생목록'
@@ -83,7 +82,6 @@ router.post('/playlist', (req, res) => {
               status: {
                 privacyStatus: req.body.privacy || 'private'
               }
-            }
           })
     }).then(response => response.json())
         .then(data => {
@@ -92,25 +90,22 @@ router.post('/playlist', (req, res) => {
 
 })
 
-router.patch('/playlist', authCheck, (req, res) => {
+router.patch('/playlist', (req, res) => {
 
-    fetch('https://www.googleapis.com/youtube/v3/playlists', {
+    fetch('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,status&key=' + apiKey, {
         method: 'POST',
         headers: {
             'Content-type': 'application/json',
             'Authorization': 'Bearer ' + req.user.accessToken,
         },
         body : JSON.stringify({
-            part: 'snippet,status',
-            resource: {
               snippet: {
-                "playlistId": req.body.playlistId,
-                "resourceId": {
-                    "videoId": req.body.videoId,
-                    "kind": "youtube#video"
+                playlistId: req.body.playlistId,
+                resourceId: {
+                    videoId: req.body.videoId,
+                    kind: "youtube#video"
                 }
               }
-            }
           })
     }).then(response => response.json())
         .then(data => {
