@@ -41,7 +41,7 @@ router.get('/', authCheck, (req, res) => {
     res.json(req.user);
 })
 
-router.get('/playlist', (req, res) => {
+router.get('/playlist', authCheck,  (req, res) => {
 
     // read playlist
 
@@ -67,7 +67,32 @@ router.post('/playlist', (req, res) => {
 
     // create playlist
 
-    const submitted = req.body;
+    fetch('https://www.googleapis.com/youtube/v3/playlists', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + req.user.accessToken,
+        },
+        body : JSON.stringify({
+            part: 'snippet,status',
+            resource: {
+              snippet: {
+                title: req.body.title || '재생목록',
+                description: req.body.description || 'cherrychart.com 에서 생성된 재생목록'
+              },
+              status: {
+                privacyStatus: req.body.privacy || 'private'
+              }
+            }
+          })
+    }).then(response => response.json())
+        .then(data => {
+            res.send(data);
+        })
+
+})
+
+router.patch('/playlist', authCheck, (req, res) => {
 
     fetch('https://www.googleapis.com/youtube/v3/playlists', {
         method: 'POST',
@@ -79,11 +104,11 @@ router.post('/playlist', (req, res) => {
             part: 'snippet,status',
             resource: {
               snippet: {
-                title: submitted.title || '재생목록',
-                description: submitted.description || 'cherrychart.com 에서 생성된 재생목록'
-              },
-              status: {
-                privacyStatus: submitted.privacy || 'private'
+                "playlistId": req.body.playlistId,
+                "resourceId": {
+                    "videoId": req.body.videoId,
+                    "kind": "youtube#video"
+                }
               }
             }
           })
@@ -91,21 +116,6 @@ router.post('/playlist', (req, res) => {
         .then(data => {
             res.send(data);
         })
-
-})
-
-router.patch('/playlist', (req, res) => {
-// ** inserting to playlist **
-// {
-//   "snippet": {
-//     "playlistId": "PL8u0G9l6wlp9BNle3N5yCZSlVuQ7_Ct8T",
-//     "resourceId": {
-//       "videoId": "1ZhDsPdvl6c",
-//       "kind": "youtube#video"
-      
-//     }
-    
-//   }
 })
 
 
