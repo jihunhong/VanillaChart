@@ -1,10 +1,12 @@
 const router = require('express').Router();
 
 const chartSchema = require('../models/Chart');
+const pastChartsSchema = require('../models/PastCharts');
 const mongoose = require('mongoose');
 
 const redis = require('redis');
 const client = redis.createClient();
+
 
 router.get('/:chart', async(req, res) => {
 
@@ -40,13 +42,14 @@ router.get('/:chart/:rank',  async(req, res) => {
     }
 })
 
-router.patch('/:chart/:id',  async(req, res) => {
-    // 조회한 음원 항목의 데이터 수정
-    const chart = mongoose.model('Chart', chartSchema, req.params.chart)
+router.get('/:chart/:time', async(req, res) => {
+    // 시간을 받아서 과거 차트 데이터 조회
+    const pastCharts = mongoose.model('pastCharts', pastChartsSchema, 'pastcharts');
 
     try{
-        const music = await chart.find({rank: req.params.rank});
-        res.json(music);
+        // const data = await pastCharts.find({data: req.params.rank});
+
+        res.json(data);
     }catch(err){
         res.json({message : err});
     }
