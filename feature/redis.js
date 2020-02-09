@@ -24,5 +24,7 @@ const chartSchema = require('../models/Chart');
     await client.set('melon', JSON.stringify(melon), redis.print);
     await client.set('genie', JSON.stringify(genie), redis.print);
     await client.set('bugs', JSON.stringify(bugs), redis.print);
-   
+    
+    client.quit();
+    mongoose.disconnect();
 })();

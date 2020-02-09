@@ -3,13 +3,19 @@ const router = require('express').Router();
 const chartSchema = require('../models/Chart');
 const mongoose = require('mongoose');
 
+const redis = require('redis');
+const client = redis.createClient();
+
 router.get('/:chart', async(req, res) => {
-    
-    const collection = mongoose.model('Chart', chartSchema, req.params.chart)
 
     try{
-        const chart = await collection.find();
-        res.json(chart);
+
+        client.get(req.params.chart, (err, value) => {
+            if( err ){console.log(err)};
+            
+            res.json(JSON.parse(value));
+        });
+
     }catch(err){
         res.json({message : err});
     }
@@ -17,15 +23,21 @@ router.get('/:chart', async(req, res) => {
 
 router.get('/:chart/:rank',  async(req, res) => {
     
-    const chart = mongoose.model('Chart', chartSchema, req.params.chart)
-
     try{
-        const music = await chart.find({rank: req.params.rank});
-        res.json(music[0]);
+        
+        client.get(req.params.chart, (err, value) => {
+            if( err ){console.log(err)};
+
+            const json = JSON.parse(value);
+
+            const data = json.find((v) => v.rank === req.params.rank );
+
+            res.json(data);
+        });
+
     }catch(err){
         res.json({message : err});
     }
-
 })
 
 router.patch('/:chart/:id',  async(req, res) => {
