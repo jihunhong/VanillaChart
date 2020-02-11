@@ -63,8 +63,10 @@ class Chart {
 
 
     async getData(){
-        const browser = await puppeteer.launch({headless : true, 
-                                                args: ['--no-sandbox']});
+
+        const args = process.env.NODE_ENV === 'production' ? {args: ['--no-sandbox', '--disable-setuid-sandbox']} : { ignoreDefaultArgs: ['--disable-extensions'] };
+        
+        const browser = await puppeteer.launch(args);
 
         const page = await browser.newPage();
 
