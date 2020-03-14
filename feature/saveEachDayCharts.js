@@ -1,42 +1,56 @@
 const mongoose = require('mongoose');
-const db = require('../keys.js').db;
-
-mongoose.connect(
-    db.uri, 
-    { useNewUrlParser: true,
-      useUnifiedTopology: true},
-    () => console.log('connected')
-)
-
+const colors = require('colors');
 const moment = require("moment");
-const pastChartsSchema = require('../models/PastCharts');
+
+const currentDate = moment().format('YYYY-MM-DD HH:mm');
+
+const db = require('../keys.js').db;
+const options = { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+};
+
+mongoose.connect(db.uri, 
+    options, 
+    () => {
+        console.log(`${currentDate} : Connected mongo`.yellow)
+    }
+);
+
+
+const pastChartSchema = require('../models/PastCharts');
 const chartSchema = require('../models/Chart');
 
-const currentDate = moment(new Date()).format();
-// moment().format('MMMM Do YYYY, h:mm:ss a'); // 2월 8일 2020, 6:05:11 오후
-// moment().format('dddd');                    // 토요일
-// moment().format("MMM Do YY");               // 2월 8일 20
-// moment().format('YYYY [escaped] YYYY');     // 2020 escaped 2020
-// moment().format();                          // 2020-02-08T18:07:38+09:00
 
-const pastChartsCollection = mongoose.model('pastCharts', pastChartsSchema);
+
+const pastChartCollection = mongoose.model('pastCharts', pastChartSchema);
 
 (async() => {
     const melonCollection = mongoose.model('Chart', chartSchema, 'melon');
     const genieCollection = mongoose.model('Chart', chartSchema, 'genie');
     const bugsCollection = mongoose.model('Chart', chartSchema, 'bugs');
-
+    
     const melonJson = await melonCollection.find({});
     const genieJson = await genieCollection.find({});
     const bugsJson = await bugsCollection.find({});
 
     try{
-        await pastChartsCollection.insertMany({data : melonJson});
-        await pastChartsCollection.insertMany({data : genieJson});
-        await pastChartsCollection.insertMany({data : bugsJson});
-        console.log('과거 데이터 저장 완료');
+    
+        const pastDocument = {
+            // date : currentDate, (Default)
+            chart : {
+                melon : melonJson,
+                genie : genieJson,
+                bugs : bugsJson
+            }
+        };
+
+        await pastChartCollection.insertMany(pastDocument);
+        
+        console.log(`${currentDate} : 과거 데이터 저장 완료`.green);
+
     }catch(e){
-        console.log(e);
+        console.log(`${currentDate} : 데이터 저장 실패`.red);
     }finally{
         mongoose.disconnect();
     }
