@@ -11,7 +11,7 @@
     "client-build": "cd client && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "product": "git pull && npm run client-build &&  npm run restart",
-    "crawl": "cd feature && node crawl.js && node youtube.js",
+    "crawl": "cd feature && node crawl.js && node youtube.js && node redis.js",
     "restart": "forever stop 0 && forever start server.js"
   },
   "repository": {
