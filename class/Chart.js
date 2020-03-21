@@ -1,4 +1,7 @@
 const puppeteer = require('puppeteer');
+const puppeteerExtra = require('puppeteer-extra');
+const pluginStealth = require('puppeteer-extra-plugin-stealth');
+
 const db = require('../keys.js').db;
 
 const mongoose = require('mongoose');
@@ -64,18 +67,15 @@ class Chart {
 
     async getData(){
 
-        const args = process.env.NODE_ENV === 'production' ? {args: ['--no-sandbox', '--disable-setuid-sandbox']} : { ignoreDefaultArgs: ['--disable-extensions'] };
+        const args = process.env.NODE_ENV === 'production' ? {args: ['--no-sandbox', '--disable-setuid-sandbox'], headless : false} : { ignoreDefaultArgs: ['--disable-extensions'], headless : false };
+
+        puppeteerExtra.use(pluginStealth());
         
-        const browser = await puppeteer.launch(args);
+        const browser = await puppeteerExtra.launch(args);
 
         const page = await browser.newPage();
 
-        await page.setRequestInterception(true);
-
-        page.on('request', (request) => {
-                    if (someCondition) request.abort();
-                    else request.continue();
-        });
+        page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36');
 
         await page.goto(this.url);
         
