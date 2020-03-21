@@ -9,13 +9,15 @@ const mongoose = require('mongoose');
 melon.Builder(
     {
         name   : 'melon', 
-        url    : 'https://www.melon.com/chart/', 
+        url    : 'https://www.melon.com/chart', 
         parent : 'tr.lst50', 
         title  : 'div.rank01 a',
         artist : '.ellipsis.rank02 > span',
         img    : '.image_typeAll > img'
     }
 );
+
+
 
 const genie = new Chart();
 
@@ -45,14 +47,14 @@ bugs.Builder(
 
 const crawl = async() => {
     
-    await melon.saveOldChart();
+    // await melon.saveOldChart();
     await melon.getData();
 
-    await genie.saveOldChart();
-    await genie.getData();
+    // await genie.saveOldChart();
+    // await genie.getData();
 
-    await bugs.saveOldChart();
-    await bugs.getData();
+    // await bugs.saveOldChart();
+    // await bugs.getData();
 }
 
 crawl()
