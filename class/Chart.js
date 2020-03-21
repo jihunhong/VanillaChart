@@ -67,16 +67,23 @@ class Chart {
 
     async getData(){
 
-        const args = process.env.NODE_ENV === 'production' ? {args: ['--no-sandbox', '--disable-setuid-sandbox', '--proxy-server=socks5://127.0.0.1:9050'], headless : true} 
+        const args = process.env.NODE_ENV === 'production' ? {args: ['--proxy-server=socks5://127.0.0.1:9050'], headless : true} 
                                                            : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
         
         const browser = await puppeteer.launch(args);
 
         const page = await browser.newPage();
-
-        page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36');
-
+        
         await page.goto(this.url);
+
+        const isUsingTor = await page.$eval('body', el =>
+            el.innerHTML.includes('Congratulations. This browser is configured to use Tor')
+        );
+
+        if (!isUsingTor) {
+            console.log('Not using Tor. Closing...');
+            return await browser.close();
+        }
         
         const _this = this;
 
