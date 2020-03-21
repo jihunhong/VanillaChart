@@ -70,6 +70,13 @@ class Chart {
 
         const page = await browser.newPage();
 
+        await page.setRequestInterception(true);
+
+        page.on('request', (request) => {
+                    if (someCondition) request.abort();
+                    else request.continue();
+        });
+
         await page.goto(this.url);
         
         const _this = this;
