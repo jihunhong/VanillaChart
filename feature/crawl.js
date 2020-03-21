@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 melon.Builder(
     {
         name   : 'melon', 
-        url    : 'https://www.melon.com/chart', 
+        url    : 'https://www.melon.com/chart/', 
         parent : 'tr.lst50', 
         title  : 'div.rank01 a',
         artist : '.ellipsis.rank02 > span',
