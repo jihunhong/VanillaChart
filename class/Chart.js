@@ -67,7 +67,8 @@ class Chart {
 
     async getData(){
 
-        const args = process.env.NODE_ENV === 'production' ? {args: ['--no-sandbox', '--disable-setuid-sandbox'], headless : false} : { ignoreDefaultArgs: ['--disable-extensions'], headless : false };
+        const args = process.env.NODE_ENV === 'production' ? {args: ['--no-sandbox', '--disable-setuid-sandbox', '--proxy-server=socks5://127.0.0.1:9050'], headless : true} 
+                                                           : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
 
         puppeteerExtra.use(pluginStealth());
         
