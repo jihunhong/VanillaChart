@@ -67,7 +67,7 @@ class Chart {
 
     async getData(){
 
-        const args = process.env.NODE_ENV === 'production' ? {args: ['--proxy-server=socks5://127.0.0.1:9050'], headless : true} 
+        const args = process.env.NODE_ENV === 'production' ? {args: ['--proxy-server=socks5://127.0.0.1:9050', '--no-sandbox'], headless : true} 
                                                            : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
         
         const browser = await puppeteer.launch(args);
