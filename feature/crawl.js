@@ -47,14 +47,14 @@ bugs.Builder(
 
 const crawl = async() => {
     
-    // await melon.saveOldChart();
+    await melon.saveOldChart();
     await melon.getData();
 
-    // await genie.saveOldChart();
-    // await genie.getData();
+    await genie.saveOldChart();
+    await genie.getData();
 
-    // await bugs.saveOldChart();
-    // await bugs.getData();
+    await bugs.saveOldChart();
+    await bugs.getData();
 }
 
 crawl()
