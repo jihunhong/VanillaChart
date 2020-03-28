@@ -85,9 +85,10 @@ class Chart {
 
         const page = await browser.newPage();
         
+        page.setDefaultNavigationTimeout((1000*60) * 5);
+        
         await page.goto(this.url);
 
-        page.setDefaultNavigationTimeout((1000*60) * 5);
         
         const _this = this;
 
