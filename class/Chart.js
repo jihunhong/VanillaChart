@@ -67,7 +67,7 @@ class Chart {
 
     async getData(){
 
-        const args = process.env.NODE_ENV === 'production' ? 
+        let args = process.env.NODE_ENV === 'production' ? 
             {
                 args: [
                     '--no-sandbox', 
@@ -80,6 +80,10 @@ class Chart {
             }
             
             : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
+
+        if(this.name !== 'melon' && process.env.NODE_ENV === 'production'){
+            args.args.pop();
+        }
         
         const browser = await puppeteer.launch(args);
 
