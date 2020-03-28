@@ -6,12 +6,26 @@ class First extends Component{
     state = {
         music: '',
         chartName: this.props.chartname,
+        imageOpt: 'maxresdefault',
     }
 
-    componentDidMount = () => {
-        fetch(`/api/chart/${this.props.chartname}/1`)
-            .then(res => res.json())
-            .then(json => this.setState({music: json}));
+    async componentDidMount() {
+
+        const res = await fetch(`/api/chart/${this.props.chartname}/1`);
+        const json = await res.json();
+        
+        
+        this.setState({
+            music : json
+        });
+        try{
+            await fetch(`https://i.ytimg.com/vi/${this.state.music.video_id}/${this.state.imageOpt}.jpg`);
+        }catch(e){
+            this.setState({
+                imageOpt : 'hqdefault'
+            })
+        }
+        
     }
 
     play = () => {
@@ -19,9 +33,8 @@ class First extends Component{
     }
 
     render(){
-        console.log(this.state.music)
         const coverBackground = {
-            backgroundImage: "url('https://i.ytimg.com/vi/" + this.state.music.video_id + "/maxresdefault.jpg')"
+            backgroundImage: `url('https://i.ytimg.com/vi/${this.state.music.video_id}/${this.state.imageOpt}.jpg')`
         };
 
         return (
