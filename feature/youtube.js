@@ -2,7 +2,7 @@ const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
 const apiKeys = require('../keys.js').apiKeys;
-const limit = 3;
+const limit = 5;
 
 const mongoose = require('mongoose');
 const db = require('../keys.js').db;
@@ -34,16 +34,19 @@ const searching = (music, name) => {
 
             if(err) { console.log(err);}
 
-            let response = [];
+            
             try{
+                let response = [];
 
-                response = result.items.slice(0);
+                ['Official', 'MV', 'M/V'].forEach((con) => {
+                    const matchedEl = result.items.find((v) => v.snippet.title.includes(con));
+                    response.push(matchedEl);
+                })
+                // 검색된 결과들중 우선순위를 따져 반환하기 위한 코드
 
-                const officialItem = response.find((v) => 
-                    ['MV', 'M/V', 'Official'].includes(v.snippet.title) );
-                    // 검색된 결과들중 우선순위를 따져 반환하기 위한 코드
+                response = response.filter((v) => Boolean(v));
 
-                officialItem === undefined ? res(response[0].id.videoId) : res(officialItem.id.videoId);
+                response.length === 0 ? res(response.shift().id.video_id) : res(result.items[0].id.video_id);
 
             }catch(e){
                 console.log(`[ youtube.search() 에러] : ${e}`);
