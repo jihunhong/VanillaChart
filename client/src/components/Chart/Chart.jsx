@@ -20,11 +20,14 @@ class Chart extends Component {
         playlist: false,
     };
 
-    componentDidMount = () => {
-        fetch(`/api/chart/${this.props.chartname}`)
-            .then(res => res.json())
-                .then(json => this.setState({chart: json}, 
-                        () => this.setState({idArray: this.state.chart})));
+    componentDidMount = async() => {
+        const res = await fetch(`/api/chart/${this.props.chartname}`);
+
+        const json = await res.json();
+        this.setState({
+            chart : json,
+            idArray : json
+        });
     }
 
     render(){
