@@ -1,3 +1,4 @@
+const moment = require('moment');
 const Chart = require('../class/Chart.js');
 
 const melon = new Chart();
@@ -59,7 +60,7 @@ const crawl = async() => {
 
 crawl()
     .then(res => {
-        console.log('[crawl.js 완료]' + new Date().toLocaleTimeString());
+        console.log(`${moment().formant('YYYY-MM-DD')} youtube 완료`)
         mongoose.disconnect();
     })
     .catch((err) => {

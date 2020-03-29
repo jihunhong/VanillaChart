@@ -21,9 +21,9 @@ const chartSchema = require('../models/Chart');
     const genie = await mongoose.model('Chart', chartSchema, 'genie').find();
     const bugs = await mongoose.model('Chart', chartSchema, 'bugs').find();
 
-    await client.set('melon', JSON.stringify(melon), redis.print);
-    await client.set('genie', JSON.stringify(genie), redis.print);
-    await client.set('bugs', JSON.stringify(bugs), redis.print);
+    client.set('melon', JSON.stringify(melon), redis.print);
+    client.set('genie', JSON.stringify(genie), redis.print);
+    client.set('bugs', JSON.stringify(bugs), redis.print);
     
     client.quit();
     mongoose.disconnect();
