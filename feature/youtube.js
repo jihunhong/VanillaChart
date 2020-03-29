@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
@@ -8,8 +10,7 @@ const mongoose = require('mongoose');
 const db = require('../keys.js').db;
 
 const chartSchema = require('../models/Chart');
-const searchScehma = require('../models/SearchLog');
-
+const pastChartsSchema  = require('../models/PastCharts.js');
 
 mongoose.connect(
     db.uri, 
@@ -18,7 +19,7 @@ mongoose.connect(
     () => console.log('connected')
 )
 
-const searching = (music, name) => {
+const search = (music, name) => {
     
     const key = apiKeys.find((v) => name === v.name).key;
 
@@ -46,94 +47,78 @@ const searching = (music, name) => {
 
                 response = response.filter((v) => Boolean(v));
 
-                response.length === 0 ? res(response.shift().id.video_id) : res(result.items[0].id.video_id);
+                console.log(music.title);
+
+                response.length === 0 ? res(result.items[0].id.video_id) : res(response.shift().id.video_id);
 
             }catch(e){
                 console.log(`[ youtube.search() 에러] : ${e}`);
-                res(undefined);
+                rej(undefined);
             }
         })
     }) 
 };
 
+const youtubeMatchingByChartName = async (name) => {
+    const collection = mongoose.model('Chart', chartSchema, name);
+    const oldCollection   = mongoose.model('Chart', chartSchema, 'old_'+name);
 
-const insertVideoId = async () => {
+    const chart = await collection.find();
+    const old   = await oldCollection.find();
 
-    const iterateSearch = async (name) => {
-        const collection = mongoose.model('Chart', chartSchema, name);
-        const oldCollection   = mongoose.model('Chart', chartSchema, 'old_'+name);
+    const result = [];
 
-        const chart = await collection.find();
-        const old   = await oldCollection.find();
+    for (const current of chart){
+        const exist = old.find((past) => current.title === past.title && past.video_id );
 
-        for (const [i, v] of chart.entries()){
-            const exist = await old.find((music) => v.title === music.title && music.video_id !== 'none');
-            // const exist = await searchCollection.find().all([{title : v.title}, {artist: v.artist}, {video_id}]);
+        if(exist){
+            result.push({...current, video_id : exist.video_id} );
 
-            if(exist && exist.video_id){
-                // 같은 노래가 존재할경우
-                v.video_id = exist.video_id;
-
-            }else if( !exist  && v.video_id){
-                // 같은노래가 없지만 video_id가 비어있지 않은 경우
-                  continue;
-            }else{
-                const video_id = await searching(v, name);
-                const searchCollection = mongoose.model('SearchLog', searchScehma, 'search');
-                await searchCollection.findOneAndUpdate({
-                                                            title: v.title,
-                                                            artist: v.artist
-                                                        }, { 
-                                                            query: `${v.title}  ${v.artist}`,
-                                                            title: v.title,
-                                                            artist: v.artist,
-                                                            video_id: video_id,
-                                                            result: new Boolean(video_id)
-                                                           }, {upsert: true});
-                chart[i].video_id = video_id;
-                console.log(`+ ${v.title} 검색 => ${video_id}`);
-            }
-
+        }else{
+            
+            const video_id = await search(current, name);
+            result.push({...current, video_id : video_id});
         }
-        return chart;
+        
+        // const pastChartsCollection = mongoose.model('PastCharts', pastChartsSchema, 'pastcharts');
+
+        // const document = await pastChartsCollection.find({data : {$elemMatch : {title : current.title} }});
+        
+        // const row = document.data.find((row) => current.title === row.title && current.artist === row.artist);
+
+        // result.push({...current, video_id : row.video_id});
+        // console.log(row.title);
+
     }
 
-        
-    const melon = await iterateSearch('melon');
-    const genie = await iterateSearch('genie');
-    const bugs  = await iterateSearch('bugs');
-
-    return [melon, genie, bugs];
+    return result;
 }
 
 (async() => {
-        insertVideoId().then( chart => {
-        const melon = chart.shift();
-        const genie = chart.shift();
-        const bugs  = chart.shift();
-
-        const insertDocument = async(data, name) => {
-            try{
-                const collection = mongoose.model('Chart', chartSchema, name)
-                await collection.remove();
-                await collection.insertMany(data)
-
-                console.log(`[${name} youtube.js 완료]`)
-            }catch(err){
-                console.log(err);
-            }
-        }
-
         
-        const insertDocuments = async() => {
-            await insertDocument(melon, 'melon');
-            await insertDocument(genie, 'genie');
-            await insertDocument(bugs, 'bugs');
-        }
+    const melon = await youtubeMatchingByChartName('melon');
+    console.log('melon youtube 완료')
+    
+    const genie = await youtubeMatchingByChartName('genie');
+    console.log('genie youtube 완료')
+    
+    const bugs  = await youtubeMatchingByChartName('bugs');
+    console.log('bugs youtube 완료')
 
-        insertDocuments().then(res => {
-            console.log(new Date().toLocaleTimeString() + '[insertDocuments() 완료]');
-            mongoose.disconnect();
-        })
-    })
+    const melonCollection = mongoose.model('Chart', chartSchema, 'melon');
+    const genieCollection = mongoose.model('Chart', chartSchema, 'genie');
+    const bugsCollection = mongoose.model('Chart', chartSchema, 'bugs');
+    
+    await melonCollection.remove({});
+    await melonCollection.insertMany(melon);
+    
+    await genieCollection.remove({});
+    await genieCollection.insertMany(genie);
+
+    await bugsCollection.remove({});
+    await bugsCollection.insertMany(bugs);
+
+    
+    
+    console.log(`${moment().formant('YYYY-MM-DD')} youtube 완료`)
 })();
