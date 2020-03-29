@@ -60,7 +60,7 @@ const crawl = async() => {
 
 crawl()
     .then(res => {
-        console.log(`${moment().formant('YYYY-MM-DD')} youtube 완료`)
+        console.log(`${moment().format('YYYY-MM-DD')} youtube 완료`)
         mongoose.disconnect();
     })
     .catch((err) => {
