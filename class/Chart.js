@@ -1,3 +1,5 @@
+const colors = require('colors');
+
 const puppeteer = require('puppeteer');
 const puppeteerExtra = require('puppeteer-extra');
 const pluginStealth = require('puppeteer-extra-plugin-stealth');
@@ -66,7 +68,7 @@ class Chart {
 
 
     async getData(){
-
+        console.log(colors.yellow(this.name + '크롤링 시작'));
         let args = process.env.NODE_ENV === 'production' ? 
             {
                 args: [
@@ -112,6 +114,8 @@ class Chart {
 
         await browser.close();
 
+        console.log(colors.green(this.name + '완료'));
+
         await this.integrateByFTS(chart);
 
         chart.forEach((v, i) => v.rank = i + 1);
@@ -143,7 +147,9 @@ class Chart {
             const existChart = await existCollection.find();
             await oldCollection.deleteMany();
             await oldCollection.insertMany(existChart);
-
+            
+            console.log(colors.green(this.name + '백업 완료'));
+            
             await new Log({
                 result: true,
                 message: `[${this.name} 백업 완료]`

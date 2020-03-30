@@ -1,4 +1,5 @@
 const moment = require('moment');
+const colors = require('colors');
 const Chart = require('../class/Chart.js');
 
 const melon = new Chart();
@@ -60,10 +61,10 @@ const crawl = async() => {
 
 crawl()
     .then(res => {
-        console.log(`${moment().format('YYYY-MM-DD')} youtube 완료`)
+        console.log(colors.green(`${moment().format('YYYY-MM-DD')} crawl 완료`));
         mongoose.disconnect();
     })
     .catch((err) => {
-        console.log('[crawl.js 에러] crawl.js 에러')
+        console.log(colors.red('[crawl.js 에러] crawl.js 에러'));
         console.log(err);
     })
