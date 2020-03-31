@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const mongoose = require('mongoose');
+const fs = require('fs');
+const path = require('path');
 
 const chartSchema = require('../models/Chart');
 const userSchema = require('../models/User');
@@ -32,11 +34,10 @@ router.get('/search', async(req, res) => {
 
 router.get('/log', async(req, res) => {
     
-    const collection = mongoose.model('Log', logSchema, 'logs')
+    const crawlLog = fs.readFileSync(path.resolve(__dirname, 'crawl.log'));
 
-    try{
-        const logs = await collection.find();
-        res.json(logs);
+    try{ 
+        res.send(crawlLog.toString());
     }catch(err){
         res.json({message : err});
     }

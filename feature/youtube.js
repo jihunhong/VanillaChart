@@ -48,9 +48,10 @@ const search = (music, name) => {
 
                 response = response.filter((v) => Boolean(v));
 
-                const video_id = response.length === 0 ? res(result.items[0].id.video_id) : res(response.shift().id.video_id);
+                const video_id = (response.length === 0 ? result.items[0].id.video_id : response.shift().id.video_id);
                 
                 console.log(colors.yellow(`${query} - ${video_id}`));
+                res(video_id);
 
             }catch(e){
                 console.log(colors.red(`[ youtube.search() 에러] : ${e}`));
