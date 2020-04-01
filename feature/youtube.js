@@ -5,7 +5,7 @@ const Youtube = require('youtube-node');
 const youtube = new Youtube();
 
 const apiKeys = require('../keys.js').apiKeys;
-const limit = 5;
+const limit = 10;
 
 const mongoose = require('mongoose');
 const db = require('../keys.js').db;
@@ -46,9 +46,13 @@ const search = (music, name) => {
                 })
                 // 검색된 결과들중 우선순위를 따져 반환하기 위한 코드
 
+                const topic = result.items.find((v) => v.snippet.channelTitle.includes('- Topic'));
+                
+                response.push(topic);
+
                 response = response.filter((v) => Boolean(v));
 
-                const video_id = result.items[0].id.video_id;
+                const video_id = response[0].id.videoId;
                 
                 console.log(colors.yellow(`${query} - ${video_id}`));
                 res(video_id);
