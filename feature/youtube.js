@@ -56,8 +56,8 @@ const search = (music, name) => {
                 let video_id;
 
                 if(!response[0]){
-                    console.log(colors.red('결과가 아예 없네요? ==> ' + query));
-                    video_id = 'null';
+                    console.log(colors.red('검색 필터에 걸리는 결과가 없네요 첫 결과를 반환합니다' + query));
+                    video_id = result.items[0].id.snippet;
 
                 }else if(Object.keys(response[0]).includes('id')){
                     const result = response[0].id.videoId;                
@@ -94,7 +94,7 @@ const youtubeMatchingByChartName = async (name) => {
         if(exist){
             result.push(Object.assign(current, {video_id : exist.video_id}));
 
-        }else{
+        }else if(exist.video_id === 'null' || exist.video_id === 'quotaExceed'){
             
             const video_id = await search(current, name);
             result.push(Object.assign(current, {video_id : video_id}));
