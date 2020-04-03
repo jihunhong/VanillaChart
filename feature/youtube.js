@@ -12,6 +12,7 @@ const db = require('../keys.js').db;
 
 const chartSchema = require('../models/Chart');
 const pastChartsSchema  = require('../models/PastCharts.js');
+const searchLogCollection = require('../models/SearchLog.js');
 
 mongoose.connect(
     db.uri, 
@@ -32,7 +33,7 @@ const search = (music, name) => {
        
         const query = `${music.artist} ${music.title}`;
 
-        youtube.search(query, limit, function (err, result) {
+        youtube.search(query, limit, async function (err, result) {
 
             if(err) { console.log(err);}
 
@@ -55,17 +56,22 @@ const search = (music, name) => {
                 let video_id;
 
                 if(!response[0]){
-                    video_id = 'null'
+                    console.log(colors.red('결과가 아예 없네요? ==> ' + query));
+                    video_id = 'null';
+
                 }else if(Object.keys(response[0]).includes('id')){
                     const result = response[0].id.videoId;                
-                    
-                    console.log(colors.yellow(`${query} - ${result}`));
+
+                    console.log(colors.green(`${query} - ${result}`));
                     video_id = result;
                 }else{
+                    consolr.log(colors.red('quota Exceed'))
                     video_id = 'quotaExceed'
                 }
                 
-                
+                await searchLogCollection.insertMany({query, video_id});
+
+                res(video_id);
 
             }catch(e){
                 console.log(colors.red(`[ youtube.search() 에러] : ${e}`));
@@ -77,38 +83,22 @@ const search = (music, name) => {
 
 const youtubeMatchingByChartName = async (name) => {
     const collection = mongoose.model('Chart', chartSchema, name);
-    const oldCollection   = mongoose.model('Chart', chartSchema, 'old_'+name);
 
     const chart = await collection.find();
-    const old   = await oldCollection.find();
 
     const result = [];
 
     for (const current of chart){
-        const exist = old.find((past) => current.title === past.title && past.video_id );
+        const exist = await searchLogCollection.findOne({query : `${current.title}  ${current.artist}`})
 
         if(exist){
-            result.push({...current, video_id : exist.video_id} );
+            result.push(Object.assign(current, {video_id : exist.video_id}));
 
         }else{
             
             const video_id = await search(current, name);
-            result.push({...current, video_id : video_id});
+            result.push(Object.assign(current, {video_id : video_id}));
         }
-        
-        // const pastChartsCollection = mongoose.model('PastCharts', pastChartsSchema, 'pastcharts');
-
-        // const document = await pastChartsCollection.findOne({data : {$elemMatch : {title : current.title} }});
-
-        // if(document.data === null){
-        //     result.push({current, video_id : 0});
-        // }else{
-        
-        // const row = document.data.find((row) => current.title === row.title && current.artist === row.artist);
-
-        // result.push({...current, video_id : row.video_id});
-        // console.log(row.title);
-        // }
     }
 
     return result;
@@ -139,4 +129,5 @@ const youtubeMatchingByChartName = async (name) => {
     await bugsCollection.insertMany(bugs);
 
     console.log(colors.green(`${moment().format('YYYY-MM-DD')} youtube 완료`))
+    process.exit();
 })();
