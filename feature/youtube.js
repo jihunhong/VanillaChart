@@ -52,10 +52,20 @@ const search = (music, name) => {
 
                 response = response.filter((v) => Boolean(v));
 
-                const video_id = response[0].id.videoId;
+                let video_id;
+
+                if(!response[0]){
+                    video_id = 'null'
+                }else if(Object.keys(response[0]).includes('id')){
+                    const result = response[0].id.videoId;                
+                    
+                    console.log(colors.yellow(`${query} - ${result}`));
+                    video_id = result;
+                }else{
+                    video_id = 'quotaExceed'
+                }
                 
-                console.log(colors.yellow(`${query} - ${video_id}`));
-                res(video_id);
+                
 
             }catch(e){
                 console.log(colors.red(`[ youtube.search() 에러] : ${e}`));
