@@ -56,8 +56,8 @@ const search = (music, name) => {
                 let video_id;
 
                 if(!response[0]){
-                    console.log(colors.red('검색 필터에 걸리는 결과가 없네요 첫 결과를 반환합니다' + query));
-                    video_id = result.items[0].id.snippet;
+                    video_id = result.items[0].id.videoId;
+                    console.log(colors.red('검색 필터에 걸리는 결과가 없네요 첫 결과를 반환합니다 ' + query + ' ' + video_id));
 
                 }else if(Object.keys(response[0]).includes('id')){
                     const result = response[0].id.videoId;                
@@ -69,7 +69,7 @@ const search = (music, name) => {
                     video_id = 'quotaExceed'
                 }
                 
-                await searchLogCollection.insertMany({query, video_id});
+                await searchLogCollection.insertMany({query: query, video_id : video_id});
 
                 res(video_id);
 
@@ -89,12 +89,14 @@ const youtubeMatchingByChartName = async (name) => {
     const result = [];
 
     for (const current of chart){
-        const exist = await searchLogCollection.findOne({query : `${current.title}  ${current.artist}`})
+        const exist = await searchLogCollection.findOne({query : `${current.artist} ${current.title}`})
+        const exist2 = await searchLogCollection.findOne({query : `${current.title}  ${current.artist}`})
 
-        if(exist){
-            result.push(Object.assign(current, {video_id : exist.video_id}));
+        if(exist || exist2){
+            const trueObj = exist || exist2;
+            result.push(Object.assign(current, {video_id : trueObj.video_id}));
 
-        }else if(exist.video_id === 'null' || exist.video_id === 'quotaExceed'){
+        }else if(exist === null || exist.video_id === 'null' || exist.video_id === 'quotaExceed'){
             
             const video_id = await search(current, name);
             result.push(Object.assign(current, {video_id : video_id}));
@@ -113,19 +115,19 @@ const youtubeMatchingByChartName = async (name) => {
     const melon = await youtubeMatchingByChartName('melon');
     console.log(colors.blue('melon youtube 완료'));
 
-    await melonCollection.remove({});
+    await melonCollection.deleteMany({});
     await melonCollection.insertMany(melon);
     
     const genie = await youtubeMatchingByChartName('genie');
     console.log(colors.blue('genie youtube 완료'));
 
-    await genieCollection.remove({});
+    await genieCollection.deleteMany({});
     await genieCollection.insertMany(genie);
     
     const bugs  = await youtubeMatchingByChartName('bugs');
     console.log(colors.blue('bugs youtube 완료'));
 
-    await bugsCollection.remove({});
+    await bugsCollection.deleteMany({});
     await bugsCollection.insertMany(bugs);
 
     console.log(colors.green(`${moment().format('YYYY-MM-DD')} youtube 완료`))
