@@ -7,6 +7,10 @@ const mongoose = require('mongoose');
 const redis = require('redis');
 const client = redis.createClient();
 
+router.get('/qwer', async(req, res) => {
+    res.redirect('melonapp://play/?ctype=1&menuid=0&cid=32381408,32381407,32381409,32381410,32381408,31706346,32381411,32381412,32381408,31388213,32381413,32381414,32381415,32381408,32381416,32381417,32381418');
+})
+
 
 router.get('/:chart', async(req, res) => {
 
