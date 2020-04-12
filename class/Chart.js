@@ -84,7 +84,7 @@ class Chart {
             : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
 
         if(this.name !== 'melon' && process.env.NODE_ENV === 'production'){
-            args.args.pop();
+            // args.args.pop();
         }
         
         const browser = await puppeteer.launch(args);
@@ -164,6 +164,7 @@ class Chart {
     }
 
     async integrateByFTS(chart){
+        console.log(chart);
         for (let [i, v] of chart.entries()) {
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
 
