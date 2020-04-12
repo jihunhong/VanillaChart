@@ -10,12 +10,7 @@ const options = {
     useUnifiedTopology: true
 };
 
-mongoose.connect(db.uri, 
-    options, 
-    () => {
-        console.log(`${currentDate} : Connected mongo`.yellow)
-    }
-);
+
 
 
 const pastChartSchema = require('../models/PastCharts');
@@ -26,6 +21,14 @@ const chartSchema = require('../models/Chart');
 const pastChartCollection = mongoose.model('pastCharts', pastChartSchema);
 
 (async() => {
+
+    await mongoose.connect(db.uri, 
+        options, 
+        () => {
+            console.log(`${currentDate} : Connected mongo`.yellow)
+        }
+    );
+
     const melonCollection = mongoose.model('Chart', chartSchema, 'melon');
     const genieCollection = mongoose.model('Chart', chartSchema, 'genie');
     const bugsCollection = mongoose.model('Chart', chartSchema, 'bugs');

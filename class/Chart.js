@@ -114,8 +114,6 @@ class Chart {
 
         await browser.close();
 
-        console.log(colors.green(this.name + '완료'));
-
         await this.integrateByFTS(chart);
 
         chart.forEach((v, i) => v.rank = i + 1);
@@ -125,17 +123,19 @@ class Chart {
             await collection.deleteMany();
             await collection.insertMany(chart);
 
-            await new Log({
+            console.log(colors.green(this.name + ' 크롤링 완료'));
+
+            await Log.insertMany({
                 result: true,
                 message: `[${this.name} 저장 완료]`
-            }).save();
+            });
 
         } catch (err) {
 
-            await new Log({
+            await Log.insertMany({
                 result: false,
                 message: `${err}`,
-            }).save();
+            });
         }
     }
 
