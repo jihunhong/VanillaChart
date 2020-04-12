@@ -1,4 +1,7 @@
 const colors = require('colors');
+const moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault('Asia/Seoul')
 
 const puppeteer = require('puppeteer');
 const puppeteerExtra = require('puppeteer-extra');
@@ -84,7 +87,7 @@ class Chart {
             : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
 
         if(this.name !== 'melon' && process.env.NODE_ENV === 'production'){
-            // args.args.pop();
+            args.args.pop();
         }
         
         const browser = await puppeteer.launch(args);
@@ -123,7 +126,7 @@ class Chart {
             await collection.deleteMany();
             await collection.insertMany(chart);
 
-            console.log(colors.green(this.name + ' 크롤링 완료'));
+            console.log(colors.yellow(moment().format('YYYY-MM-DD HH:mm:ss ')) + colors.green(this.name + ' 크롤링 완료'));
 
             await Log.insertMany({
                 result: true,
@@ -164,7 +167,6 @@ class Chart {
     }
 
     async integrateByFTS(chart){
-        console.log(chart);
         for (let [i, v] of chart.entries()) {
             // 음원 데이터의 제목과 아티스트 이름을 모두 같게 하는 코드
 
