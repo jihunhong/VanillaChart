@@ -27,4 +27,5 @@ const chartSchema = require('../models/Chart');
     
     client.quit();
     mongoose.disconnect();
+    process.exit();
 })();

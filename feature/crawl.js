@@ -63,6 +63,7 @@ crawl()
     .then(res => {
         console.log(colors.green(`${moment().format('YYYY-MM-DD')} crawl 완료`));
         mongoose.disconnect();
+        process.exit();
     })
     .catch((err) => {
         console.log(colors.red('[crawl.js 에러] crawl.js 에러'));

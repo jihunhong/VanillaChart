@@ -56,6 +56,7 @@ const pastChartCollection = mongoose.model('pastCharts', pastChartSchema);
         console.log(`${currentDate} : 데이터 저장 실패`.red);
     }finally{
         mongoose.disconnect();
+        process.exit();
     }
 })();
 
