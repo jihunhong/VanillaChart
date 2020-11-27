@@ -1,0 +1,12 @@
+{
+    "name": "chart",
+    "version": "1.0.0",
+    "description": "VanillaChart Refactor",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "jihunhong",
+    "license": "MIT"
+  }
+  
