@@ -1,15 +1,29 @@
-const mongoose = require('mongoose');
-const moment = require('moment');
-
-const currentDate = moment().format('YYYY-MM-DD');
-
-const chartSchema = mongoose.Schema({
-    rank:     {type: Number, require: true },
-    title :   {type: String, require: true },
-    artist:   {type: String, require: true },
-    img :     {type: String, require: true },
-    video_id: {type: String, require: false},
-    date :    {type: String, default : currentDate}
-});
-
-module.exports = chartSchema;
+module.exports = (sequelize, DataTypes) => {
+    const Chart = sequelize.define('Chart', {
+        name : {
+            type : DataTypes.STRING(20),
+            allowNull : false,
+        },
+        category : {
+            type : DataTypes.STRING(10),
+            allowNull : false,
+        },
+        description : {
+            type : DataTypes.TEXT,
+            allowNull : false,
+        },
+        music_id : {
+            type : DataTypes.STRING(20),
+            allowNull : false,
+        },
+        created_at : {
+            type : DataTypes.DATE,
+            allowNull : DataTypes.NOW,
+        },
+    }, {
+        charset : 'utf-8',
+        collate : 'utf-8_general_ci'
+    });
+    Chart.associate = (db) => {};
+    return Chart;
+}
