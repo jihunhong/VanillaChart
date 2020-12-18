@@ -1,5 +1,5 @@
-# 12월13일 부터 revised 브랜치에서 리팩토링중
 # 💿 음원차트 파싱 프로젝트
+# 🔨 12월13일 부터 revised 브랜치에서 리팩토링중
 
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->

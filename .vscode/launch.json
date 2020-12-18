@@ -11,7 +11,16 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/feature/youtube.js"
+            "program": "${workspaceFolder}/feature/crawl.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "current debug",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${file}"
         },
         {
             "name": "Debug Jest Tests",

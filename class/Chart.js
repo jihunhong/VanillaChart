@@ -6,18 +6,7 @@ moment.tz.setDefault('Asia/Seoul')
 const puppeteer = require('puppeteer');
 const puppeteerExtra = require('puppeteer-extra');
 const pluginStealth = require('puppeteer-extra-plugin-stealth');
-
-const db = require('../keys.js').db;
-
-const mongoose = require('mongoose');
-mongoose.connect(
-    db.uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        poolSize: 10
-    },
-    () => console.log('connected')
-)
+const fs = require('fs');
 
 const Log = require('../models/Log');
 const chartSchema = require('../models/Chart');
@@ -80,11 +69,11 @@ class Chart {
                     '--user-agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36"',
                     '--proxy-server=socks5://127.0.0.1:9050'
                 ], 
-                headless : true,
+                headless : false,
                 ignoreDefaultArgs: ['--disable-extensions'],
             }
             
-            : { ignoreDefaultArgs: ['--disable-extensions'], headless : true };
+            : { ignoreDefaultArgs: ['--disable-extensions'], headless : false };
 
         if(this.name !== 'melon' && process.env.NODE_ENV === 'production'){
             args.args.pop();
@@ -122,16 +111,9 @@ class Chart {
         chart.forEach((v, i) => v.rank = i + 1);
 
         try {
-            const collection = mongoose.model('Chart', chartSchema, this.name);
-            await collection.deleteMany();
-            await collection.insertMany(chart);
-
+        
+            fs.writeFileSync(`./${this.name}.json`, JSON.stringify(chart, null, 2));
             console.log(colors.yellow(moment().format('YYYY-MM-DD HH:mm:ss ')) + colors.green(this.name + ' 크롤링 완료'));
-
-            await Log.insertMany({
-                result: true,
-                message: `[${this.name} 저장 완료]`
-            });
 
         } catch (err) {
 
