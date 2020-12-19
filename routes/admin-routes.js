@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 
-const chartSchema = require('../models/Chart');
+const chartSchema = require('../models/chart');
 const userSchema = require('../models/User');
 const searchlogSchema = require('../models/SearchLog');
 const logSchema = require('../models/Log');

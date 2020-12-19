@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const chartSchema = require('../models/Chart');
+const chartSchema = require('../models/chart');
 const pastChartsSchema = require('../models/PastCharts');
 const mongoose = require('mongoose');
 
