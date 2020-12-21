@@ -1,4 +1,4 @@
-const { waitor } = require('./crawlOption');
+const { waitor } = require('./crawlUtil');
 
 async function fetchMelon({ page }){
 
