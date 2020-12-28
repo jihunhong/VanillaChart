@@ -16,15 +16,15 @@ module.exports = (sequelize, DataTypes) => {
         },
         album : {
             type : DataTypes.STRING(100),
-            allowNull : true,
+            allowNull : false,
         },
         created_at : {
             type : DataTypes.DATE,
             allowNull : DataTypes.NOW,
         },
     }, {
-        charset : 'utf-8',
-        collate : 'utf-8_general_ci'
+        charset : 'utf8',
+        collate : 'utf8_general_ci'
     });
     Music.associate = (db) => {};
     return Music;
