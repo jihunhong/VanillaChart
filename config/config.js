@@ -12,12 +12,12 @@ module.exports = {
     "dialect": "mysql",
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": process.env.TEST_DB_ID,
+    "password": process.env.TEST_DB_PASSWORD,
+    "database": "cherry_chart",
+    "host": process.env.TEST_DB_HOST,
     "port" : 3306,
-    "dialect": "mysql"
+    "dialect": "mysql",
   },
   "production": {
     "username": "root",

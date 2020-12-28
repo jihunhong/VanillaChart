@@ -25,18 +25,14 @@ exports.launchBrowser = async() => {
 }
 
 exports.insertChart = async({ site, chart }) => {
-    await Promise.all(chart.map(async(row) => {
-        try{
-            await Chart.create({
-                rank : row.rank,
-                title : row.title,
-                artist : row.artist,
-                album : row.album,
-                site,
-                // ...row
-            })
-        }catch(err){
-            console.error(err);
-        }
-    }))
+    for(const row of chart){
+        await Chart.create({
+            rank : row.rank,
+            title : row.title,
+            artist : row.artist,
+            album : row.album,
+            site,
+            // ...row
+        })
+    }
 }

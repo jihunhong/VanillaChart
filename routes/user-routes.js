@@ -6,7 +6,7 @@ const { User } = require('../models');
 
 const router = express.Router();
 
-const { signUpUser } = require('../controller/user');
+const { signUpUser } = require('../controller/userController');
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
