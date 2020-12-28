@@ -2,7 +2,7 @@ const passport = require('passport');
 const YoutubeV3Strategy = require('passport-youtube-v3').Strategy;
 
 const keys = require('../keys');
-const User = require('../models/User');
+const User = require('../models/users');
 
 passport.serializeUser((user, done) => {
     done(null, user.id);

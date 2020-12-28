@@ -6,7 +6,7 @@ const passport = require('passport');
 const keys = require('../keys');
 const apiKey = keys.apiKeys.shift();
 
-const User = require('../models/User');
+const User = require('../models/users');
 
 const authCheck = (req, res, next) => {
     if(!req.user){

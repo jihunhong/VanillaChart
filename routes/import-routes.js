@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const keys = require('../keys');
-const User = require('../models/User');
+const User = require('../models/users');
 
 const Playlist = require('../class/Playlist');
 
