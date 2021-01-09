@@ -1,6 +1,7 @@
-const { User } = require('../models');
+import { Request } from "express";
+import bcrypt from 'bcrypt';
 
-exports.signUpUser = async( req ) => {
+export async function signUpUser( req: Request ) {
     try{
         const hashPassword = await bcrypt.hash(req.body.password, 12);
         await User.create({

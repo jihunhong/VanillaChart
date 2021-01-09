@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
+
 const router = express.Router();
 
-const { Chart } = require('../models');
 
 router.get('/:chart', async(req, res, next) => {
 

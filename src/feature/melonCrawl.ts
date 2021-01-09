@@ -1,6 +1,7 @@
-const { waitor } = require('./crawlUtil');
+import { waitor } from './crawlUtil';
+import { Page } from 'puppeteer';
 
-async function fetchMelon({ page }){
+async function fetchMelon({ page }: { page : Page }){
 
     const titles = await page.$$eval('.rank01', titles => titles.map((el) => el.textContent.trim()));
     const artists = await page.evaluate(() => {
@@ -27,12 +28,10 @@ async function fetchMelon({ page }){
     }
 }
 
-async function collectMelon({ page }){
+export async function collectMelon({ page }: { page : Page }){
     await page.goto(`https://www.melon.com/chart/`, waitor);
     const untilHundred = await fetchMelon({ page });
     // 1위부터 100위까지
 
     return untilHundred;
 }
-
-module.exports = { collectMelon };

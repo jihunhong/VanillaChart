@@ -1,12 +1,10 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
-
-const { User } = require('../models');
+import express from 'express';
+import bcrypt from 'bcrypt';
+import passport from 'passport';
 
 const router = express.Router();
 
-const { signUpUser } = require('../controller/userController');
+import { signUpUser } from '../controller/userController';
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -31,7 +29,9 @@ router.post('/login', (req, res, next) => {
 
 router.post('/logout', (req, res, next) => {
     req.logout();
-    req.session.destroy();
+    req.session.destroy(() => {
+        console.log('destroyed session..');
+    });
     res.send('ok');
 })
 

@@ -1,6 +1,7 @@
-const { waitor } = require('./crawlUtil');
+import { waitor } from './crawlUtil';
+import { Page } from 'puppeteer';
 
-async function fetchGenie({ page }){
+async function fetchGenie({ page }: { page : Page }){
 
     const titles = await page.$$eval('.info .title', titles => titles.map((el) => el.textContent.trim()));
     const artists = await page.$$eval('.info .artist', artists => artists.map((el) => el.textContent.trim()));
@@ -22,7 +23,7 @@ async function fetchGenie({ page }){
     }
 }
 
-async function collectGenie({ page }){
+export async function collectGenie({ page }: { page : Page }){
     await page.goto(`https://www.genie.co.kr/chart/top200`, waitor);
     const untilFifty = await fetchGenie({ page });
     // 1위부터 50위까지
@@ -35,5 +36,3 @@ async function collectGenie({ page }){
 
     return [...untilFifty, ...untilHundred];
 }
-
-module.exports = { collectGenie };

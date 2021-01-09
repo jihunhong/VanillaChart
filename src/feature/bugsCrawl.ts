@@ -1,6 +1,7 @@
-const { waitor } = require('./crawlUtil');
+import { waitor } from './crawlUtil';
+import { Page } from 'puppeteer';
 
-async function fetchBugs({ page }){
+async function fetchBugs({ page }: { page : Page }){
 
     const titles = await page.$$eval('p.title', titles => titles.map((el) => el.textContent));
     const artists = await page.$$eval('p.artist', artists => artists.map((el) => el.textContent));
@@ -22,12 +23,10 @@ async function fetchBugs({ page }){
     }
 }
 
-async function collectBugs({ page }){
+export async function collectBugs({ page }: { page : Page }){
     await page.goto(`https://music.bugs.co.kr/chart`, waitor);
     const untilHundred = await fetchBugs({ page });
     // 1위부터 100위까지
 
     return untilHundred;
 }
-
-module.exports = { collectBugs };

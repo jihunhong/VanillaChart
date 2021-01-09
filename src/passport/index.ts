@@ -1,8 +1,7 @@
-const passport = require('passport');
-const local = require('./local');
-const User = require('../models/User');
+import passport from 'passport';
+import { localStrategy } from './local';
 
-module.exports = () => {
+export function passportConfig() {
     passport.serializeUser((user, done) => {
         done(null, user.id);
     })
@@ -17,5 +16,5 @@ module.exports = () => {
         }
     })
     
-    local();
+    localStrategy();
 }
