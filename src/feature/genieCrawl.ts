@@ -3,9 +3,9 @@ import { Page } from 'puppeteer';
 
 async function fetchGenie({ page }: { page : Page }){
 
-    const titles = await page.$$eval('.info .title', titles => titles.map((el) => el.textContent.trim())) as unknown as Array<string>;;
-    const artists = await page.$$eval('.info .artist', artists => artists.map((el) => el.textContent.trim())) as unknown as Array<string>;;
-    const albumtitles = await page.$$eval('.info .albumtitle', albumtitles => albumtitles.map((el) => el.textContent.trim())) as unknown as Array<string>;;
+    const titles = await page.$$eval('.info .title', titles => titles.map((el) => el.textContent!.trim())) as unknown as Array<string>;;
+    const artists = await page.$$eval('.info .artist', artists => artists.map((el) => el.textContent!.trim())) as unknown as Array<string>;;
+    const albumtitles = await page.$$eval('.info .albumtitle', albumtitles => albumtitles.map((el) => el.textContent!.trim())) as unknown as Array<string>;;
 
     if(titles.length === artists.length && artists.length === albumtitles.length){
         const charts = Array(titles.length).fill('').map((v, i) => {
