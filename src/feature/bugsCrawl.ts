@@ -3,12 +3,12 @@ import { Page } from 'puppeteer';
 
 async function fetchBugs({ page }: { page : Page }){
 
-    const titles = await page.$$eval('p.title', titles => titles.map((el) => el.textContent));
-    const artists = await page.$$eval('p.artist', artists => artists.map((el) => el.textContent));
-    const albumtitles = await page.$$eval('td[class="left"] > a', albumtitles => albumtitles.map((el) => el.textContent));
+    const titles = await page.$$eval('p.title', titles => titles.map((el) => el.textContent)) as unknown as Array<string>;
+    const artists = await page.$$eval('p.artist', artists => artists.map((el) => el.textContent)) as unknown as Array<string>;
+    const albumtitles = await page.$$eval('td[class="left"] > a', albumtitles => albumtitles.map((el) => el.textContent)) as unknown as Array<string>;
 
     if(titles.length === artists.length && artists.length === albumtitles.length){
-        const charts = Array(titles.length).fill().map((v, i) => {
+        const charts = Array(titles.length).fill('').map((v, i) => {
             return {
                 rank : i + 1,
                 title : titles[i].replace(/\n/g, ''),

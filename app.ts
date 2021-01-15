@@ -2,16 +2,17 @@ import express from 'express';
 import path from 'path';
 import fs from 'fs';
 import dotenv from 'dotenv';
-dotenv.config();
-const app = express();
 import passport from 'passport';
 import { passportConfig  } from './src/passport'
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 
 //  Router 
+import chartRoutes from './src/routes/chart-routes';
 import userRoutes from './src/routes/user-routes';
 
+const app = express();
+dotenv.config();
 passportConfig();
 
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/user', userRoutes);
+app.use('/chart', chartRoutes);
 
 app.listen(8080, () => {
   console.log('LOCAL DEV SETTING app.listen port 8080')

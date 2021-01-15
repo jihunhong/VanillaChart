@@ -5,6 +5,7 @@ import passport from 'passport';
 const router = express.Router();
 
 import { signUpUser } from '../controller/userController';
+import prisma from '../config/db';
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -38,7 +39,7 @@ router.post('/logout', (req, res, next) => {
 router.post('/create', async(req, res, next) => {
     
     try{
-        const existUser = await User.findOne({
+        const existUser = await prisma.users.findOne({
             where : {
                 email : req.body.email,
             }
@@ -47,7 +48,7 @@ router.post('/create', async(req, res, next) => {
             return res.status(403).send('이미 사용중인 아이디입니다.')
         }
 
-        await signUpUser(req);
+        await signUpUser({ email : req.body.eamil, nickname : req.body.nickname, password: req.body.password });
         res.status(201).send('ok');
     }catch(err){
         console.error(err);
@@ -55,4 +56,4 @@ router.post('/create', async(req, res, next) => {
     }
 })
 
-module.exports = router;
+export default router;

@@ -1,14 +1,21 @@
 import express from 'express';
+import prisma from '../config/db';
+import moment from 'moment';
 
 const router = express.Router();
-
 
 router.get('/:chart', async(req, res, next) => {
 
     try{
-        const chart = await Chart.findOne({
+        const chart = await prisma.charts.findMany({
             where : {
-                site : req.params.chart,
+                site : {
+                    equals : req.params.chart,
+                },
+                updatedAt : {
+                    gte : moment().format('YYYY-MM-DD'),
+                    lt : moment().add(1, 'days').format('YYYY-MM-DD'),
+                }
             }
         })
         res.status(200).send(chart);
@@ -22,11 +29,12 @@ router.get('/:chart/:date', async(req, res, next) => {
     // dateFormat => 'YYYY-MM-DDTHH:mm:ss'
 
     try{
-        const chart = await Chart.findAll({
+        const chart = await prisma.charts.findMany({
             where : {
                 site : req.params.chart,
                 createdAt : {
-                    gte : req.params.date
+                    gte : moment(req.params.date).format('YYYY-MM-DDTHH:mm:ss'),
+                    lt : moment(req.params.date).add(1, 'days').format('YYYY-MM-DDT00:00:00'),
                 }
             }
         })
@@ -40,10 +48,18 @@ router.get('/:chart/:date', async(req, res, next) => {
 router.get('/:chart/:rank',  async(req, res, next) => {
     
     try{
-        const result = await Chart.findOne({
+        const result = await prisma.charts.findMany({
             where : {
-                site : req.params.chart,
-                rank : req.params.rank
+                site : {
+                    equals : req.params.chart,
+                },
+                updatedAt : {
+                    gte : moment().format('YYYY-MM-DD'),
+                    lt : moment().add(1, 'days').format('YYYY-MM-DD'),
+                },
+                rank : {
+                    equals : req.params.rank as unknown as number
+                }
             }
         })
         res.status(200).send(result);
@@ -53,4 +69,4 @@ router.get('/:chart/:rank',  async(req, res, next) => {
     }
 })
 
-module.exports = router;
+export default router;
