@@ -1,18 +1,21 @@
-const { launchBrowser, insertChart } = require('./crawlUtil.js');
-const { collectMelon } = require('./melonCrawl.js');
-const { collectGenie } = require('./genieCrawl.js');
-const { collectBugs } = require('./bugsCrawl.js');
+import { launchBrowser, insertChart, convertChartFormat } from './crawlUtil.js';
+import { collectMelon } from './melonCrawl.js';
+import { collectGenie } from './genieCrawl.js';
+import { collectBugs } from './bugsCrawl.js';
 
 (async() => {
-    const [browser, page] = await launchBrowser();
+    const { browser, page } = await launchBrowser();
     try{
         const melon = await collectMelon({ page });
         const genie = await collectGenie({ page });
         const bugs = await collectBugs({ page });
 
-        await insertChart({ site : 'melon', chart : melon });
+        const convertedMelon = await convertChartFormat({ chart : melon });
+        const convertedBugs = await convertChartFormat({ chart : bugs });
+
+        await insertChart({ site : 'melon', chart : convertedMelon });
         await insertChart({ site : 'genie', chart : genie });
-        await insertChart({ site : 'bugs', chart : bugs });
+        await insertChart({ site : 'bugs', chart : convertedBugs });
 
         console.log('SUCCESS INSERT AND CRAWL');
     }catch(err){

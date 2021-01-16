@@ -2,10 +2,9 @@ import { waitor } from './crawlUtil';
 import { Page } from 'puppeteer';
 
 async function fetchGenie({ page }: { page : Page }){
-
-    const titles = await page.$$eval('.info .title', titles => titles.map((el) => el.textContent!.trim())) as unknown as Array<string>;;
-    const artists = await page.$$eval('.info .artist', artists => artists.map((el) => el.textContent!.trim())) as unknown as Array<string>;;
-    const albumtitles = await page.$$eval('.info .albumtitle', albumtitles => albumtitles.map((el) => el.textContent!.trim())) as unknown as Array<string>;;
+    const titles = await page.$$eval('.info .title', titles => titles.map((el) => el.textContent!.trim())) as unknown as Array<string>;
+    const artists = await page.$$eval('.info .artist', artists => artists.map((el) => el.textContent!.trim())) as unknown as Array<string>;
+    const albumtitles = await page.$$eval('.info .albumtitle', albumtitles => albumtitles.map((el) => el.textContent!.trim())) as unknown as Array<string>;
 
     if(titles.length === artists.length && artists.length === albumtitles.length){
         const charts = Array(titles.length).fill('').map((v, i) => {
@@ -30,7 +29,7 @@ export async function collectGenie({ page }: { page : Page }){
 
     await page.click(`.rank-page-nav a:not([class=current])`);
     // 다음 페이지 버튼 클릭
-
+    
     const untilHundred = await fetchGenie({ page });
     // 51위부터 100위까지 페이지에서 같은 함수 실행
 
