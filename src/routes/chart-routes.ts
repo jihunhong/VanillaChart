@@ -1,13 +1,13 @@
 import express from 'express';
-import prisma from '../config/db';
 import moment from 'moment';
+import { Chart } from '../models';
 
 const router = express.Router();
 
 router.get('/:chart', async(req, res, next) => {
 
     try{
-        const chart = await prisma.charts.findMany({
+        const chart = await Chart.findMany({
             where : {
                 site : {
                     equals : req.params.chart,
@@ -29,7 +29,7 @@ router.get('/:chart/:date', async(req, res, next) => {
     // dateFormat => 'YYYY-MM-DDTHH:mm:ss'
 
     try{
-        const chart = await prisma.charts.findMany({
+        const chart = await Chart.findMany({
             where : {
                 site : req.params.chart,
                 createdAt : {
@@ -48,7 +48,7 @@ router.get('/:chart/:date', async(req, res, next) => {
 router.get('/:chart/:rank',  async(req, res, next) => {
     
     try{
-        const result = await prisma.charts.findMany({
+        const result = await Chart.findMany({
             where : {
                 site : {
                     equals : req.params.chart,

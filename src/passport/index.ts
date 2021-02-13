@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { localStrategy } from './local';
-import prisma from '../config/db';
+import { User } from '../models';
 
 export function passportConfig() {
     passport.serializeUser((user, done) => {
@@ -9,7 +9,7 @@ export function passportConfig() {
     
     passport.deserializeUser(async(id: number, done) => {
         try{
-            const user = await prisma.users.findOne({ where : { id }});
+            const user = await User.findOne({ where : { id }});
             done(null, user!)
         }catch(error){
             console.error(error);

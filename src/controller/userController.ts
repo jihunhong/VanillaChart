@@ -1,16 +1,14 @@
 import { Request } from "express";
 import bcrypt from 'bcrypt';
-import prisma from "../config/db";
+import { User } from "../models";
 
 export async function signUpUser({ email, nickname, password } : { email: string, nickname: string, password: string }) {
     try{
         const hashPassword = await bcrypt.hash(password, 12);
-        await prisma.users.create({
-            data : {
-                email,
-                nickname,
-                password : hashPassword
-            }
+        await User.create({
+            email,
+            nickname,
+            password : hashPassword
         })
     }catch(err){
         throw err;

@@ -29,9 +29,14 @@ export async function collectGenie({ page }: { page : Page }){
 
     await page.click(`.rank-page-nav a:not([class=current])`);
     // 다음 페이지 버튼 클릭
-    
-    const untilHundred = await fetchGenie({ page });
+    await page.waitFor(3000);
+    const temp = await fetchGenie({ page });
+    const untilHundred = temp.map((v) => {
+        return {
+            ...v,
+            rank : 50 + v.rank
+        }
+    })
     // 51위부터 100위까지 페이지에서 같은 함수 실행
-
     return [...untilFifty, ...untilHundred];
 }

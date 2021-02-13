@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy } from 'passport-local';
 import bcrypt from 'bcrypt';
-import prisma from '../config/db';
+import { User } from '../models';
 
 export function localStrategy() {
     passport.use(new Strategy({
@@ -9,7 +9,7 @@ export function localStrategy() {
         passwordField : 'password',
     }, async(email, password, done) => {
         try{
-            const user = await prisma.users.findOne({
+            const user = await User.findOne({
                 where : { email }
             });
             

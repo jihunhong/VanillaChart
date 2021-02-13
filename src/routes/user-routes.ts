@@ -5,7 +5,7 @@ import passport from 'passport';
 const router = express.Router();
 
 import { signUpUser } from '../controller/userController';
-import prisma from '../config/db';
+import { User } from '../models';
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -39,7 +39,7 @@ router.post('/logout', (req, res, next) => {
 router.post('/create', async(req, res, next) => {
     
     try{
-        const existUser = await prisma.users.findOne({
+        const existUser = await User.findOne({
             where : {
                 email : req.body.email,
             }
