@@ -1,13 +1,12 @@
 import dotenv from 'dotenv';
-import path from 'path';
-dotenv.config({ path : path.join(__dirname, '../.env') });
+dotenv.config();
 
 module.exports = {
   "development": {
-    "username": process.env.LOCAL_DB_ID,
-    "password": process.env.LOCAL_DB_PASSWORD,
+    "username": <string> process.env.LOCAL_DB_ID,
+    "password": <string> process.env.LOCAL_DB_PASSWORD,
     "database": "cherry_chart",
-    "host": process.env.LOCAL_DB_HOST,
+    "host": <string> process.env.LOCAL_DB_HOST,
     "port" : 3306,
     "dialect": "mysql",
   },

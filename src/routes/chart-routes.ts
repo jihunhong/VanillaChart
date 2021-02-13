@@ -7,13 +7,11 @@ const router = express.Router();
 router.get('/:chart', async(req, res, next) => {
 
     try{
-        const chart = await Chart.findMany({
+        const chart = await Chart.findAll({
             where : {
-                site : {
-                    equals : req.params.chart,
-                },
+                site : req.params.chart,
                 updatedAt : {
-                    gte : moment().format('YYYY-MM-DD'),
+                    gte : moment().format('YYYY-MM-DD 00:00:00'),
                     lt : moment().add(1, 'days').format('YYYY-MM-DD'),
                 }
             }
@@ -29,7 +27,7 @@ router.get('/:chart/:date', async(req, res, next) => {
     // dateFormat => 'YYYY-MM-DDTHH:mm:ss'
 
     try{
-        const chart = await Chart.findMany({
+        const chart = await Chart.findAll({
             where : {
                 site : req.params.chart,
                 createdAt : {
@@ -48,18 +46,14 @@ router.get('/:chart/:date', async(req, res, next) => {
 router.get('/:chart/:rank',  async(req, res, next) => {
     
     try{
-        const result = await Chart.findMany({
+        const result = await Chart.findAll({
             where : {
-                site : {
-                    equals : req.params.chart,
-                },
+                site : req.params.chart,
                 updatedAt : {
                     gte : moment().format('YYYY-MM-DD'),
                     lt : moment().add(1, 'days').format('YYYY-MM-DD'),
                 },
-                rank : {
-                    equals : req.params.rank as unknown as number
-                }
+                rank : req.params.rank as unknown as number
             }
         })
         res.status(200).send(result);
