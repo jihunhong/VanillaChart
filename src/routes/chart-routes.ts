@@ -1,6 +1,7 @@
 import express from 'express';
 import moment from 'moment';
 import { Chart } from '../models';
+import { Op } from 'sequelize';
 
 const router = express.Router();
 
@@ -11,8 +12,8 @@ router.get('/:chart', async(req, res, next) => {
             where : {
                 site : req.params.chart,
                 updatedAt : {
-                    gte : moment().format('YYYY-MM-DD 00:00:00'),
-                    lt : moment().add(1, 'days').format('YYYY-MM-DD'),
+                    [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
+                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
                 }
             }
         })
@@ -31,8 +32,8 @@ router.get('/:chart/:date', async(req, res, next) => {
             where : {
                 site : req.params.chart,
                 createdAt : {
-                    gte : moment(req.params.date).format('YYYY-MM-DDTHH:mm:ss'),
-                    lt : moment(req.params.date).add(1, 'days').format('YYYY-MM-DDT00:00:00'),
+                    [Op.gte] : moment(req.params.date).format('YYYY-MM-DDTHH:mm:ss'),
+                    [Op.lt] : moment(req.params.date).add(1, 'days').format('YYYY-MM-DDT00:00:00'),
                 }
             }
         })
@@ -50,8 +51,8 @@ router.get('/:chart/:rank',  async(req, res, next) => {
             where : {
                 site : req.params.chart,
                 updatedAt : {
-                    gte : moment().format('YYYY-MM-DD'),
-                    lt : moment().add(1, 'days').format('YYYY-MM-DD'),
+                    [Op.gte] : moment().format('YYYY-MM-DD'),
+                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
                 },
                 rank : req.params.rank as unknown as number
             }

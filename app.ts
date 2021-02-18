@@ -12,12 +12,13 @@ import chartRoutes from './src/routes/chart-routes';
 import userRoutes from './src/routes/user-routes';
 
 const app = express();
-dotenv.config();
+dotenv.config({ path : path.join(__dirname, './.env')});
 passportConfig();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use(cookieParser(process.env.SESSION_SECRET));
+
 app.use(session({
   saveUninitialized : false,
   resave : false,
