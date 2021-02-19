@@ -6,6 +6,7 @@ export interface ChartData {
     artist : string
     album : string
     score? : number
+    image? : string
 }
 
 declare global {

@@ -3,6 +3,11 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { siteName, ChartData} from '../../@types';
 import { LoadEvent } from 'puppeteer';
 import db, { Chart, sequelize } from '../models';
+import https from 'https';
+import fs from 'fs';
+import path from 'path';
+import { response } from 'express';
+
 puppeteer.use(StealthPlugin());
 
 db.sequelize.sync()
@@ -35,6 +40,7 @@ export async function insertChart({ site, chart } : { site : siteName, chart : A
             site,
                 // ...row
         })
+        await imageDownload({ url : row.image!, music : row, site });
     }
 }
 
@@ -71,6 +77,14 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
         console.error(err);
         return element;
     }
+}
+
+export async function imageDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
+    const file = fs.createWriteStream(path.join(__dirname, `../../../covers/${site}/${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`));
+    https.get(url, (response) => {
+        response.pipe(file);
+        file.on('finish', () => file.close());
+    });
 }
 
 export async function convertChartFormat({ chart } : { chart : Array<ChartData> }){

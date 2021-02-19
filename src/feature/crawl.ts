@@ -1,4 +1,4 @@
-import { launchBrowser, insertChart, convertChartFormat } from './crawlUtil';
+import { launchBrowser, insertChart, convertChartFormat, imageDownload } from './crawlUtil';
 import { collectMelon } from './melonCrawl';
 import { collectGenie } from './genieCrawl';
 import { collectBugs } from './bugsCrawl';

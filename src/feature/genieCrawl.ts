@@ -5,6 +5,10 @@ async function fetchGenie({ page }: { page : Page }){
     const titles = await page.$$eval('.info .title', titles => titles.map((el) => el.textContent!.trim())) as unknown as Array<string>;
     const artists = await page.$$eval('.info .artist', artists => artists.map((el) => el.textContent!.trim())) as unknown as Array<string>;
     const albumtitles = await page.$$eval('.info .albumtitle', albumtitles => albumtitles.map((el) => el.textContent!.trim())) as unknown as Array<string>;
+    const images = await page.$$eval('a.cover img', imageTags => imageTags.map((el) => el!.getAttribute('src')?.replace('//image.genie.co.kr/', 'https://image.genie.co.kr/').replace('140x140.JPG/dims/resize/Q_80,0', '500x500.JPG')));
+    // //image.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/902/916/81902916_1613722333486_1_140x140.JPG/dims/resize/Q_80,0
+    // //image.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/902/916/81902916_1613722333486_1_600x600.JPG
+
 
     if(titles.length === artists.length && artists.length === albumtitles.length){
         const charts = Array(titles.length).fill('').map((v, i) => {
@@ -12,7 +16,8 @@ async function fetchGenie({ page }: { page : Page }){
                 rank : i + 1,
                 title : titles[i],
                 artist : artists[i],
-                album : albumtitles[i]
+                album : albumtitles[i],
+                image : images[i],
             }
         })
 

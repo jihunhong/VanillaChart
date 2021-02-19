@@ -11,7 +11,7 @@ async function fetchMelon({ page }: { page : Page }){
         });
     }) as unknown as Array<string>;
     const albumtitles = await page.$$eval('.rank03', albumtitles => albumtitles.map((el) => el.textContent!.trim())) as unknown as Array<string>;
-    const images = await page.$$eval('.image_typeAll > img', imageTags => imageTags.map((el) => el!.getAttribute('src')?.replace('120/quality/80/optimize', '282/sharpen/0x1')));
+    const images = await page.$$eval('.image_typeAll > img', imageTags => imageTags.map((el) => el!.getAttribute('src')?.replace('120/quality/80/optimize', '500/sharpen/0x1')));
     // https://cdnimg.melon.co.kr/cm2/album/images/105/54/246/10554246_20210127150136_500.jpg/melon/resize/120/quality/80/optimize
     // https://cdnimg.melon.co.kr/cm2/album/images/105/54/246/10554246_20210127150136_500.jpg/melon/resize/282/sharpen/0x1
 
@@ -22,7 +22,7 @@ async function fetchMelon({ page }: { page : Page }){
                 title : titles[i],
                 artist : artists[i],
                 album : albumtitles[i],
-                images : images[i],
+                image : images[i],
             }
         })
 
