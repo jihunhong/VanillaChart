@@ -31,10 +31,10 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/cover', express.static(path.join(__dirname, '../covers')));
+app.use('/api/cover', express.static(path.join(__dirname, '../covers')));
 
-app.use('/user', userRoutes);
-app.use('/chart', chartRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/chart', chartRoutes);
 
 app.listen(8080, () => {
   console.log('LOCAL DEV SETTING app.listen port 8080')
