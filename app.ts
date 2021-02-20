@@ -6,6 +6,7 @@ import passport from 'passport';
 import { passportConfig  } from './src/passport'
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 //  Router 
 import chartRoutes from './src/routes/chart-routes';
@@ -17,6 +18,10 @@ passportConfig();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}))
 app.use(cookieParser(process.env.SESSION_SECRET));
 
 app.use(session({
@@ -26,6 +31,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/cover', express.static(path.join(__dirname, '../covers')));
 
 app.use('/user', userRoutes);
 app.use('/chart', chartRoutes);

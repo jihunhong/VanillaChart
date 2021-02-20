@@ -3,10 +3,9 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { siteName, ChartData} from '../../@types';
 import { LoadEvent } from 'puppeteer';
 import db, { Chart, sequelize } from '../models';
-import https from 'https';
+import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
-import { response } from 'express';
 
 puppeteer.use(StealthPlugin());
 
@@ -32,14 +31,6 @@ export async function launchBrowser() {
 
 export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
     for(const row of chart){
-        await Chart.create({
-            rank : row.rank,
-            title : row.title,
-            artist : row.artist,
-            album : row.album,
-            site,
-                // ...row
-        })
         await imageDownload({ url : row.image!, music : row, site });
     }
 }
@@ -79,12 +70,27 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
     }
 }
 
-export async function imageDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
-    const file = fs.createWriteStream(path.join(__dirname, `../../../covers/${site}/${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`));
-    https.get(url, (response) => {
-        response.pipe(file);
-        file.on('finish', () => file.close());
+async function download({ targetPath, url } : { targetPath : string, url : string }){
+    const writer = fs.createWriteStream(targetPath);
+    const response = await axios({
+        url,
+        method : 'GET',
+        responseType : 'stream'
     });
+
+    response.data.pipe(writer);
+
+    return new Promise((res, rej) => {
+        writer.on('finish', res);
+        writer.on('error', rej);
+    })
+}
+
+export async function imageDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
+    const targetPath = path.join(__dirname, `../../../covers/${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
+    if(!fs.existsSync(targetPath)){
+        await download({ targetPath, url });
+    }
 }
 
 export async function convertChartFormat({ chart } : { chart : Array<ChartData> }){

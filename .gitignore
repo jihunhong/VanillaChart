@@ -9,3 +9,4 @@ server.log
 /client/build
 /.vscode
 /dist
+/covers
