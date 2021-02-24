@@ -19,7 +19,7 @@ passportConfig();
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use(cors({
-  origin: 'http://www.cherrychart.com:3000',
+  origin: 'http://www.cherrychart.com',
   credentials: true,
 }))
 app.use(cookieParser(process.env.SESSION_SECRET));
