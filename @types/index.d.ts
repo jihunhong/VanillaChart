@@ -26,5 +26,6 @@ declare namespace NodeJS {
       /** node environment */
       NODE_ENV: string
       SESSION_SECRET : string
+      YOUTUBE_API_KEY : string
     }
   }
