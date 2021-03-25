@@ -1,11 +1,25 @@
 import express from 'express';
-import bcrypt from 'bcrypt';
 import passport from 'passport';
 
 const router = express.Router();
 
 import { signUpUser } from '../controller/userController';
 import { User } from '../models';
+import { sign } from '../lib';
+
+router.get('/', (req, res, next) => {
+    passport.authenticate('jwt', { session : false }, (error, user, info) => {
+        if(error){
+            console.error(error);
+            return next(error);
+        }
+        if(info){
+            return res.status(401).json(info);
+        }
+
+        return res.status(200).json(user);
+    })(req, res, next);
+})
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
@@ -17,13 +31,16 @@ router.post('/login', (req, res, next) => {
         if(info){
             return res.status(401).send(info.message);
         }
-
-        return req.login(user, async(loginError) => {
+        return req.login(user, { session : false } , async(loginError) => {
             if(loginError){
                 console.error(loginError);
                 return next(loginError);
             }
-            return res.status(200).json(user);
+            const token = await sign(user);
+            return res.status(200).json({
+                message : 'logged in successfully',
+                token,
+            });
         })
     })(req, res, next);
 });
@@ -44,12 +61,13 @@ router.post('/create', async(req, res, next) => {
                 email : req.body.email,
             }
         });
+        
         if(existUser){
             return res.status(403).send('이미 사용중인 아이디입니다.')
         }
 
-        await signUpUser({ email : req.body.eamil, nickname : req.body.nickname, password: req.body.password });
-        res.status(201).send('ok');
+        await signUpUser({ email : req.body.email, nickname : req.body.nickname, password: req.body.password });
+        res.status(201).send({ email : req.body.email, nickname : req.body.nickname, password: req.body.password });
     }catch(err){
         console.error(err);
         next(err)

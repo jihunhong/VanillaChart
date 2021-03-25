@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/feature/crawl.js"
+            "program": "${workspaceFolder}/dist/app.js"
         },
         {
             "type": "node",

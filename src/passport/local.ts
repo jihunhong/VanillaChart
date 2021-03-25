@@ -4,13 +4,14 @@ import bcrypt from 'bcrypt';
 import { User } from '../models';
 
 export function localStrategy() {
-    passport.use(new Strategy({
+    passport.use('local', new Strategy({
         usernameField : 'email',
         passwordField : 'password',
     }, async(email, password, done) => {
         try{
             const user = await User.findOne({
-                where : { email }
+                where : { email },
+                raw : true
             });
             
             if(!user){
@@ -19,6 +20,7 @@ export function localStrategy() {
     
             const result = await bcrypt.compare(password, user.password);
             if(result){
+                delete user['password'];
                 return done(null, user);
             }
     
