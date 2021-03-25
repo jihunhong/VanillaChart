@@ -5,12 +5,50 @@ import { Op } from 'sequelize';
 
 const router = express.Router();
 
-router.get('/:chart', async(req, res, next) => {
+router.get('/artists/:site', async(req, res, next) => {
+    try{
+        const artists = await Chart.findAll({
+            where : {
+                site : req.params.site,
+                updatedAt : {
+                    [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
+                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
+                }
+            },
+            group : ['artists']
+        })
+        res.status(200).send(artists);
+    }catch(err){
+        console.error(err);
+        next(err);
+    }
+})
+
+router.get('/albums/:site', async(req, res, next) => {
+    try{
+        const albums = await Chart.findAll({
+            where : {
+                site : req.params.site,
+                updatedAt : {
+                    [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
+                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
+                }
+            },
+            group : ['album']
+        })
+        res.status(200).send(albums);
+    }catch(err){
+        console.error(err);
+        next(err);
+    }
+})
+
+router.get('/:site', async(req, res, next) => {
 
     try{
         const chart = await Chart.findAll({
             where : {
-                site : req.params.chart,
+                site : req.params.site,
                 updatedAt : {
                     [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
                     [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),

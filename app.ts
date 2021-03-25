@@ -15,7 +15,6 @@ dotenv.config({ path : path.join(__dirname, './.env')});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
-app.use(morgan('dev'));
 
 passportConfig();
 app.use(passport.initialize());

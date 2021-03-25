@@ -34,6 +34,7 @@ declare global {
         PRODUCTION_DB_PASSWORD : string
         PRODUCTION_DB_HOST : string
         SECRET_KEY : string
+        YOUTUBE_API_KEY : string
       }
     }
 }
