@@ -5,7 +5,7 @@ import { User } from '../models';
 
 const JWTStrategy = passportJWT.Strategy;
 const { ExtractJwt } = passportJWT;
-console.log(process.env.SECRET_KEY);
+
 export function passportConfig(){
     passport.use('jwt', new JWTStrategy({
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

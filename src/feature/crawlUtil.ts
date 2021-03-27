@@ -17,6 +17,8 @@ db.sequelize.sync()
         console.error(err);
 });
 
+const MIN_MATCH_SCORE = 7;
+
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
 }
@@ -56,7 +58,7 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
         });
 
         if(matchedList.length > 0 ){
-            if(matchedList[0].score! > 7){
+            if(matchedList[0].score! > MIN_MATCH_SCORE){
                 console.log(`✔'${element.title} - ${element.title}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `)
                 return {
                     ...element,
