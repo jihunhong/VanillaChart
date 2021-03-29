@@ -2,7 +2,10 @@ import passport from 'passport';
 import passportJWT from 'passport-jwt';
 import { localStrategy } from './local';
 import { User } from '../models';
+import dotenv from 'dotenv';
+import path from 'path';
 
+dotenv.config({ path : path.join(__dirname, '../../.env') });
 const JWTStrategy = passportJWT.Strategy;
 const { ExtractJwt } = passportJWT;
 
