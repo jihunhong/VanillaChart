@@ -59,19 +59,20 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
 
         if(matchedList.length > 0 ){
             if(matchedList[0].score! > MIN_MATCH_SCORE){
-                console.log(`✔'${element.title} - ${element.title}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `)
+                console.log(`✔ '${element.title} - ${element.artist}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `);
                 return {
                     ...element,
                     title : matchedList[0].title,
                     artist : matchedList[0].artist,
                     album : matchedList[0].album,
+                    matched: true
                 }
             }else{
-                console.log(`💫'${element.title} - ${element.title}' not found `)
+                console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} `)
                 return element;
             }
         }else{
-            console.log(`💫'${element.title} - ${element.title}' not found `)
+            console.error(`❌ '${element.title} - ${element.title}' not found `)
             return element;
         }
     }catch(err){

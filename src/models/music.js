@@ -18,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING(100),
             allowNull : false,
         },
-        created_at : {
-            type : DataTypes.DATE,
-            allowNull : DataTypes.NOW,
-        },
     }, {
         charset : 'utf8',
         collate : 'utf8_general_ci'

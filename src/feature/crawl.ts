@@ -2,6 +2,7 @@ import { launchBrowser, insertChart, convertChartFormat, imageDownload } from '.
 import { collectMelon } from './melonCrawl';
 import { collectGenie } from './genieCrawl';
 import { collectBugs } from './bugsCrawl';
+import { createYoutubeRows } from './youtubeMatch';
 
 (async() => {
     const { browser, page } = await launchBrowser();
@@ -12,10 +13,14 @@ import { collectBugs } from './bugsCrawl';
         const melon = await collectMelon({ page });
         const convertedMelon = await convertChartFormat({ chart : melon });
         await insertChart({ site : 'melon', chart : convertedMelon });
+        const matchedMelon = convertedMelon.filter(v => v.matched);
+        await createYoutubeRows({ chartData: matchedMelon });
 
         const bugs = await collectBugs({ page });
         const convertedBugs = await convertChartFormat({ chart : bugs });
         await insertChart({ site : 'bugs', chart : convertedBugs });
+        const matchedGenie = convertedBugs.filter(v => v.matched);
+        await createYoutubeRows({ chartData: matchedGenie });
         
         console.log('SUCCESS INSERT AND CRAWL');
     }catch(err){

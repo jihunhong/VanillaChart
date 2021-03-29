@@ -23,6 +23,15 @@
             "program": "${file}"
         },
         {
+            "type": "node",
+            "request": "launch",
+            "name": "crawl debug",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/dist/src/feature/crawl.js"
+        },
+        {
             "name": "Debug Jest Tests",
             "type": "node",
             "request": "launch",

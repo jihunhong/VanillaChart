@@ -7,6 +7,7 @@ export interface ChartData {
     album : string
     score? : number
     image? : string
+    matched?: boolean
 }
 
 export interface UserWithPWD {
