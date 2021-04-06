@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { siteName, ChartData} from '../../@types';
 import { LoadEvent } from 'puppeteer';
-import db, { Chart, sequelize } from '../models';
+import db, { Chart, sequelize, Music } from '../models';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
@@ -17,7 +17,7 @@ db.sequelize.sync()
         console.error(err);
 });
 
-const MIN_MATCH_SCORE = 7;
+const MIN_MATCH_SCORE = 3;
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
@@ -33,13 +33,18 @@ export async function launchBrowser() {
 
 export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
     for(const row of chart){
+        const [res] = await Music.findOrCreate({
+            where : {
+                title : row.title,
+                artist : row.artist,
+                album : row.album,
+            },
+            raw : true
+        });
         await Chart.create({
             rank : row.rank,
-            title : row.title,
-            artist : row.artist,
-            album : row.album,
             site,
-                // ...row
+            MusicId : res.id
         })
         await imageDownload({ url : row.image!, music : row, site });
     }
@@ -48,12 +53,18 @@ export async function insertChart({ site, chart } : { site : siteName, chart : A
 export async function fullTextSearch(element : ChartData): Promise<ChartData> {
     try{
         const matchedList:Array<ChartData> = await sequelize.query(`
-            SELECT *, match(title) against( ? ) as score 
-            FROM Charts WHERE match(title) against( ? ) AND site = 'genie' 
+            SELECT *, match(title, artist) against( ? ) as score 
+            FROM Music 
+            WHERE match(title, artist) against( ? ) AND 
+                id IN (
+                    SELECT MusicId
+                    FROM Charts
+                    WHERE site = 'genie'
+                )
             ORDER BY score desc
             LIMIT 5;`
         , {
-            replacements : [ element.title, element.title ],
+            replacements : [ `${element.title} ${element.artist}`, `${element.title} ${element.artist}` ],
             type : sequelize.QueryTypes.SELECT
         });
 
@@ -69,10 +80,13 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                 }
             }else{
                 console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} `)
-                return element;
+                return {
+                    ...element,
+                    ...matchedList[0]
+                };
             }
         }else{
-            console.error(`❌ '${element.title} - ${element.title}' not found `)
+            console.error(`❌ '${element.title} - ${element.artist}' not found `)
             return element;
         }
     }catch(err){
@@ -104,6 +118,6 @@ export async function imageDownload({ url, site, music } : { url : string, site 
     }
 }
 
-export async function convertChartFormat({ chart } : { chart : Array<ChartData> }){
+export async function ftsMatchingJob({ chart } : { chart : Array<ChartData> }){
     return await Promise.all(chart.map(fullTextSearch));
 }

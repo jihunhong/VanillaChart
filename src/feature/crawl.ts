@@ -1,4 +1,4 @@
-import { launchBrowser, insertChart, convertChartFormat, imageDownload } from './crawlUtil';
+import { launchBrowser, insertChart, ftsMatchingJob, imageDownload } from './crawlUtil';
 import { collectMelon } from './melonCrawl';
 import { collectGenie } from './genieCrawl';
 import { collectBugs } from './bugsCrawl';
@@ -11,13 +11,13 @@ import { createYoutubeRows } from './youtubeMatch';
         await insertChart({ site : 'genie', chart : genie });
         
         const melon = await collectMelon({ page });
-        const convertedMelon = await convertChartFormat({ chart : melon });
+        const convertedMelon = await ftsMatchingJob({ chart : melon });
         await insertChart({ site : 'melon', chart : convertedMelon });
         const matchedMelon = convertedMelon.filter(v => v.matched);
         await createYoutubeRows({ chartData: matchedMelon });
 
         const bugs = await collectBugs({ page });
-        const convertedBugs = await convertChartFormat({ chart : bugs });
+        const convertedBugs = await ftsMatchingJob({ chart : bugs });
         await insertChart({ site : 'bugs', chart : convertedBugs });
         const matchedGenie = convertedBugs.filter(v => v.matched);
         await createYoutubeRows({ chartData: matchedGenie });

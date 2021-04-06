@@ -10,6 +10,7 @@ module.exports = {
     "host": <string> process.env.LOCAL_DB_HOST,
     "port" : 3306,
     "dialect": "mysql",
+    "timezone": "+09:00"
   },
   "test": {
     "username": "root",
@@ -17,7 +18,8 @@ module.exports = {
     "database": "database_test",
     "host": "127.0.0.1",
     "port" : 3306,
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "timezone": "+09:00"
   },
   "production": {
     "username": <string> process.env.PRODUCTION_DB_ID,
@@ -26,5 +28,6 @@ module.exports = {
     "host": <string> process.env.PRODUCTION_DB_HOST,
     "port" : 3306,
     "dialect": "mysql",
+    "timezone": "+09:00"
   }
 }

@@ -4,26 +4,17 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.INTEGER,
             allowNull : false,
         },
-        title : {
-            type : DataTypes.STRING(150),
-            allowNull : false,
-        },
-        artist : {
-            type : DataTypes.STRING(150),
-            allowNull : false,
-        },
-        album : {
-            type : DataTypes.STRING(100),
-            allowNull : false,
-        },
         site : {
-            type : DataTypes.STRING(10),
-            allowNull : false,
-        },
+            type : DataTypes.STRING(15),
+            allowNull : false
+        }
+        // MusicId
     }, {
         charset : 'utf8',
         collate : 'utf8_general_ci'
     });
-    Chart.associate = (db) => {};
+    Chart.associate = (db) => {
+        db.Chart.belongsTo(db.Music);
+    };
     return Chart;
 }
