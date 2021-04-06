@@ -17,7 +17,7 @@ db.sequelize.sync()
         console.error(err);
 });
 
-const MIN_MATCH_SCORE = 3;
+const MIN_MATCH_SCORE = 15;
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
