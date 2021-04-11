@@ -7,8 +7,10 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
 
-const s3 = new AWS.S3({ accessKeyId: '', secretAccessKey: '' });
+dotenv.config({ path : path.join(__dirname, '../../.env') });
+const s3 = new AWS.S3({ accessKeyId: process.env.AWS_ACCES_KEY, secretAccessKey: process.env.AWS_SECRET_KEY });
 
 puppeteer.use(StealthPlugin());
 
