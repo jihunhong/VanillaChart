@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import AWS from 'aws-sdk';
 
-const s3 = new AWS.S3({ accessKeyId: 'AKIAZN4DQH4E236UVBGU', secretAccessKey: '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' });
+const s3 = new AWS.S3({ accessKeyId: '', secretAccessKey: '' });
 
 puppeteer.use(StealthPlugin());
 
