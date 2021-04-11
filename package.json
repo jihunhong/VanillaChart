@@ -4,15 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client-install": "cd client && npm install",
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "cd client && npm start",
-    "client-build": "cd client && npm run build",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "product": "git pull && npm run client-build &&  npm run restart",
-    "crawl": "cd feature && node crawl.js && node youtube.js && node redis.js",
-    "restart": "forever stop 0 && forever start server.js"
+    "start": "node dist/app.js",
+    "sync-dir": "cp .env ./dist/.env"
   },
   "repository": {
     "type": "git",
@@ -25,7 +18,8 @@
   },
   "homepage": ".",
   "dependencies": {
-    "axios": "^0.19.2",
+    "aws-sdk": "^2.884.0",
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -54,6 +48,7 @@
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
+    "@aws-sdk/types": "^3.12.0",
     "@types/bcrypt": "^3.0.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.10",
