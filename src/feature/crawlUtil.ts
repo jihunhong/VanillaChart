@@ -6,6 +6,9 @@ import db, { Chart, sequelize, Music } from '../models';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
+import AWS from 'aws-sdk';
+
+const s3 = new AWS.S3({ accessKeyId: 'AKIAZN4DQH4E236UVBGU', secretAccessKey: '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' });
 
 puppeteer.use(StealthPlugin());
 
@@ -17,7 +20,7 @@ db.sequelize.sync()
         console.error(err);
 });
 
-const MIN_MATCH_SCORE = 3;
+const MIN_MATCH_SCORE = 9;
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
@@ -33,18 +36,18 @@ export async function launchBrowser() {
 
 export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
     for(const row of chart){
-        const [res] = await Music.findOrCreate({
+        const res = await Music.findOrCreate({
             where : {
                 title : row.title,
                 artist : row.artist,
-                album : row.album,
+                album : row.album
             },
             raw : true
-        });
+        })
         await Chart.create({
             rank : row.rank,
             site,
-            MusicId : res.id
+            MusicId : res[0].id,
         })
         await imageDownload({ url : row.image!, music : row, site });
     }
@@ -79,10 +82,22 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                     matched: true
                 }
             }else{
-                console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} `)
+                if((element.title.includes(matchedList[0].title) && element.artist.includes(matchedList[0].artist))
+                ||
+                matchedList[0].title.includes(element.title) && matchedList[0].artist.includes(element.artist)
+                ){
+                    console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `)
+                    return {
+                        ...element,
+                        title : matchedList[0].title,
+                        artist : matchedList[0].artist,
+                        album : matchedList[0].album,
+                        matched: true
+                    }
+                }
+                console.error(`❌ '${element.title} - ${element.artist}' not found `)
                 return {
                     ...element,
-                    ...matchedList[0]
                 };
             }
         }else{
@@ -111,13 +126,41 @@ async function download({ targetPath, url } : { targetPath : string, url : strin
     })
 }
 
+async function uploadS3({ targetPath, music }: { targetPath : string, music: ChartData }){
+    const fileContent = fs.readFileSync(targetPath);
+    const params = {
+        Bucket : 'cherrychart.resources',
+        Key : `${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
+        Body : fileContent
+    }
+    return new Promise((res, rej) => {
+        s3.upload(params, (err, data) => {
+            if(err) rej(err);
+            console.log(`File uploaded Successfully at ${data.Location}`)
+            res(data);
+        })    
+    })
+}
+
 export async function imageDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
-    const targetPath = path.join(__dirname, `../../../covers/${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
+    const targetPath = path.join(__dirname, `../../covers/${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
+    const coverDir = path.join(__dirname, `../../covers`);
+    const exist = fs.existsSync(coverDir);
+
+    if(!exist){
+        fs.mkdirSync(path.join(__dirname, coverDir));
+    }
     if(!fs.existsSync(targetPath)){
         await download({ targetPath, url });
+        await uploadS3({ targetPath, music });
     }
 }
 
 export async function ftsMatchingJob({ chart } : { chart : Array<ChartData> }){
-    return await Promise.all(chart.map(fullTextSearch));
+    const res:Array<ChartData> = [];
+    for(const el of chart){
+        const mapped = await fullTextSearch(el);
+        res.push(mapped);
+    }
+    return res;
 }

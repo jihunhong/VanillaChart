@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { matchedItem } from '../../@types/search';
 import { ChartData } from '../../@types';
-import { Music } from '../models';
+import { Music, Video } from '../models';
 
 dotenv.config({ path : path.join(__dirname, '../../.env') });
 const KEY = process.env.YOUTUBE_API_KEY;
@@ -14,7 +14,7 @@ async function search({ q }: { q : string }) {
         const res = await axios.get(`${API_URL}?part=snippet&q=${encodeURI(q)}&key=${KEY}`);
         return res.data;
     }catch(error){
-        console.error(error);;
+        console.error(error);
         throw error;
     }
 }
@@ -43,23 +43,23 @@ async function excuteSearch({ q }: { q : string }) {
     }
 }
 
-export async function createYoutubeRows({ chartData }: { chartData : Array<ChartData> }){
+export async function createYoutubeRows(){
+    const chartData = await Music.findAll({
+        raw : true
+    });
     try{
         for( const el of chartData ){
-            const exist = await Music.findOne({
+
+            const exist = await Video.findOne({
                 where : {
-                    title : el.title,
-                    artist: el.artist,
-                    album: el.album
+                    MusicId : el.id
                 }
             })
 
             if(!exist){
                 const youtubeSnippet = await excuteSearch({ q: `${el.title} ${el.artist}` });
-                await Music.create({
-                    title : el.title,
-                    artist: el.artist,
-                    album: el.album,
+                await Video.create({
+                    MusicId : el.id,
                     videoId: youtubeSnippet!.videoId
                 })
             }

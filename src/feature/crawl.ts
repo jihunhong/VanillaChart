@@ -13,14 +13,12 @@ import { createYoutubeRows } from './youtubeMatch';
         const melon = await collectMelon({ page });
         const convertedMelon = await ftsMatchingJob({ chart : melon });
         await insertChart({ site : 'melon', chart : convertedMelon });
-        const matchedMelon = convertedMelon.filter(v => v.matched);
-        await createYoutubeRows({ chartData: matchedMelon });
 
         const bugs = await collectBugs({ page });
         const convertedBugs = await ftsMatchingJob({ chart : bugs });
         await insertChart({ site : 'bugs', chart : convertedBugs });
-        const matchedGenie = convertedBugs.filter(v => v.matched);
-        await createYoutubeRows({ chartData: matchedGenie });
+
+        await createYoutubeRows();
         
         console.log('SUCCESS INSERT AND CRAWL');
     }catch(err){
