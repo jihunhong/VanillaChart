@@ -1,6 +1,6 @@
 import express from 'express';
 import moment from 'moment';
-import { Chart, Music } from '../models';
+import { Chart, Music, Video } from '../models';
 import { Op } from 'sequelize';
 
 const router = express.Router();
@@ -65,7 +65,15 @@ router.get('/:site', async(req, res, next) => {
                         'artist',
                         'album',
                     ],
-                }
+                    include : [
+                        {
+                            model : Video,
+                            attributes : [
+                                'videoId'
+                            ]
+                        }
+                    ]
+                },
             ],
             order : [
                 ['rank', 'ASC']
@@ -98,7 +106,14 @@ router.get('/:chart/:date', async(req, res, next) => {
                         'artist',
                         'album',
                     ],
-                    
+                    include : [
+                        {
+                            model : Video,
+                            attributes : [
+                                'videoId'
+                            ]
+                        }
+                    ]
                 }
             ]
         })
@@ -133,7 +148,15 @@ router.get('/:chart/:rank',  async(req, res, next) => {
                     ],
                     where : {
                         rank : req.params.rank
-                    }
+                    },
+                    include : [
+                        {
+                            model : Video,
+                            attributes : [
+                                'videoId'
+                            ]
+                        }
+                    ]
                 }
             ],
             order : [
