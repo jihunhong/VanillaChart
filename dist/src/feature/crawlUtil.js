@@ -169,7 +169,7 @@ function imageDownload({ url, site, music }) {
         const coverDir = path_1.default.join(__dirname, `../../covers`);
         const exist = fs_1.default.existsSync(coverDir);
         if (!exist) {
-            fs_1.default.mkdirSync(path_1.default.join(__dirname, coverDir));
+            fs_1.default.mkdirSync(coverDir);
         }
         if (!fs_1.default.existsSync(targetPath)) {
             yield download({ targetPath, url });
