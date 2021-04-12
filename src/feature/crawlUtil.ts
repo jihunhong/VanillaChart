@@ -150,7 +150,7 @@ export async function imageDownload({ url, site, music } : { url : string, site 
     const exist = fs.existsSync(coverDir);
 
     if(!exist){
-        fs.mkdirSync(path.join(__dirname, coverDir));
+        fs.mkdirSync(coverDir);
     }
     if(!fs.existsSync(targetPath)){
         await download({ targetPath, url });
