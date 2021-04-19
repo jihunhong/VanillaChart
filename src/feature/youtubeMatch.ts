@@ -11,7 +11,13 @@ const API_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 async function search({ q }: { q : string }) {
     try{
-        const res = await axios.get(`${API_URL}?part=snippet&q=${encodeURI(q)}&key=${KEY}`);
+        const res = await axios.get(API_URL, {
+            params: {
+                part: 'snippet',
+                q: encodeURI(q),
+                key : KEY,
+            }
+        });
         return res.data;
     }catch(error){
         console.error(error);
@@ -37,7 +43,11 @@ async function excuteSearch({ q }: { q : string }) {
     try {
         const { items } = await search({ q });
         const matchedList: Array<matchedItem> = arrange(items);
-        return matchedList[0];
+        const exact = matchedList.find((v) => {
+            return v.title.includes('MV') && v.videoId;
+        });
+
+        return exact || matchedList.find((v) => v.videoId);
     } catch (err) {
         console.error(err);
     }

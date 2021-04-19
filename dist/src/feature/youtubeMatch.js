@@ -23,7 +23,13 @@ const API_URL = 'https://www.googleapis.com/youtube/v3/search';
 function search({ q }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const res = yield axios_1.default.get(`${API_URL}?part=snippet&q=${encodeURI(q)}&key=${KEY}`);
+            const res = yield axios_1.default.get(API_URL, {
+                params: {
+                    part: 'snippet',
+                    q: encodeURI(q),
+                    key: KEY,
+                }
+            });
             return res.data;
         }
         catch (error) {
@@ -50,7 +56,10 @@ function excuteSearch({ q }) {
         try {
             const { items } = yield search({ q });
             const matchedList = arrange(items);
-            return matchedList[0];
+            const exact = matchedList.find((v) => {
+                return v.title.includes('MV') && v.videoId;
+            });
+            return exact || matchedList.find((v) => v.videoId);
         }
         catch (err) {
             console.error(err);
