@@ -26,7 +26,7 @@ function search({ q }) {
             const res = yield axios_1.default.get(API_URL, {
                 params: {
                     part: 'snippet',
-                    q: encodeURI(q),
+                    q: encodeURIComponent(q),
                     key: KEY,
                 }
             });
@@ -79,7 +79,12 @@ function createYoutubeRows() {
                     }
                 });
                 if (!exist) {
+                    console.log(`not exist element. start to youtube matching job : ${el.title}`);
                     const youtubeSnippet = yield excuteSearch({ q: `${el.title} ${el.artist}` });
+                    if (!youtubeSnippet) {
+                        console.log(`empty response! q : ${el.title} ${el.artist}`);
+                        continue;
+                    }
                     yield models_1.Video.create({
                         MusicId: el.id,
                         videoId: youtubeSnippet.videoId

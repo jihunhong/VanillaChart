@@ -14,7 +14,7 @@ async function search({ q }: { q : string }) {
         const res = await axios.get(API_URL, {
             params: {
                 part: 'snippet',
-                q: encodeURI(q),
+                q: encodeURIComponent(q),
                 key : KEY,
             }
         });
@@ -67,7 +67,12 @@ export async function createYoutubeRows(){
             })
 
             if(!exist){
+                console.log(`not exist element. start to youtube matching job : ${el.title}`);
                 const youtubeSnippet = await excuteSearch({ q: `${el.title} ${el.artist}` });
+                if(!youtubeSnippet){
+                    console.log(`empty response! q : ${el.title} ${el.artist}`)
+                    continue;
+                }
                 await Video.create({
                     MusicId : el.id,
                     videoId: youtubeSnippet!.videoId
