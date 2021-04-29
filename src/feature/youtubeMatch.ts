@@ -14,7 +14,8 @@ async function search({ q }: { q : string }) {
         const res = await axios.get(API_URL, {
             params: {
                 part: 'snippet',
-                q: encodeURIComponent(q),
+                q,
+                type: 'video',
                 key : KEY,
             }
         });
