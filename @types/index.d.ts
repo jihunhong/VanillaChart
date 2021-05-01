@@ -10,6 +10,17 @@ export interface ChartData {
     matched?: boolean
 }
 
+export interface Track {
+    trackName: string
+    lead: boolean?
+}
+
+export interface AlbumData {
+    albumName: string
+    artist: string
+    tracks: Array<Track>
+}
+
 export interface UserWithPWD {
     id?: number
     email : string

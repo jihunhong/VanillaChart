@@ -9,9 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.collectGenie = void 0;
+exports.collectGenieAlbums = exports.collectGenieCharts = void 0;
 const crawlUtil_1 = require("./crawlUtil");
-function fetchGenie({ page }) {
+function fetchGenieCharts({ page }) {
     return __awaiter(this, void 0, void 0, function* () {
         const titles = yield page.$$eval('.info .title', titles => titles.map((el) => el.textContent.trim()));
         const artists = yield page.$$eval('.info .artist', artists => artists.map((el) => el.textContent.trim()));
@@ -19,6 +19,7 @@ function fetchGenie({ page }) {
         const images = yield page.$$eval('a.cover img', imageTags => imageTags.map((el) => { var _a; return (_a = el.getAttribute('src')) === null || _a === void 0 ? void 0 : _a.replace('//image.genie.co.kr/', 'https://image.genie.co.kr/').replace('140x140.JPG/dims/resize/Q_80,0', '600x600.JPG'); }));
         // //image.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/902/916/81902916_1613722333486_1_140x140.JPG/dims/resize/Q_80,0
         // //image.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/902/916/81902916_1613722333486_1_600x600.JPG
+        const albumInfoNumbers = yield page.$$eval('.albumtitle', anchors => anchors.map((el) => { var _a; return (_a = el.getAttribute('onclick')) === null || _a === void 0 ? void 0 : _a.replace(/[^0-9]/g, ''); }));
         if (titles.length === artists.length && artists.length === albumtitles.length) {
             const charts = Array(titles.length).fill('').map((v, i) => {
                 return {
@@ -27,6 +28,7 @@ function fetchGenie({ page }) {
                     artist: artists[i],
                     album: albumtitles[i],
                     image: images[i],
+                    album_id: albumInfoNumbers[i]
                 };
             });
             return charts;
@@ -36,15 +38,46 @@ function fetchGenie({ page }) {
         }
     });
 }
-function collectGenie({ page }) {
+function fetchGenieAlbumNumbers({ page }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const albumInfoNumbers = yield page.$$eval('.albumtitle', anchors => anchors.map((el) => el.getAttribute('onclick')));
+        const infoNumbers = albumInfoNumbers.map((el) => {
+            return el.replace(/[^0-9]/g, '');
+        });
+        return infoNumbers;
+    });
+}
+function fetchAlbumInfo({ page, albumId }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield page.goto(`https://www.genie.co.kr/detail/albumInfo?axnm=${albumId}`, crawlUtil_1.waitor);
+        const albumName = yield page.$eval('h2.name', el => el.textContent);
+        const artist = yield page.$eval('a[onclick*="artistInfo"]', el => el.textContent);
+        const tracks = yield page.$$eval('td > a.title', trackList => trackList.map((el) => { var _a; return (_a = el.textContent) === null || _a === void 0 ? void 0 : _a.trim(); }));
+        const releaseDate = yield page.$eval('li:last-child > span.value', time => { var _a; return (_a = time.textContent) === null || _a === void 0 ? void 0 : _a.trim(); });
+        // YYYY.MM.DD
+        const leadIndex = yield page.$$eval('td.info', tracks => Array.from(tracks).findIndex((track) => track.querySelector('span.icon-title')));
+        return {
+            albumName,
+            artist,
+            tracks: tracks.map((trackName, index) => {
+                return {
+                    track: trackName === null || trackName === void 0 ? void 0 : trackName.replace('TITLE\n', ''),
+                    lead: index === leadIndex
+                };
+            }),
+            releaseDate
+        };
+    });
+}
+function collectGenieCharts({ page }) {
     return __awaiter(this, void 0, void 0, function* () {
         yield page.goto(`https://www.genie.co.kr/chart/top200`, crawlUtil_1.waitor);
-        const untilFifty = yield fetchGenie({ page });
+        const untilFifty = yield fetchGenieCharts({ page });
         // 1위부터 50위까지
         yield page.click(`.rank-page-nav a:not([class=current])`);
         // 다음 페이지 버튼 클릭
         yield page.waitFor(3000);
-        const temp = yield fetchGenie({ page });
+        const temp = yield fetchGenieCharts({ page });
         const untilHundred = temp.map((v) => {
             return Object.assign(Object.assign({}, v), { rank: 50 + v.rank });
         });
@@ -52,5 +85,25 @@ function collectGenie({ page }) {
         return [...untilFifty, ...untilHundred];
     });
 }
-exports.collectGenie = collectGenie;
+exports.collectGenieCharts = collectGenieCharts;
+function collectGenieAlbums({ page }) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield page.goto(`https://www.genie.co.kr/chart/top200`, crawlUtil_1.waitor);
+        const firstToFifty = yield fetchGenieAlbumNumbers({ page });
+        // 1위부터 50위까지
+        yield page.click(`.rank-page-nav a:not([class=current])`);
+        // 다음 페이지 버튼 클릭
+        yield page.waitFor(3000);
+        const fiftyToHundered = yield fetchGenieAlbumNumbers({ page });
+        const totalIds = Array.from(new Set(firstToFifty.concat(fiftyToHundered)));
+        // 51위부터 100위까지 페이지에서 같은 함수 실행
+        const albumInfos = [];
+        for (const id of totalIds) {
+            const albumInfo = yield fetchAlbumInfo({ page, albumId: id });
+            albumInfos.push(albumInfo);
+        }
+        return albumInfos;
+    });
+}
+exports.collectGenieAlbums = collectGenieAlbums;
 //# sourceMappingURL=genieCrawl.js.map

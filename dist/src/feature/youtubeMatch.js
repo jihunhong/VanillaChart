@@ -26,7 +26,8 @@ function search({ q }) {
             const res = yield axios_1.default.get(API_URL, {
                 params: {
                     part: 'snippet',
-                    q: encodeURIComponent(q),
+                    q,
+                    type: 'video',
                     key: KEY,
                 }
             });
