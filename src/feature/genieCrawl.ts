@@ -37,7 +37,7 @@ async function fetchGenieAlbumNumbers({ page }: { page : Page }){
     return infoNumbers;
 }
 
-async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: string }){
+export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: string }){
     await page.goto(`https://www.genie.co.kr/detail/albumInfo?axnm=${albumId}`, waitor);
     
     const albumName = await page.$eval('h2.name', el => el.textContent);

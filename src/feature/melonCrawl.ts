@@ -43,7 +43,7 @@ async function fetchMelonAlbumNumbers({ page }: { page : Page }){
     return infoNumbers;
 }
 
-async function fetchAlbumInfo({ page, albumId }: { page: Page, albumId: string }){
+export async function fetchAlbumInfo({ page, albumId }: { page: Page, albumId: string }){
     await page.goto(`https://www.melon.com/album/detail.htm?albumId=${albumId}`, waitor);
     
     const albumName = await page.$eval('div.song_name', el => el.textContent?.trim().replace('앨범명\n\t\t\t\t\t\t\t\t\t\t', ''));

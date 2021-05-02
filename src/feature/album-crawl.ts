@@ -10,8 +10,7 @@ import { collectBugsAlbums } from "./bugsCrawl";
     try{
 
         const genie = await collectGenieAlbums({ page });
-        console.log(genie);
-        fs.writeFileSync('./genie.json', JSON.stringify(genie));
+        fs.writeFileSync('./genie.json', JSON.stringify(genie)); 
 
         const melon = await collectMelonAlbums({ page });
         console.log(melon);

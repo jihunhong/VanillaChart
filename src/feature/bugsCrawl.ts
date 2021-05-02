@@ -38,7 +38,7 @@ async function fetchBugsAlbumNubers({ page }: { page : Page }){
     return infoNumbers;
 }
 
-async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: string }) {
+export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: string }) {
     await page.goto(`https://music.bugs.co.kr/album/${albumId}`, waitor);
     
     const albumName = await page.$eval('.innerContainer > h1', el => el.textContent);
