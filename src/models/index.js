@@ -9,6 +9,7 @@ db.Chart = require('./Chart')(sequelize, Sequelize);
 db.Music = require('./music')(sequelize, Sequelize);
 db.User = require('./User')(sequelize, Sequelize);
 db.Video = require('./Video')(sequelize, Sequelize);
+db.Album = require('./Album')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

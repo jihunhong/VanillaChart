@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.collectGenieAlbums = exports.collectGenieCharts = void 0;
+exports.collectGenieAlbums = exports.collectGenieCharts = exports.fetchAlbumInfo = void 0;
 const crawlUtil_1 = require("./crawlUtil");
 function fetchGenieCharts({ page }) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -69,6 +69,7 @@ function fetchAlbumInfo({ page, albumId }) {
         };
     });
 }
+exports.fetchAlbumInfo = fetchAlbumInfo;
 function collectGenieCharts({ page }) {
     return __awaiter(this, void 0, void 0, function* () {
         yield page.goto(`https://www.genie.co.kr/chart/top200`, crawlUtil_1.waitor);

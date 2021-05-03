@@ -80,15 +80,16 @@ async function getAlbumInfo({ page, site, albumId }): Promise<AlbumData>{
 
 export async function insertChart({ page, site, chart } : { page: Page, site : siteName, chart : Array<ChartData> }) {
     for(const row of chart){
-        const exist = await Album.findOne({
-            where : {
-                id: Number(row.album_id)
-            }
-        });
-        if(exist){
+        if(row.matched){
+            await Chart.findOrCreate({
+                where : {
+                    rank: row.rank,
+                    site,
+                    MusicId: row.id
+                }
+            })
             continue;
         }
-
         const albumInfo = await getAlbumInfo({ page, site, albumId: row.album_id });
         
         await Album.findOrCreate({
@@ -100,7 +101,6 @@ export async function insertChart({ page, site, chart } : { page: Page, site : s
                 releaseDate: albumInfo.releaseDate
             }
         })
-        // fts로 이것도 매칭할까..?
         
         for(const music of albumInfo.tracks){
             const res = await Music.findOrCreate({
@@ -121,6 +121,9 @@ export async function insertChart({ page, site, chart } : { page: Page, site : s
                         MusicId : res[0].id || res[0].dataValues.id,
                     }
                 })
+            }else{
+                console.log(row.title);
+                console.log(music.track + '\n');
             }
         }
         await imageDownload({ url : row.image!, music : row, site });
@@ -179,6 +182,7 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
         return element;
     }
 }
+
 
 async function download({ targetPath, url } : { targetPath : string, url : string }){
     const writer = fs.createWriteStream(targetPath);

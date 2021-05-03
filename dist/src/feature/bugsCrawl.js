@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.collectBugsAlbums = exports.collectBugsCharts = void 0;
+exports.collectBugsAlbums = exports.collectBugsCharts = exports.fetchAlbumInfo = void 0;
 const crawlUtil_1 = require("./crawlUtil");
 function fetchBugsCharts({ page }) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -54,7 +54,7 @@ function fetchAlbumInfo({ page, albumId }) {
         yield page.goto(`https://music.bugs.co.kr/album/${albumId}`, crawlUtil_1.waitor);
         const albumName = yield page.$eval('.innerContainer > h1', el => el.textContent);
         const artist = yield page.$eval('.info a[href*="artist"]', el => el.textContent);
-        const tracks = yield page.$$eval('p.title', trackList => trackList.map((el) => el.textContent));
+        const tracks = yield page.$$eval('th > p.title', trackList => trackList.map((el) => { var _a; return (_a = el.textContent) === null || _a === void 0 ? void 0 : _a.trim(); }));
         const releaseDate = yield page.$eval('td > time', time => time.textContent);
         // YYYY.MM.DD
         const leadIndex = yield page.$$eval('tr[albumid]', tracks => Array.from(tracks).findIndex((track) => track.querySelector('span.albumTitle')));
@@ -71,6 +71,7 @@ function fetchAlbumInfo({ page, albumId }) {
         };
     });
 }
+exports.fetchAlbumInfo = fetchAlbumInfo;
 function collectBugsCharts({ page }) {
     return __awaiter(this, void 0, void 0, function* () {
         yield page.goto(`https://music.bugs.co.kr/chart`, crawlUtil_1.waitor);

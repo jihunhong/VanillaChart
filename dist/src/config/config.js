@@ -15,6 +15,7 @@ module.exports = {
         "port": 3306,
         "dialect": "mysql",
         "timezone": "+09:00",
+        "logging": false
     },
     "test": {
         "username": "root",

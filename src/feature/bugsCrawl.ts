@@ -43,7 +43,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
     
     const albumName = await page.$eval('.innerContainer > h1', el => el.textContent);
     const artist = await page.$eval('.info a[href*="artist"]', el => el.textContent);
-    const tracks = await page.$$eval('p.title', trackList => trackList.map((el) => el.textContent));
+    const tracks = await page.$$eval('th > p.title', trackList => trackList.map((el) => el.textContent?.trim()));
     const releaseDate = await page.$eval('td > time', time => time.textContent);
     // YYYY.MM.DD
 

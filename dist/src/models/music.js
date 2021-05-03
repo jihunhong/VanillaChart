@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         album: {
             type: DataTypes.STRING(150),
             allowNull: false,
+        },
+        lead: {
+            type: DataTypes.BOOLEAN,
         }
     }, {
         charset: 'utf8',
@@ -20,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     Music.associate = (db) => {
         db.Music.hasMany(db.Chart);
         db.Music.hasOne(db.Video);
+        db.Music.belongsTo(db.Album);
     };
     return Music;
 };

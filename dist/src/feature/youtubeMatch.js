@@ -69,25 +69,51 @@ function excuteSearch({ q }) {
 }
 function createYoutubeRows() {
     return __awaiter(this, void 0, void 0, function* () {
-        const chartData = yield models_1.Music.findAll({
-            raw: true
+        const chartData = yield models_1.Chart.findAll({
+            attributes: [
+                'rank'
+            ],
+            raw: true,
+            include: [
+                {
+                    model: models_1.Music,
+                    attributes: [
+                        'id',
+                        'title',
+                        'artist',
+                        'album',
+                    ],
+                    include: [
+                        {
+                            model: models_1.Video,
+                            attributes: [
+                                'videoId'
+                            ]
+                        }
+                    ]
+                },
+            ],
+            group: ['Music.id'],
+            order: [
+                ['rank', 'ASC']
+            ]
         });
         try {
             for (const el of chartData) {
                 const exist = yield models_1.Video.findOne({
                     where: {
-                        MusicId: el.id
+                        MusicId: el["Music.id"]
                     }
                 });
                 if (!exist) {
-                    console.log(`not exist element. start to youtube matching job : ${el.title}`);
-                    const youtubeSnippet = yield excuteSearch({ q: `${el.title} ${el.artist}` });
+                    console.log(`not exist element. start to youtube matching job : ${el["Music.title"]}`);
+                    const youtubeSnippet = yield excuteSearch({ q: `${el["Music.title"]} ${el["Music.artist"]}` });
                     if (!youtubeSnippet) {
-                        console.log(`empty response! q : ${el.title} ${el.artist}`);
+                        console.log(`empty response! q : ${el["Music.title"]} ${el["Music.artist"]}`);
                         continue;
                     }
                     yield models_1.Video.create({
-                        MusicId: el.id,
+                        MusicId: el["Music.id"],
                         videoId: youtubeSnippet.videoId
                     });
                 }

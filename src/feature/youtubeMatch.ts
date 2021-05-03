@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { matchedItem } from '../../@types/search';
 import { ChartData } from '../../@types';
-import { Music, Video } from '../models';
+import { Music, Video, Chart } from '../models';
 
 dotenv.config({ path : path.join(__dirname, '../../.env') });
 const KEY = process.env.YOUTUBE_API_KEY;
@@ -55,27 +55,53 @@ async function excuteSearch({ q }: { q : string }) {
 }
 
 export async function createYoutubeRows(){
-    const chartData = await Music.findAll({
-        raw : true
+    const chartData = await Chart.findAll({
+        attributes: [
+            'rank'
+        ],
+        raw : true,
+        include : [
+            {
+                model : Music,
+                attributes : [
+                    'id',
+                    'title',
+                    'artist',
+                    'album',
+                ],
+                include : [
+                    {
+                        model : Video,
+                        attributes : [
+                            'videoId'
+                        ]
+                    }
+                ]
+            },
+        ],
+        group: ['Music.id'],
+        order : [
+            ['rank', 'ASC']
+        ]
     });
     try{
         for( const el of chartData ){
-
             const exist = await Video.findOne({
                 where : {
-                    MusicId : el.id
+                    MusicId : el["Music.id"]
                 }
             })
 
             if(!exist){
-                console.log(`not exist element. start to youtube matching job : ${el.title}`);
-                const youtubeSnippet = await excuteSearch({ q: `${el.title} ${el.artist}` });
+
+                console.log(`not exist element. start to youtube matching job : ${el["Music.title"]}`);
+                const youtubeSnippet = await excuteSearch({ q: `${el["Music.title"]} ${el["Music.artist"]}` });
                 if(!youtubeSnippet){
-                    console.log(`empty response! q : ${el.title} ${el.artist}`)
+                    console.log(`empty response! q : ${el["Music.title"]} ${el["Music.artist"]}`);
                     continue;
                 }
                 await Video.create({
-                    MusicId : el.id,
+                    MusicId : el["Music.id"],
                     videoId: youtubeSnippet!.videoId
                 })
             }

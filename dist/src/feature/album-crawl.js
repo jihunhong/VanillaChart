@@ -21,7 +21,6 @@ const bugsCrawl_1 = require("./bugsCrawl");
     const { browser, page } = yield crawlUtil_1.launchBrowser();
     try {
         const genie = yield genieCrawl_1.collectGenieAlbums({ page });
-        console.log(genie);
         fs_1.default.writeFileSync('./genie.json', JSON.stringify(genie));
         const melon = yield melonCrawl_1.collectMelonAlbums({ page });
         console.log(melon);

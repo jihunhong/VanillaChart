@@ -1,6 +1,7 @@
 export type siteName = 'melon' | 'genie' | 'bugs';
 
 export interface ChartData {
+    id?: number
     rank : number
     title : string
     artist : string
@@ -8,10 +9,11 @@ export interface ChartData {
     score? : number
     image? : string
     matched?: boolean
+    album_id: string | number
 }
 
 export interface Track {
-    trackName: string
+    track: string
     lead: boolean?
 }
 
@@ -19,6 +21,7 @@ export interface AlbumData {
     albumName: string
     artist: string
     tracks: Array<Track>
+    releaseDate: string
 }
 
 export interface UserWithPWD {
