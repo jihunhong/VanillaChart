@@ -1,6 +1,6 @@
 import express from 'express';
 import moment from 'moment';
-import { Chart, Music, Video } from '../models';
+import { Chart, Music, Video, Album } from '../models';
 import { Op } from 'sequelize';
 
 const router = express.Router();
@@ -24,17 +24,12 @@ router.get('/artists/:site', async(req, res, next) => {
     }
 })
 
-router.get('/albums/:site', async(req, res, next) => {
+router.get('/album/:album_id', async(req, res, next) => {
     try{
-        const albums = await Chart.findAll({
+        const albums = await Album.findAll({
             where : {
-                site : req.params.site,
-                updatedAt : {
-                    [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
-                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
-                }
-            },
-            group : ['album']
+                id : req.params.album_id,
+            }
         })
         res.status(200).send(albums);
     }catch(err){
@@ -48,7 +43,7 @@ router.get('/:site', async(req, res, next) => {
     try{
         const chart = await Chart.findAll({
             attributes : [
-              'rank'
+              'rank',
             ],
             where : {
                 site : req.params.site,
@@ -64,6 +59,7 @@ router.get('/:site', async(req, res, next) => {
                         'title',
                         'artist',
                         'album',
+                        'AlbumId'
                     ],
                     include : [
                         {

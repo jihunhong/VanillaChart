@@ -51,7 +51,7 @@ function fetchBugsAlbumNubers({ page }) {
 }
 function fetchAlbumInfo({ page, albumId }) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield page.goto(`https://music.bugs.co.kr/album/${albumId}`, crawlUtil_1.waitor);
+        yield page.goto(`https://music.bugs.co.kr/album/${albumId}`);
         const albumName = yield page.$eval('.innerContainer > h1', el => el.textContent);
         const artist = yield page.$eval('.info a[href*="artist"]', el => el.textContent);
         const tracks = yield page.$$eval('th > p.title', trackList => trackList.map((el) => { var _a; return (_a = el.textContent) === null || _a === void 0 ? void 0 : _a.trim(); }));

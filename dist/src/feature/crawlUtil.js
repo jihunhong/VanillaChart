@@ -53,7 +53,7 @@ models_1.default.sequelize.sync()
     .catch((err) => {
     console.error(err);
 });
-const MIN_MATCH_SCORE = 9;
+const MIN_MATCH_SCORE = 15;
 exports.waitor = {
     waitUntil: "networkidle2"
 };
@@ -106,12 +106,10 @@ function insertChart({ page, site, chart }) {
     return __awaiter(this, void 0, void 0, function* () {
         for (const row of chart) {
             if (row.matched) {
-                yield models_1.Chart.findOrCreate({
-                    where: {
-                        rank: row.rank,
-                        site,
-                        MusicId: row.id
-                    }
+                yield models_1.Chart.create({
+                    rank: row.rank,
+                    site,
+                    MusicId: row.id
                 });
                 continue;
             }
@@ -126,6 +124,15 @@ function insertChart({ page, site, chart }) {
                 }
             });
             for (const music of albumInfo.tracks) {
+                const matchExist = yield fullTextSearch(Object.assign(Object.assign({}, row), { title: music.track }));
+                if (matchExist.matched && row.title === music.track) {
+                    yield models_1.Chart.create({
+                        rank: row.rank,
+                        site,
+                        MusicId: matchExist.id
+                    });
+                    continue;
+                }
                 const res = yield models_1.Music.findOrCreate({
                     where: {
                         title: music.track,
@@ -137,17 +144,11 @@ function insertChart({ page, site, chart }) {
                     raw: true
                 });
                 if (row.title === music.track) {
-                    yield models_1.Chart.findOrCreate({
-                        where: {
-                            rank: row.rank,
-                            site,
-                            MusicId: res[0].id || res[0].dataValues.id,
-                        }
+                    yield models_1.Chart.create({
+                        rank: row.rank,
+                        site,
+                        MusicId: res[0].id || res[0].dataValues.id,
                     });
-                }
-                else {
-                    console.log(row.title);
-                    console.log(music.track + '\n');
                 }
             }
             yield imageDownload({ url: row.image, music: row, site });

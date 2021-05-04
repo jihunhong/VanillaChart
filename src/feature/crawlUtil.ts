@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 import { fetchAlbumInfo as getGenieAlbumInfo } from './genieCrawl';
 import { fetchAlbumInfo as getMelonAlbumInfo } from './melonCrawl';
 import { fetchAlbumInfo as getBugsAlbumInfo } from './bugsCrawl';
+import { match } from 'assert';
 
 dotenv.config({ path : path.join(__dirname, '../../.env') });
 const s3 = new AWS.S3({ accessKeyId: process.env.AWS_ACCES_KEY, secretAccessKey: process.env.AWS_SECRET_KEY });
@@ -25,7 +26,7 @@ db.sequelize.sync()
         console.error(err);
 });
 
-const MIN_MATCH_SCORE = 9;
+const MIN_MATCH_SCORE = 15;
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
@@ -81,12 +82,10 @@ async function getAlbumInfo({ page, site, albumId }): Promise<AlbumData>{
 export async function insertChart({ page, site, chart } : { page: Page, site : siteName, chart : Array<ChartData> }) {
     for(const row of chart){
         if(row.matched){
-            await Chart.findOrCreate({
-                where : {
-                    rank: row.rank,
-                    site,
-                    MusicId: row.id
-                }
+            await Chart.create({
+                rank: row.rank,
+                site,
+                MusicId: row.id
             })
             continue;
         }
@@ -103,6 +102,18 @@ export async function insertChart({ page, site, chart } : { page: Page, site : s
         })
         
         for(const music of albumInfo.tracks){
+            const matchExist = await fullTextSearch({
+                ...row,
+                title : music.track
+            });
+            if(matchExist.matched && row.title === music.track){
+                await Chart.create({
+                    rank: row.rank,
+                    site,
+                    MusicId: matchExist.id
+                })
+                continue;
+            }
             const res = await Music.findOrCreate({
                 where : {
                     title : music.track,
@@ -114,16 +125,11 @@ export async function insertChart({ page, site, chart } : { page: Page, site : s
                 raw : true
             });
             if(row.title === music.track){
-                await Chart.findOrCreate({
-                    where: {
-                        rank : row.rank,
-                        site,
-                        MusicId : res[0].id || res[0].dataValues.id,
-                    }
+                await Chart.create({
+                    rank : row.rank,
+                    site,
+                    MusicId : res[0].id || res[0].dataValues.id,
                 })
-            }else{
-                console.log(row.title);
-                console.log(music.track + '\n');
             }
         }
         await imageDownload({ url : row.image!, music : row, site });

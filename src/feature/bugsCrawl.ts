@@ -39,7 +39,7 @@ async function fetchBugsAlbumNubers({ page }: { page : Page }){
 }
 
 export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: string }) {
-    await page.goto(`https://music.bugs.co.kr/album/${albumId}`, waitor);
+    await page.goto(`https://music.bugs.co.kr/album/${albumId}`);
     
     const albumName = await page.$eval('.innerContainer > h1', el => el.textContent);
     const artist = await page.$eval('.info a[href*="artist"]', el => el.textContent);

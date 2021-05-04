@@ -36,17 +36,12 @@ router.get('/artists/:site', (req, res, next) => __awaiter(void 0, void 0, void 
         next(err);
     }
 }));
-router.get('/albums/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/album/:album_id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const albums = yield models_1.Chart.findAll({
+        const albums = yield models_1.Album.findAll({
             where: {
-                site: req.params.site,
-                updatedAt: {
-                    [sequelize_1.Op.gte]: moment_1.default().format('YYYY-MM-DD 00:00:00'),
-                    [sequelize_1.Op.lt]: moment_1.default().add(1, 'days').format('YYYY-MM-DD'),
-                }
-            },
-            group: ['album']
+                id: req.params.album_id,
+            }
         });
         res.status(200).send(albums);
     }
@@ -59,7 +54,7 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
     try {
         const chart = yield models_1.Chart.findAll({
             attributes: [
-                'rank'
+                'rank',
             ],
             where: {
                 site: req.params.site,
@@ -75,6 +70,7 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                         'title',
                         'artist',
                         'album',
+                        'AlbumId'
                     ],
                     include: [
                         {

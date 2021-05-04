@@ -9,6 +9,7 @@ import cors from 'cors';
 //  Router 
 import chartRoutes from './src/routes/chart-routes';
 import userRoutes from './src/routes/user-routes';
+import albumRoutes from './src/routes/album-routes';
 
 const app = express();
 dotenv.config({ path : path.join(__dirname, './.env')});
@@ -25,6 +26,7 @@ app.use(passport.initialize());
 app.use('/api/cover', express.static(path.join(__dirname, '../covers')));
 
 app.use('/api/user', userRoutes);
+app.use('/api/album', albumRoutes);
 app.use('/api/chart', chartRoutes);
 
 app.listen(8080, () => {
