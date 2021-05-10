@@ -1,17 +1,13 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import { siteName, ChartData, AlbumData} from '../../@types';
-import { LoadEvent, Page } from 'puppeteer';
-import db, { Chart, sequelize, Music, Album } from '../models';
+import { siteName, ChartData} from '../../@types';
+import { LoadEvent } from 'puppeteer';
+import db, { Chart, sequelize, Music } from '../models';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
-import { fetchAlbumInfo as getGenieAlbumInfo } from './genieCrawl';
-import { fetchAlbumInfo as getMelonAlbumInfo } from './melonCrawl';
-import { fetchAlbumInfo as getBugsAlbumInfo } from './bugsCrawl';
-import { match } from 'assert';
 
 dotenv.config({ path : path.join(__dirname, '../../.env') });
 const s3 = new AWS.S3({ accessKeyId: process.env.AWS_ACCES_KEY, secretAccessKey: process.env.AWS_SECRET_KEY });
@@ -26,7 +22,7 @@ db.sequelize.sync()
         console.error(err);
 });
 
-const MIN_MATCH_SCORE = 15;
+const MIN_MATCH_SCORE = 9;
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
@@ -40,98 +36,21 @@ export async function launchBrowser() {
     return { browser, page };
 }
 
-// export async function albumInsert({ page, site, chart } : { page: Page ,site : siteName, chart : Array<ChartData> }) {
-//     for(const row of chart){
-
-//         const albumInfo = await getAlbumInfo({ page, albumId: row.album_id });
-        
-//         const res = await Album.findAndUpdate({
-//             where : {
-//                 albumName: albumInfo.albumName,
-//                 artist: albumInfo.artist,
-//                 releaseDate: albumInfo.releaseDate
-//             },
-//             raw : true
-//         });
-
-//         for(const single of albumInfo.tracks){
-//             await Music.findOrCreate({
-//                 where : {
-//                     title: single.track,
-//                     artist: row.artist,
-//                     album: row.album,
-//                     lead:  single.lead,
-//                     AlbumId: res.id
-//                 }
-//             })
-//         }
-//     }
-// }
-
-async function getAlbumInfo({ page, site, albumId }): Promise<AlbumData>{
-    const func = {
-        'melon': getMelonAlbumInfo,
-        'genie': getGenieAlbumInfo,
-        'bugs': getBugsAlbumInfo
-    };
-
-    const targetFunction = func[site];
-    return targetFunction({ page, albumId });
-}
-
-export async function insertChart({ page, site, chart } : { page: Page, site : siteName, chart : Array<ChartData> }) {
+export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
     for(const row of chart){
-        if(row.matched){
-            await Chart.create({
-                rank: row.rank,
-                site,
-                MusicId: row.id
-            })
-            continue;
-        }
-        const albumInfo = await getAlbumInfo({ page, site, albumId: row.album_id });
-        
-        await Album.findOrCreate({
-            where: {
-                id: Number(row.album_id),
-                artist: row.artist,
-                album: row.album,
-                site,
-                releaseDate: albumInfo.releaseDate
-            }
+        const res = await Music.findOrCreate({
+            where : {
+                title : row.title,
+                artist : row.artist,
+                album : row.album
+            },
+            raw : true
         })
-        
-        for(const music of albumInfo.tracks){
-            const matchExist = await fullTextSearch({
-                ...row,
-                title : music.track
-            });
-            if(matchExist.matched && row.title === music.track){
-                await Chart.create({
-                    rank: row.rank,
-                    site,
-                    MusicId: matchExist.id
-                })
-                continue;
-            }
-            const res = await Music.findOrCreate({
-                where : {
-                    title : music.track,
-                    artist : row.artist,
-                    album : row.album,
-                    AlbumId: Number(row.album_id),
-                    lead: Boolean(music.lead)
-                },
-                raw : true
-            });
-            if(row.title === music.track){
-                await Chart.create({
-                    rank : row.rank,
-                    site,
-                    MusicId : res[0].id || res[0].dataValues.id,
-                })
-            }
-        }
+        await Chart.create({
+            rank : row.rank,
+            site,
+            MusicId : res[0].id,
+        })
         await imageDownload({ url : row.image!, music : row, site });
     }
 }
@@ -159,7 +78,9 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                 console.log(`✔ '${element.title} - ${element.artist}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `);
                 return {
                     ...element,
-                    ...matchedList[0],
+                    title : matchedList[0].title,
+                    artist : matchedList[0].artist,
+                    album : matchedList[0].album,
                     matched: true
                 }
             }else{
@@ -170,7 +91,9 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                     console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `)
                     return {
                         ...element,
-                        ...matchedList[0],
+                        title : matchedList[0].title,
+                        artist : matchedList[0].artist,
+                        album : matchedList[0].album,
                         matched: true
                     }
                 }
@@ -189,7 +112,6 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
     }
 }
 
-
 async function download({ targetPath, url } : { targetPath : string, url : string }){
     const writer = fs.createWriteStream(targetPath);
     const response = await axios({
@@ -204,6 +126,10 @@ async function download({ targetPath, url } : { targetPath : string, url : strin
         writer.on('finish', res);
         writer.on('error', rej);
     })
+}
+
+function deleteFile({ targetPath }) {
+    fs.unlinkSync(targetPath);
 }
 
 async function uploadS3({ targetPath, music }: { targetPath : string, music: ChartData }){
@@ -233,6 +159,7 @@ export async function imageDownload({ url, site, music } : { url : string, site 
     if(!fs.existsSync(targetPath)){
         await download({ targetPath, url });
         await uploadS3({ targetPath, music });
+        deleteFile({ targetPath });
     }
 }
 

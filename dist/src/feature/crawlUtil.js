@@ -40,9 +40,6 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const genieCrawl_1 = require("./genieCrawl");
-const melonCrawl_1 = require("./melonCrawl");
-const bugsCrawl_1 = require("./bugsCrawl");
 dotenv_1.default.config({ path: path_1.default.join(__dirname, '../../.env') });
 const s3 = new aws_sdk_1.default.S3({ accessKeyId: process.env.AWS_ACCES_KEY, secretAccessKey: process.env.AWS_SECRET_KEY });
 puppeteer_extra_1.default.use(puppeteer_extra_plugin_stealth_1.default());
@@ -53,7 +50,7 @@ models_1.default.sequelize.sync()
     .catch((err) => {
     console.error(err);
 });
-const MIN_MATCH_SCORE = 15;
+const MIN_MATCH_SCORE = 9;
 exports.waitor = {
     waitUntil: "networkidle2"
 };
@@ -67,90 +64,22 @@ function launchBrowser() {
     });
 }
 exports.launchBrowser = launchBrowser;
-// export async function albumInsert({ page, site, chart } : { page: Page ,site : siteName, chart : Array<ChartData> }) {
-//     for(const row of chart){
-//         const albumInfo = await getAlbumInfo({ page, albumId: row.album_id });
-//         const res = await Album.findAndUpdate({
-//             where : {
-//                 albumName: albumInfo.albumName,
-//                 artist: albumInfo.artist,
-//                 releaseDate: albumInfo.releaseDate
-//             },
-//             raw : true
-//         });
-//         for(const single of albumInfo.tracks){
-//             await Music.findOrCreate({
-//                 where : {
-//                     title: single.track,
-//                     artist: row.artist,
-//                     album: row.album,
-//                     lead:  single.lead,
-//                     AlbumId: res.id
-//                 }
-//             })
-//         }
-//     }
-// }
-function getAlbumInfo({ page, site, albumId }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const func = {
-            'melon': melonCrawl_1.fetchAlbumInfo,
-            'genie': genieCrawl_1.fetchAlbumInfo,
-            'bugs': bugsCrawl_1.fetchAlbumInfo
-        };
-        const targetFunction = func[site];
-        return targetFunction({ page, albumId });
-    });
-}
-function insertChart({ page, site, chart }) {
+function insertChart({ site, chart }) {
     return __awaiter(this, void 0, void 0, function* () {
         for (const row of chart) {
-            if (row.matched) {
-                yield models_1.Chart.create({
-                    rank: row.rank,
-                    site,
-                    MusicId: row.id
-                });
-                continue;
-            }
-            const albumInfo = yield getAlbumInfo({ page, site, albumId: row.album_id });
-            yield models_1.Album.findOrCreate({
+            const res = yield models_1.Music.findOrCreate({
                 where: {
-                    id: Number(row.album_id),
+                    title: row.title,
                     artist: row.artist,
-                    album: row.album,
-                    site,
-                    releaseDate: albumInfo.releaseDate
-                }
+                    album: row.album
+                },
+                raw: true
             });
-            for (const music of albumInfo.tracks) {
-                const matchExist = yield fullTextSearch(Object.assign(Object.assign({}, row), { title: music.track }));
-                if (matchExist.matched && row.title === music.track) {
-                    yield models_1.Chart.create({
-                        rank: row.rank,
-                        site,
-                        MusicId: matchExist.id
-                    });
-                    continue;
-                }
-                const res = yield models_1.Music.findOrCreate({
-                    where: {
-                        title: music.track,
-                        artist: row.artist,
-                        album: row.album,
-                        AlbumId: Number(row.album_id),
-                        lead: Boolean(music.lead)
-                    },
-                    raw: true
-                });
-                if (row.title === music.track) {
-                    yield models_1.Chart.create({
-                        rank: row.rank,
-                        site,
-                        MusicId: res[0].id || res[0].dataValues.id,
-                    });
-                }
-            }
+            yield models_1.Chart.create({
+                rank: row.rank,
+                site,
+                MusicId: res[0].id,
+            });
             yield imageDownload({ url: row.image, music: row, site });
         }
     });
@@ -176,14 +105,14 @@ function fullTextSearch(element) {
             if (matchedList.length > 0) {
                 if (matchedList[0].score > MIN_MATCH_SCORE) {
                     console.log(`✔ '${element.title} - ${element.artist}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `);
-                    return Object.assign(Object.assign(Object.assign({}, element), matchedList[0]), { matched: true });
+                    return Object.assign(Object.assign({}, element), { title: matchedList[0].title, artist: matchedList[0].artist, album: matchedList[0].album, matched: true });
                 }
                 else {
                     if ((element.title.includes(matchedList[0].title) && element.artist.includes(matchedList[0].artist))
                         ||
                             matchedList[0].title.includes(element.title) && matchedList[0].artist.includes(element.artist)) {
                         console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `);
-                        return Object.assign(Object.assign(Object.assign({}, element), matchedList[0]), { matched: true });
+                        return Object.assign(Object.assign({}, element), { title: matchedList[0].title, artist: matchedList[0].artist, album: matchedList[0].album, matched: true });
                     }
                     console.error(`❌ '${element.title} - ${element.artist}' not found `);
                     return Object.assign({}, element);
@@ -216,6 +145,9 @@ function download({ targetPath, url }) {
         });
     });
 }
+function deleteFile({ targetPath }) {
+    fs_1.default.unlinkSync(targetPath);
+}
 function uploadS3({ targetPath, music }) {
     return __awaiter(this, void 0, void 0, function* () {
         const fileContent = fs_1.default.readFileSync(targetPath);
@@ -245,6 +177,7 @@ function imageDownload({ url, site, music }) {
         if (!fs_1.default.existsSync(targetPath)) {
             yield download({ targetPath, url });
             yield uploadS3({ targetPath, music });
+            deleteFile({ targetPath });
         }
     });
 }
