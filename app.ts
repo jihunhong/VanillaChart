@@ -17,7 +17,7 @@ dotenv.config({ path : path.join(__dirname, './.env')});
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'http://www.cherrychart.com' : 'http://localhost:3000',
+  origin: process.env.NODE_ENV === 'production' ? 'https://www.cherrychart.com' : 'http://localhost:3000',
   credentials: true,
 }))
 

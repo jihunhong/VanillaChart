@@ -18,7 +18,7 @@ dotenv_1.default.config({ path: path_1.default.join(__dirname, './.env') });
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(cors_1.default({
-    origin: process.env.NODE_ENV === 'production' ? 'http://www.cherrychart.com' : 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' ? 'https://www.cherrychart.com' : 'http://localhost:3000',
     credentials: true,
 }));
 passport_2.passportConfig();
