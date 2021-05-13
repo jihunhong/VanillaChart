@@ -9,7 +9,7 @@ export interface ChartData {
     score? : number
     image? : string
     matched?: boolean
-    album_id: string | number
+    album_id?: string | number
 }
 
 export interface Track {

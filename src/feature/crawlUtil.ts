@@ -1,13 +1,16 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { siteName, ChartData} from '../../@types';
-import { LoadEvent } from 'puppeteer';
-import db, { Chart, sequelize, Music } from '../models';
+import { LoadEvent, Page } from 'puppeteer';
+import db, { Chart, sequelize, Music, Album } from '../models';
 import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
+import { fetchAlbumInfo as getGenieAlbumInfo } from './genieCrawl';
+import { fetchAlbumInfo as getMelonAlbumInfo } from './melonCrawl';
+import { fetchAlbumInfo as getBugsAlbumInfo } from './bugsCrawl';
 
 dotenv.config({ path : path.join(__dirname, '../../.env') });
 const s3 = new AWS.S3({ accessKeyId: process.env.AWS_ACCES_KEY, secretAccessKey: process.env.AWS_SECRET_KEY });
@@ -36,28 +39,111 @@ export async function launchBrowser() {
     return { browser, page };
 }
 
-export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
-    for(const row of chart){
-        const res = await Music.findOrCreate({
+// export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
+//     for(const row of chart){
+//         const res = await Music.findOrCreate({
+//             where : {
+//                 title : row.title,
+//                 artist : row.artist,
+//                 album : row.album
+//             },
+//             raw : true
+//         })
+//         await Chart.create({
+//             rank : row.rank,
+//             site,
+//             MusicId : res[0].id,
+//         })
+//         await imageDownload({ url : row.image!, music : row, site });
+//     }
+// }
+
+async function getAlbumInfo({ page, site, albumId }): Promise<any>{
+    const func = {
+        'melon': getMelonAlbumInfo,
+        'genie': getGenieAlbumInfo,
+        'bugs': getBugsAlbumInfo
+    };
+
+    const targetFunction = func[site];
+    return targetFunction({ page, albumId });
+}
+
+export async function insertChart({ page, site, chart }: { page: Page, site: siteName, chart: Array<ChartData> }){
+    for(const row of chart) {
+        if(row.matched){
+            // 매칭이 됐다면 앨범정보, 음원 정보 모두 이미 있다는 말이다.
+            await Chart.create({
+                rank: row.rank,
+                site,
+                MusicId: row.id
+            })
+            continue;
+        }
+        // 매칭이 되지 않은 경우
+        const albumInfoExist = await Album.findOne({
             where : {
-                title : row.title,
-                artist : row.artist,
-                album : row.album
-            },
-            raw : true
+                id: row.album_id
+            }
         })
+        if(!albumInfoExist){
+             const albumInfo = await getAlbumInfo({ page, site, albumId: row.album_id });
+             const { tracks } = albumInfo;
+
+             const album = await Album.findOrCreate({
+                 where : {
+                     album: row.album,
+                     artist: row.artist,
+                     releaseDate: albumInfo.releaseDate,
+                     site,
+                 }
+             })
+        
+             for(const element of tracks){
+                 const res = await Music.findOrCreate({
+                     where: {
+                         title: element.track,
+                         artist: row.artist,
+                         album: row.album,
+                         lead: element.lead,
+                         AlbumId: album[0].id
+                     }
+                 })
+                 if(row.title === element.track){
+                    await Chart.create({
+                        rank: row.rank,
+                        site,
+                        MusicId: res[0].id
+                    })
+                 }
+             }
+             await imageDownload({ url : row.image!, music : row, site });
+             continue;
+        }
+        //  매칭이 되지 않았지만 이미 앨범 정보가 있다면
+        //  이전에 이미 가져왔기 때문에 위의 if문
+        //  음원정보는 모두 존재한다는 말이다. 또한 Music도 이미 존재할것이다.
+        const music = await Music.findOrCreate({
+            where: {
+                title: row.title,
+                artist: row.artist,
+                album: row.album,
+                AlbumId: row.album_id
+            }
+        });
         await Chart.create({
-            rank : row.rank,
+            rank: row.rank,
             site,
-            MusicId : res[0].id,
+            MusicId: music[0].id
         })
-        await imageDownload({ url : row.image!, music : row, site });
+        continue;
+
     }
 }
 
 export async function fullTextSearch(element : ChartData): Promise<ChartData> {
     try{
-        const matchedList:Array<ChartData> = await sequelize.query(`
+        const matchedList:Array<any> = await sequelize.query(`
             SELECT *, match(title, artist) against( ? ) as score 
             FROM Music 
             WHERE match(title, artist) against( ? ) AND 
@@ -78,9 +164,11 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                 console.log(`✔ '${element.title} - ${element.artist}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `);
                 return {
                     ...element,
+                    id: matchedList[0].id,
                     title : matchedList[0].title,
                     artist : matchedList[0].artist,
                     album : matchedList[0].album,
+                    album_id: matchedList[0].AlbumId,
                     matched: true
                 }
             }else{
@@ -91,9 +179,11 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                     console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `)
                     return {
                         ...element,
+                        id: matchedList[0].id,
                         title : matchedList[0].title,
                         artist : matchedList[0].artist,
                         album : matchedList[0].album,
+                        album_id: matchedList[0].AlbumId,
                         matched: true
                     }
                 }

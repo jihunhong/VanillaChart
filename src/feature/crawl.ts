@@ -8,15 +8,15 @@ import { createYoutubeRows } from './youtubeMatch';
     const { browser, page } = await launchBrowser();
     try{
         const genie = await collectGenieCharts({ page });
-        await insertChart({ site : 'genie', chart : genie });
+        await insertChart({ page, site : 'genie', chart : genie });
 
         const melon = await collectMelonCharts({ page });
         const convertedMelon = await ftsMatchingJob({ chart : melon });
-        await insertChart({ site : 'melon', chart : convertedMelon });
+        await insertChart({ page, site : 'melon', chart : convertedMelon });
 
         const bugs = await collectBugsCharts({ page });
         const convertedBugs = await ftsMatchingJob({ chart : bugs });
-        await insertChart({ site : 'bugs', chart : convertedBugs });
+        await insertChart({ page, site : 'bugs', chart : convertedBugs });
 
         await createYoutubeRows();
         
