@@ -1,0 +1,7 @@
+/node_modules
+__test__
+dump.rdb
+/.vscode
+/dist
+/sample
+README.md

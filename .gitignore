@@ -5,3 +5,8 @@ dump.rdb
 /logs
 /cronScripts
 server.log
+/client/node_modules
+/client/build
+/.vscode
+# /dist
+/covers
