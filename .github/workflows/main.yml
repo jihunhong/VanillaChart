@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CRAWL CRON
 
 on:
   schedule:
@@ -22,7 +22,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
         env:
           DOT_ENV: ${{ secrets.DOT_ENV }}
-          
+      - run: npm install
       - run: npx tsc
       - run: echo $DOT_ENV | base64 --decode > ./.env
       - run: npm run sync-dir
