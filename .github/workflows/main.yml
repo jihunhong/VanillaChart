@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  schedule:
+    - cron: "36 04 * * *"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+      
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+  
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+        env:
+          DOT_ENV: ${{ secrets.DOT_ENV }}
+          
+      - run: npx tsc
+      - run: echo $DOT_ENV | base64 --decode > ./.env
+      - run: npm run sync-dir
+      - run: npm run crawl
+      
