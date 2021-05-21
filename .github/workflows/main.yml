@@ -4,7 +4,7 @@ name: CRAWL CRON
 
 on:
   schedule:
-    - cron: "50 06 * * *"
+    - cron: "12 07 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
