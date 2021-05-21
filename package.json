@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "sync-dir": "cp .env ./dist/.env",
-    "crawl": "EXPORT NODE_ENV=production && node dist/src/feature/crawl.js"
+    "crawl": "export NODE_ENV=production && node dist/src/feature/crawl.js"
   },
   "repository": {
     "type": "git",
