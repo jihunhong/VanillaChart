@@ -22,10 +22,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-        env:
-          DOT_ENV: ${{ secrets.DOT_ENV }}
       - run: npm install
-      - run: echo $DOT_ENV | base64 --decode > ./.env
+      - run: echo ${{ secrets.DOT_ENV }} | base64 --decode > ./.env
       - run: ls -al
       - run: npm run sync-dir
       - run: npm run crawl
