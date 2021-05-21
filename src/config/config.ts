@@ -2,6 +2,9 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path : path.join(__dirname, '../../.env') });
 
+console.log(process.env.NODE_ENV);
+console.log(process.env.LOCAL_DB_ID);
+
 module.exports = {
   "development": {
     "username": <string> process.env.LOCAL_DB_ID,
