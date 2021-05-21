@@ -4,7 +4,7 @@ name: CRAWL CRON
 
 on:
   schedule:
-    - cron: "20 07 * * *"
+    - cron: "32 15 * * *"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,6 +24,7 @@ jobs:
           DOT_ENV: ${{ secrets.DOT_ENV }}
       - run: npm install
       - run: echo $DOT_ENV | base64 --decode > ./.env
+      - run: ls -al
       - run: npm run sync-dir
       - run: npm run crawl
       
