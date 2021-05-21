@@ -4,9 +4,7 @@ name: CRAWL
 
 on:
   schedule:
-    - cron: "53 17 * * *"
-  push:
-    branches: [master]
+    - cron: "0 15 * * *" # 00:00 GMT+09:00
 jobs:
   build:
     runs-on: ubuntu-latest
