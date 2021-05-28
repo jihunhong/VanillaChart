@@ -57,14 +57,12 @@ async function excuteSearch({ q }: { q : string }) {
 export async function createYoutubeRows(){
     const chartData = await Chart.findAll({
         attributes: [
-            'rank',
-            'Music.id'
+            'rank'
         ],
         raw : true,
         include : [
             {
                 model : Music,
-                as: 'Music',
                 attributes : [
                     'id',
                     'title',
@@ -131,7 +129,6 @@ export async function createYoutubeRows(){
                 })
             }
         }
-        
     }catch(error){
         console.error(error);
     }
