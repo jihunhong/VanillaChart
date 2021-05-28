@@ -71,14 +71,12 @@ function createYoutubeRows() {
     return __awaiter(this, void 0, void 0, function* () {
         const chartData = yield models_1.Chart.findAll({
             attributes: [
-                'rank',
-                'Music.id'
+                'rank'
             ],
             raw: true,
             include: [
                 {
                     model: models_1.Music,
-                    as: 'Music',
                     attributes: [
                         'id',
                         'title',
