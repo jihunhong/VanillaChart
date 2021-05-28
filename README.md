@@ -1,24 +1,6 @@
-# 12월13일 부터 revised 브랜치에서 리팩토링중
 # 💿 음원차트 파싱 프로젝트
-# 🔨 12월13일 부터 revised 브랜치에서 리팩토링중
-
-
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-<!-- code_chunk_output -->
-
-* [💿 음원차트 파싱 프로젝트](#음원차트-파싱-프로젝트)
-	* [📷 ScreenShot](#screenshot)
-	* [✒️ 개요](#️-개요)
-	* [📚 사용해본것들](#사용해본것들)
-	* [🔗 Links](#links)
-
-<!-- /code_chunk_output -->
-
-
 
 ## 📷 Preview
-
-<center><img src="/preview.gif"></center>
 
 ## ✒️ 개요
 기존의 음원 플랫폼은 지니를 사용하다가
@@ -43,11 +25,12 @@
 
 
 ## 📚 사용해본것들
+- Typescript
 - Node.js
 - Express
-- React
-- MongoDB
-- OAuth 2.0
+- Next.js
+- MySQL
+- Sequelize
 
 
 ## 🔗 Links
