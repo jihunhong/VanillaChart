@@ -57,12 +57,14 @@ async function excuteSearch({ q }: { q : string }) {
 export async function createYoutubeRows(){
     const chartData = await Chart.findAll({
         attributes: [
-            'rank'
+            'rank',
+            'Music.id'
         ],
         raw : true,
         include : [
             {
                 model : Music,
+                as: 'Music',
                 attributes : [
                     'id',
                     'title',
@@ -102,10 +104,34 @@ export async function createYoutubeRows(){
                 }
                 await Video.create({
                     MusicId : el["Music.id"],
+                    videoId: youtubeSnippet.videoId
+                })
+            }
+        }
+        // 차트 내에 존재하는 데이터 부터 검색 시작
+        // 할당량이 남아있다면 최근 추가된 앨범의 데이터부터 차례로 검색 시작
+
+        const recentMusics = await Music.findAll({
+            order: [
+                ['createdAt']
+            ]
+        })
+        for(const el of recentMusics){
+            const exist = await Video.findOne({
+                where : {
+                    id: el.id
+                }
+            })
+
+            if(!exist){
+                const youtubeSnippet = await excuteSearch({ q: `${el.title} ${el.artist}`});
+                await Video.create({
+                    MusicId: el.id,
                     videoId: youtubeSnippet!.videoId
                 })
             }
         }
+        
     }catch(error){
         console.error(error);
     }

@@ -71,12 +71,14 @@ function createYoutubeRows() {
     return __awaiter(this, void 0, void 0, function* () {
         const chartData = yield models_1.Chart.findAll({
             attributes: [
-                'rank'
+                'rank',
+                'Music.id'
             ],
             raw: true,
             include: [
                 {
                     model: models_1.Music,
+                    as: 'Music',
                     attributes: [
                         'id',
                         'title',
@@ -114,6 +116,27 @@ function createYoutubeRows() {
                     }
                     yield models_1.Video.create({
                         MusicId: el["Music.id"],
+                        videoId: youtubeSnippet.videoId
+                    });
+                }
+            }
+            // 차트 내에 존재하는 데이터 부터 검색 시작
+            // 할당량이 남아있다면 최근 추가된 앨범의 데이터부터 차례로 검색 시작
+            const recentMusics = yield models_1.Music.findAll({
+                order: [
+                    ['createdAt']
+                ]
+            });
+            for (const el of recentMusics) {
+                const exist = yield models_1.Video.findOne({
+                    where: {
+                        id: el.id
+                    }
+                });
+                if (!exist) {
+                    const youtubeSnippet = yield excuteSearch({ q: `${el.title} ${el.artist}` });
+                    yield models_1.Video.create({
+                        MusicId: el.id,
                         videoId: youtubeSnippet.videoId
                     });
                 }
