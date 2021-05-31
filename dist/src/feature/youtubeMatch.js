@@ -110,10 +110,34 @@ function createYoutubeRows() {
                     const youtubeSnippet = yield excuteSearch({ q: `${el["Music.title"]} ${el["Music.artist"]}` });
                     if (!youtubeSnippet) {
                         console.log(`empty response! q : ${el["Music.title"]} ${el["Music.artist"]}`);
-                        continue;
+                        break;
                     }
                     yield models_1.Video.create({
                         MusicId: el["Music.id"],
+                        videoId: youtubeSnippet.videoId
+                    });
+                }
+            }
+            // 차트 내에 존재하는 데이터 부터 검색 시작
+            // 할당량이 남아있다면 최근 추가된 앨범의 데이터부터 차례로 검색 시작
+            const recentMusics = yield models_1.Music.findAll({
+                order: [
+                    ['createdAt']
+                ]
+            });
+            for (const el of recentMusics) {
+                const exist = yield models_1.Video.findOne({
+                    where: {
+                        id: el.id
+                    }
+                });
+                if (!exist) {
+                    const youtubeSnippet = yield excuteSearch({ q: `${el.title} ${el.artist}` });
+                    if (!youtubeSnippet) {
+                        break;
+                    }
+                    yield models_1.Video.create({
+                        MusicId: el.id,
                         videoId: youtubeSnippet.videoId
                     });
                 }
