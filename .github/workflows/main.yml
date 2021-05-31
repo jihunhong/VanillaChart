@@ -3,6 +3,8 @@
 name: CRAWL
 
 on:
+  push:
+    branches: [ master ]
   schedule:
     - cron: "0 15 * * *" # 00:00 GMT+09:00
 jobs:
