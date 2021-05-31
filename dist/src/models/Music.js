@@ -27,4 +27,4 @@ module.exports = (sequelize, DataTypes) => {
     };
     return Music;
 };
-//# sourceMappingURL=Music.js.map
+//# sourceMappingURL=music.js.map

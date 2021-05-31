@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
 dotenv_1.default.config({ path: path_1.default.join(__dirname, '../../.env') });
-console.log(process.env.NODE_ENV);
-console.log(process.env.LOCAL_DB_ID);
 module.exports = {
     "development": {
         "username": process.env.LOCAL_DB_ID,

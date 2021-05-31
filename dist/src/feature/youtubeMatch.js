@@ -133,12 +133,9 @@ function createYoutubeRows() {
                 });
                 if (!exist) {
                     const youtubeSnippet = yield excuteSearch({ q: `${el.title} ${el.artist}` });
-<<<<<<< HEAD
-=======
                     if (!youtubeSnippet) {
                         break;
                     }
->>>>>>> dev
                     yield models_1.Video.create({
                         MusicId: el.id,
                         videoId: youtubeSnippet.videoId
