@@ -98,7 +98,7 @@ export async function createYoutubeRows(){
                 const youtubeSnippet = await excuteSearch({ q: `${el["Music.title"]} ${el["Music.artist"]}` });
                 if(!youtubeSnippet){
                     console.log(`empty response! q : ${el["Music.title"]} ${el["Music.artist"]}`);
-                    continue;
+                    break;
                 }
                 await Video.create({
                     MusicId : el["Music.id"],
@@ -123,9 +123,12 @@ export async function createYoutubeRows(){
 
             if(!exist){
                 const youtubeSnippet = await excuteSearch({ q: `${el.title} ${el.artist}`});
+                if(!youtubeSnippet){
+                    break;
+                }
                 await Video.create({
                     MusicId: el.id,
-                    videoId: youtubeSnippet!.videoId
+                    videoId: youtubeSnippet.videoId
                 })
             }
         }

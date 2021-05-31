@@ -10,18 +10,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const crawlUtil_1 = require("./crawlUtil");
+const melonCrawl_1 = require("./melonCrawl");
+const genieCrawl_1 = require("./genieCrawl");
+const bugsCrawl_1 = require("./bugsCrawl");
 const youtubeMatch_1 = require("./youtubeMatch");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const { browser, page } = yield crawlUtil_1.launchBrowser();
     try {
-        // const genie = await collectGenieCharts({ page });
-        // await insertChart({ page, site : 'genie', chart : genie });
-        // const melon = await collectMelonCharts({ page });
-        // const convertedMelon = await ftsMatchingJob({ chart : melon });
-        // await insertChart({ page, site : 'melon', chart : convertedMelon });
-        // const bugs = await collectBugsCharts({ page });
-        // const convertedBugs = await ftsMatchingJob({ chart : bugs });
-        // await insertChart({ page, site : 'bugs', chart : convertedBugs });
+        const genie = yield genieCrawl_1.collectGenieCharts({ page });
+        yield crawlUtil_1.insertChart({ page, site: 'genie', chart: genie });
+        const melon = yield melonCrawl_1.collectMelonCharts({ page });
+        const convertedMelon = yield crawlUtil_1.ftsMatchingJob({ chart: melon });
+        yield crawlUtil_1.insertChart({ page, site: 'melon', chart: convertedMelon });
+        const bugs = yield bugsCrawl_1.collectBugsCharts({ page });
+        const convertedBugs = yield crawlUtil_1.ftsMatchingJob({ chart: bugs });
+        yield crawlUtil_1.insertChart({ page, site: 'bugs', chart: convertedBugs });
         yield youtubeMatch_1.createYoutubeRows();
         console.log('SUCCESS INSERT AND CRAWL');
     }

@@ -110,7 +110,7 @@ function createYoutubeRows() {
                     const youtubeSnippet = yield excuteSearch({ q: `${el["Music.title"]} ${el["Music.artist"]}` });
                     if (!youtubeSnippet) {
                         console.log(`empty response! q : ${el["Music.title"]} ${el["Music.artist"]}`);
-                        continue;
+                        break;
                     }
                     yield models_1.Video.create({
                         MusicId: el["Music.id"],
@@ -133,6 +133,12 @@ function createYoutubeRows() {
                 });
                 if (!exist) {
                     const youtubeSnippet = yield excuteSearch({ q: `${el.title} ${el.artist}` });
+<<<<<<< HEAD
+=======
+                    if (!youtubeSnippet) {
+                        break;
+                    }
+>>>>>>> dev
                     yield models_1.Video.create({
                         MusicId: el.id,
                         videoId: youtubeSnippet.videoId
