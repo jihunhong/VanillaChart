@@ -49,7 +49,7 @@ router.get('/:site', async(req, res, next) => {
                 site : req.params.site,
                 updatedAt : {
                     [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
-                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
+                    [Op.lt] : moment().format('YYYY-MM-DD 23:59:59'),
                 }
             },
             include : [
@@ -73,7 +73,8 @@ router.get('/:site', async(req, res, next) => {
             ],
             order : [
                 ['rank', 'ASC']
-            ]
+            ],
+            group: ['rank']
         })
         res.status(200).send(chart);
     }catch(err){
