@@ -7,7 +7,7 @@
     "start": "node dist/app.js",
     "deploy": "tsc && npm run sync-dir",
     "sync-dir": "cp .env ./dist/.env",
-    "crawl": "export NODE_ENV=production && node dist/src/feature/crawl.js"
+    "crawl": "npm run deploy && export NODE_ENV=production && node dist/src/feature/crawl.js"
   },
   "repository": {
     "type": "git",
