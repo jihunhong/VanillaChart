@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         site: {
             type: DataTypes.STRING(10)
+        },
+        description: {
+            type: DataTypes.TEXT
         }
     }, {
         charset : 'utf8',
