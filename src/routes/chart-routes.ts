@@ -102,6 +102,7 @@ router.get('/:chart/:date', async(req, res, next) => {
                         'title',
                         'artist',
                         'album',
+                        'AlbumId'
                     ],
                     include : [
                         {
@@ -112,7 +113,11 @@ router.get('/:chart/:date', async(req, res, next) => {
                         }
                     ]
                 }
-            ]
+            ],
+            order: [
+                ['rank', 'ASC']
+            ],
+            group: ['rank']
         })
         res.status(200).send(chart);
     }catch(err){

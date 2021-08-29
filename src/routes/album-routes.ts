@@ -50,5 +50,19 @@ router.get('/:album_id', async(req, res, next) => {
     }
 })
 
+router.get('/artist/:artistName', async(req, res, next) => {
+    try{
+        const albums = await Album.findAll({
+            where : {
+                artist : req.params.artistName,
+            }
+        })
+        res.status(200).send(albums);
+    }catch(err){
+        console.error(err);
+        next(err);
+    }
+})
+
 
 export default router;
