@@ -44,6 +44,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
     const artist = await page.$eval('a[onclick*="artistInfo"]', el => el.textContent);
     const tracks = await page.$$eval('td > a.title', trackList => trackList.map((el) => el.textContent?.trim()));
     const releaseDate = await page.$eval('li:last-child > span.value', time => time.textContent?.trim());
+    const description = await page.evaluate(() => Array.from(document.querySelectorAll('.db-insert p')).map(v => v.textContent).filter((v, i) => i > 0).join());
     // YYYY.MM.DD
 
     const leadIndex = await page.$$eval('td.info', tracks => Array.from(tracks).findIndex((track) => track.querySelector('span.icon-title')));
@@ -57,7 +58,8 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
                 lead: index === leadIndex
             }
         }),
-        releaseDate
+        releaseDate,
+        description
     }
 }
 

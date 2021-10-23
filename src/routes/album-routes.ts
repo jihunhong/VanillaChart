@@ -55,7 +55,11 @@ router.get('/artist/:artistName', async(req, res, next) => {
         const albums = await Album.findAll({
             where : {
                 artist : req.params.artistName,
-            }
+            },
+            group: 'album',
+            order : [
+                ['releaseDate', 'DESC']
+            ],
         })
         res.status(200).send(albums);
     }catch(err){

@@ -40,25 +40,6 @@ export async function launchBrowser() {
     return { browser, page };
 }
 
-// export async function insertChart({ site, chart } : { site : siteName, chart : Array<ChartData> }) {
-//     for(const row of chart){
-//         const res = await Music.findOrCreate({
-//             where : {
-//                 title : row.title,
-//                 artist : row.artist,
-//                 album : row.album
-//             },
-//             raw : true
-//         })
-//         await Chart.create({
-//             rank : row.rank,
-//             site,
-//             MusicId : res[0].id,
-//         })
-//         await imageDownload({ url : row.image!, music : row, site });
-//     }
-// }
-
 async function getAlbumInfo({ page, site, albumId }): Promise<any>{
     const func = {
         'melon': getMelonAlbumInfo,
@@ -96,6 +77,7 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
                      album: row.album,
                      artist: row.artist,
                      releaseDate: albumInfo.releaseDate,
+                     description: albumInfo.description,
                      site,
                  }
              })
