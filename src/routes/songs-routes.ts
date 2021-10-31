@@ -1,28 +1,24 @@
 import express from 'express';
 import { Music, Video, Sequelize, Album } from '../models';
+import { Op } from 'sequelize';
 
 const router = express.Router();
 
 router.get('/updated', async(req, res, next) => {
     try{
-        const vidoes = await Video.findAll({
-            where : {
-            },
+        const songs = await Music.findAll({
             include: [
                 {
-                    model: Music,
+                    model: Album,
                     attributes : [
-                        'title',
-                        'artist',
-                        'lead',
+                        ['id', 'albumId']
                     ],
-                    include: [
-                        {
-                            model: Album,
-                            attributes: [
-                                ['id', 'albumId']
-                            ]
-                        }
+                    
+                },
+                {
+                    model: Video,
+                    attributes: [
+                        'videoId'
                     ]
                 }
             ],
@@ -30,9 +26,9 @@ router.get('/updated', async(req, res, next) => {
             order: [
                 ['updatedAt', 'DESC']
             ],
-            limit: 12
+            limit: 320
         })
-        res.json(vidoes);
+        res.json(songs);
     }catch(err){
         console.error(err);
         next(err);
