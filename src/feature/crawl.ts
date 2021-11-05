@@ -9,7 +9,7 @@ import { createYoutubeRows } from './youtubeMatch';
     try {
         const genie = await collectGenieCharts({ page });
         await insertChart({ page, site : 'genie', chart : genie });
-
+ 
         const melon = await collectMelonCharts({ page });
         const convertedMelon = await ftsMatchingJob({ chart : melon });
         await insertChart({ page, site : 'melon', chart : convertedMelon });

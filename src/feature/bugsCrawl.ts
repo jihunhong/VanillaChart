@@ -42,7 +42,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
     await page.goto(`https://music.bugs.co.kr/album/${albumId}`);
     
     const albumName = await page.$eval('.innerContainer > h1', el => el.textContent);
-    const artist = await page.$eval('.info a[href*="artist"]', el => el.textContent);
+    const artist = await page.$eval('.info td', el => el.textContent);
     const tracks = await page.$$eval('th > p.title', trackList => trackList.map((el) => el.textContent?.trim()));
     const releaseDate = await page.$eval('td > time', time => time.textContent);
     // YYYY.MM.DD

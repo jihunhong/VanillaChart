@@ -77,7 +77,6 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
                      album: row.album,
                      artist: row.artist,
                      releaseDate: albumInfo.releaseDate,
-                     description: albumInfo.description,
                      site,
                  }
              })
