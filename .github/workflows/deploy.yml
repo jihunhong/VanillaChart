@@ -23,7 +23,9 @@ jobs:
       - run: npm install
       - run: echo ${{ secrets.DOT_ENV }} | base64 --decode > ./.env
       - run: ls -al
+      - run: pwd
       - run: npm run deploy
+      - run: sudo pm2 start ./dist/app.js
       
       - uses: 8398a7/action-slack@v3
         with:
