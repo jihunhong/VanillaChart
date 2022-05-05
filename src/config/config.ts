@@ -11,7 +11,13 @@ module.exports = {
     "port" : 3306,
     "dialect": "mysql",
     "timezone": "+09:00",
-    "logging" : false
+    "logging" : false,
+    "ssl": true,
+    "dialectOptions": {
+       "ssl": {
+          "require": true
+       }
+     }
   },
   "test": {
     "username": "root",
@@ -20,7 +26,12 @@ module.exports = {
     "host": "127.0.0.1",
     "port" : 3306,
     "dialect": "mysql",
-    "timezone": "+09:00"
+    "timezone": "+09:00",
+    "dialectOptions": {
+      "ssl": {
+         "require": true
+      }
+    }
   },
   "production": {
     "username": <string> process.env.PRODUCTION_DB_ID,
@@ -29,6 +40,11 @@ module.exports = {
     "host": <string> process.env.PRODUCTION_DB_HOST,
     "port" : 3306,
     "dialect": "mysql",
-    "timezone": "+09:00"
+    "timezone": "+09:00",
+    "dialectOptions": {
+      "ssl": {
+         "require": true
+      }
+    }
   }
 }
