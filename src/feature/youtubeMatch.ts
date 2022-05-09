@@ -66,8 +66,8 @@ export async function createYoutubeRows(){
                 attributes : [
                     'id',
                     'title',
-                    'artist',
-                    'album',
+                    'artistName',
+                    'albumName',
                 ],
                 include : [
                     {
@@ -79,7 +79,7 @@ export async function createYoutubeRows(){
                 ]
             },
         ],
-        group: ['Music.id'],
+        group: ['music.id'],
         order : [
             ['rank', 'ASC']
         ]
@@ -88,20 +88,20 @@ export async function createYoutubeRows(){
         for( const el of chartData ){
             const exist = await Video.findOne({
                 where : {
-                    musicId : el["Music.id"]
+                    musicId : el["music.id"]
                 }
             })
 
             if(!exist){
 
-                console.log(`not exist element. start to youtube matching job : ${el["Music.title"]}`);
-                const youtubeSnippet = await excuteSearch({ q: `${el["Music.title"]} ${el["Music.artist"]}` });
+                console.log(`not exist element. start to youtube matching job : ${el["music.title"]}`);
+                const youtubeSnippet = await excuteSearch({ q: `${el["music.title"]} ${el["music.artistName"]}` });
                 if(!youtubeSnippet){
-                    console.log(`empty response! q : ${el["Music.title"]} ${el["Music.artist"]}`);
+                    console.log(`empty response! q : ${el["music.title"]} ${el["music.artistName"]}`);
                     break;
                 }
                 await Video.create({
-                    musicId : el["Music.id"],
+                    musicId : el["music.id"],
                     videoId: youtubeSnippet.videoId
                 })
             }
