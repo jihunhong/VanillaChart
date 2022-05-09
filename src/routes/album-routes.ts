@@ -16,7 +16,7 @@ router.get('/tracks/:album_id', async(req, res, next) => {
                     model: Music,
                     attributes : [
                         'title',
-                        'artist',
+                        'artistName',
                         'lead',
                     ],
                     include: [
@@ -56,7 +56,7 @@ router.get('/artist/:artistName', async(req, res, next) => {
             where : {
                 artist : req.params.artistName,
             },
-            group: 'album',
+            group: 'albumName',
             order : [
                 ['releaseDate', 'DESC']
             ],

@@ -15,7 +15,8 @@ module.exports = {
     "ssl": true,
     "dialectOptions": {
        "ssl": {
-          "require": true
+          "require": true,
+          "rejectUnauthorized": false
        }
      }
   },
@@ -29,7 +30,8 @@ module.exports = {
     "timezone": "+09:00",
     "dialectOptions": {
       "ssl": {
-         "require": true
+         "require": true,
+         "rejectUnauthorized": false
       }
     }
   },
@@ -43,7 +45,8 @@ module.exports = {
     "timezone": "+09:00",
     "dialectOptions": {
       "ssl": {
-         "require": true
+         "require": true,
+         "rejectUnauthorized": false
       }
     }
   }

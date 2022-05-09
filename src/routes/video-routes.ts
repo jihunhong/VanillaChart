@@ -13,7 +13,7 @@ router.get('/updated', async(req, res, next) => {
                     model: Music,
                     attributes : [
                         'title',
-                        'artist',
+                        'artistName',
                         'lead',
                     ],
                     include: [

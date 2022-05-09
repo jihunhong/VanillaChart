@@ -57,9 +57,9 @@ router.get('/:site', async(req, res, next) => {
                     model : Music,
                     attributes : [
                         'title',
-                        'artist',
-                        'album',
-                        'AlbumId'
+                        'artistName',
+                        'albumName',
+                        'albumId'
                     ],
                     include : [
                         {
@@ -100,9 +100,9 @@ router.get('/:chart/:date', async(req, res, next) => {
                     model : Music,
                     attributes : [
                         'title',
-                        'artist',
-                        'album',
-                        'AlbumId'
+                        'artistName',
+                        'albumName',
+                        'albumId'
                     ],
                     include : [
                         {
@@ -145,8 +145,8 @@ router.get('/:chart/:rank',  async(req, res, next) => {
                     model : Music,
                     attributes : [
                         'title',
-                        'artist',
-                        'album',
+                        'artistName',
+                        'albumName',
                     ],
                     where : {
                         rank : req.params.rank
