@@ -3,7 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import { passportConfig  } from './src/passport'
-import { sequelize } from './models';
+import { sequelize } from './src/models';
 import cors from 'cors';
 
 //  Router 
@@ -18,10 +18,10 @@ dotenv.config({ path : path.join(__dirname, './.env')});
 
 sequelize.sync({ force : false })
   .then(() => {
-    console.log('connected database');
+    console.log('Connected database ⚡');
   }).catch((err) => {
     console.error(err);
-    console.log('failed to connect database');
+    console.log('Failed to connect database 🔥');
   });
 
 app.use(express.json());

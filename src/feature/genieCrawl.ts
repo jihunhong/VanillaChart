@@ -15,8 +15,8 @@ async function fetchGenieCharts({ page }: { page : Page }){
             return {
                 rank : i + 1,
                 title : titles[i],
-                artist : artists[i],
-                album : albumtitles[i],
+                artistName : artists[i],
+                albumName : albumtitles[i],
                 image : images[i],
                 album_id: albumInfoNumbers[i]
             }
@@ -41,7 +41,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
     await page.goto(`https://www.genie.co.kr/detail/albumInfo?axnm=${albumId}`, waitor);
     
     const albumName = await page.$eval('h2.name', el => el.textContent);
-    const artist = await page.$eval('a[onclick*="artistInfo"]', el => el.textContent);
+    const artistName = await page.$eval('a[onclick*="artistInfo"]', el => el.textContent);
     const tracks = await page.$$eval('td > a.title', trackList => trackList.map((el) => el.textContent?.trim()));
     const releaseDate = await page.$eval('li:last-child > span.value', time => time.textContent?.trim());
     const description = await page.evaluate(() => Array.from(document.querySelectorAll('.db-insert p')).map(v => v.textContent).filter((v, i) => i > 0).join());
@@ -51,7 +51,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
 
     return {
         albumName,
-        artist,
+        artistName,
         tracks : tracks.map((trackName, index) => {
             return {
                 track : trackName?.replace('TITLE\n', ''),

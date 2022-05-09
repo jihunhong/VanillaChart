@@ -58,7 +58,7 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
             await Chart.create({
                 rank: row.rank,
                 site,
-                MusicId: row.id
+                musicId: row.id
             })
             continue;
         }
@@ -74,8 +74,8 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
 
              const album = await Album.findOrCreate({
                  where : {
-                     album: row.album,
-                     artist: row.artist,
+                     albumName: row.albumName,
+                     artistName: row.artistName,
                      releaseDate: albumInfo.releaseDate,
                      site,
                  }
@@ -85,17 +85,17 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
                  const res = await Music.findOrCreate({
                      where: {
                          title: element.track,
-                         artist: row.artist,
-                         album: row.album,
+                         artistName: row.artistName,
+                         albumName: row.albumName,
                          lead: element.lead,
-                         AlbumId: album[0].id
+                         albumId: album[0].id
                      }
                  })
                  if(row.title === element.track){
                     await Chart.create({
                         rank: row.rank,
                         site,
-                        MusicId: res[0].id
+                        musicId: res[0].id
                     })
                  }
              }
@@ -108,15 +108,15 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
         const music = await Music.findOrCreate({
             where: {
                 title: row.title,
-                artist: row.artist,
-                album: row.album,
-                AlbumId: row.album_id
+                artistName: row.artistName,
+                albumName: row.albumName,
+                albumId: row.album_id
             }
         });
         await Chart.create({
             rank: row.rank,
             site,
-            MusicId: music[0].id
+            musicId: music[0].id
         })
         continue;
 
@@ -126,56 +126,56 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
 export async function fullTextSearch(element : ChartData): Promise<ChartData> {
     try{
         const matchedList:Array<any> = await sequelize.query(`
-            SELECT *, match(title, artist) against( ? ) as score 
-            FROM Music 
-            WHERE match(title, artist) against( ? ) AND 
+            SELECT *, match(title, artistName) against( ? ) as score 
+            FROM music 
+            WHERE match(title, artistName) against( ? ) AND 
                 id IN (
-                    SELECT MusicId
-                    FROM Charts
+                    SELECT musicId
+                    FROM charts
                     WHERE site = 'genie'
                 )
             ORDER BY score desc
             LIMIT 5;`
         , {
-            replacements : [ `${element.title} ${element.artist}`, `${element.title} ${element.artist}` ],
+            replacements : [ `${element.title} ${element.artistName}`, `${element.title} ${element.artistName}` ],
             type : sequelize.QueryTypes.SELECT
         });
 
         if(matchedList.length > 0 ){
             if(matchedList[0].score! > MIN_MATCH_SCORE){
-                console.log(`✔ '${element.title} - ${element.artist}' matched '${matchedList[0].title} - ${matchedList[0].artist}' `);
+                console.log(`✔ '${element.title} - ${element.artistName}' matched '${matchedList[0].title} - ${matchedList[0].artistName}' `);
                 return {
                     ...element,
                     id: matchedList[0].id,
                     title : matchedList[0].title,
-                    artist : matchedList[0].artist,
-                    album : matchedList[0].album,
-                    album_id: matchedList[0].AlbumId,
+                    artistName : matchedList[0].artistName,
+                    albumName : matchedList[0].albumName,
+                    album_id: matchedList[0].albumId,
                     matched: true
                 }
             }else{
-                if((element.title.includes(matchedList[0].title) && element.artist.includes(matchedList[0].artist))
+                if((element.title.includes(matchedList[0].title) && element.artistName.includes(matchedList[0].artist))
                 ||
-                matchedList[0].title.includes(element.title) && matchedList[0].artist.includes(element.artist)
+                matchedList[0].title.includes(element.title) && matchedList[0].artist.includes(element.artistName)
                 ){
-                    console.warn(`💫 '${element.title} - ${element.artist}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `)
+                    console.warn(`💫 '${element.title} - ${element.artistName}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `)
                     return {
                         ...element,
                         id: matchedList[0].id,
                         title : matchedList[0].title,
-                        artist : matchedList[0].artist,
-                        album : matchedList[0].album,
-                        album_id: matchedList[0].AlbumId,
+                        artistName : matchedList[0].artistName,
+                        albumName : matchedList[0].albumName,
+                        album_id: matchedList[0].albumId,
                         matched: true
                     }
                 }
-                console.error(`❌ '${element.title} - ${element.artist}' not found `)
+                console.error(`❌ '${element.title} - ${element.artistName}' not found `)
                 return {
                     ...element,
                 };
             }
         }else{
-            console.error(`❌ '${element.title} - ${element.artist}' not found `)
+            console.error(`❌ '${element.title} - ${element.artistName}' not found `)
             return element;
         }
     }catch(err){
@@ -208,7 +208,7 @@ async function uploadS3({ targetPath, music }: { targetPath : string, music: Cha
     const fileContent = fs.readFileSync(targetPath);
     const params = {
         Bucket : 'cherrychart.resources',
-        Key : `${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
+        Key : `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
         Body : fileContent
     }
     return new Promise((res, rej) => {
@@ -221,7 +221,7 @@ async function uploadS3({ targetPath, music }: { targetPath : string, music: Cha
 }
 
 export async function imageDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
-    const targetPath = path.join(__dirname, `../../covers/${music.album.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
+    const targetPath = path.join(__dirname, `../../covers/${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
     const coverDir = path.join(__dirname, `../../covers`);
     const exist = fs.existsSync(coverDir);
 

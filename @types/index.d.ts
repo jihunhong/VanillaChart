@@ -4,8 +4,8 @@ export interface ChartData {
     id?: number
     rank : number
     title : string
-    artist : string
-    album : string
+    artistName : string
+    albumName : string
     score? : number
     image? : string
     matched?: boolean
@@ -19,7 +19,7 @@ export interface Track {
 
 export interface AlbumData {
     albumName: string
-    artist: string
+    artistName: string
     tracks: Array<Track>
     releaseDate: string
 }

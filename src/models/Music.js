@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const Music = sequelize.define('Music', {
+    const Music = sequelize.define('music', {
         title : {
             type : DataTypes.STRING(150),
             allowNull : false,
         },
-        artist : {
+        artistName : {
             type : DataTypes.STRING(150),
             allowNull : false,
         },
-        album : {
+        albumName : {
             type : DataTypes.STRING(150),
             allowNull : false,
         },

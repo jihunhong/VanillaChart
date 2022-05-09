@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-    const Album = sequelize.define('Album', {
-        album : {
+    const Album = sequelize.define('albums', {
+        albumName : {
             type : DataTypes.STRING(150),
             allowNull : false,
         },
-        artist : {
+        artistName : {
             type : DataTypes.STRING(150),
             allowNull : false
         },

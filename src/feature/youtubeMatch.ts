@@ -88,7 +88,7 @@ export async function createYoutubeRows(){
         for( const el of chartData ){
             const exist = await Video.findOne({
                 where : {
-                    MusicId : el["Music.id"]
+                    musicId : el["Music.id"]
                 }
             })
 
@@ -101,7 +101,7 @@ export async function createYoutubeRows(){
                     break;
                 }
                 await Video.create({
-                    MusicId : el["Music.id"],
+                    musicId : el["Music.id"],
                     videoId: youtubeSnippet.videoId
                 })
             }
@@ -127,7 +127,7 @@ export async function createYoutubeRows(){
                     break;
                 }
                 await Video.create({
-                    MusicId: el.id,
+                    musicId: el.id,
                     videoId: youtubeSnippet.videoId
                 })
             }

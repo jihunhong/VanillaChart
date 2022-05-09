@@ -21,8 +21,8 @@ async function fetchMelonCharts({ page }: { page : Page }){
             return {
                 rank : i + 1,
                 title : titles[i],
-                artist : artists[i],
-                album : albumtitles[i],
+                artistName : artists[i],
+                albumName : albumtitles[i],
                 image : images[i],
                 album_id: albumInfoNumbers[i]
             }
@@ -47,7 +47,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page: Page, albumId: s
     await page.goto(`https://www.melon.com/album/detail.htm?albumId=${albumId}`, waitor);
     
     const albumName = await page.$eval('div.song_name', el => el.textContent?.trim().replace('앨범명\n\t\t\t\t\t\t\t\t\t\t', ''));
-    const artist = await page.$eval('div.artist', el => el.textContent?.trim());
+    const artistName = await page.$eval('div.artist', el => el.textContent?.trim());
     const tracks = await page.$$eval('a[href*="playSong"]', trackList => trackList.map((el) => el.textContent));
     const releaseDate = await page.$eval('dl.list > dd', time => time.textContent);
     // YYYY.MM.DD
@@ -56,7 +56,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page: Page, albumId: s
 
     return {
         albumName,
-        artist,
+        artistName,
         tracks : tracks.map((trackName, index) => {
             return {
                 track : trackName,

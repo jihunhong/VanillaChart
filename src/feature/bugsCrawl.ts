@@ -16,8 +16,8 @@ async function fetchBugsCharts({ page }: { page : Page }){
             return {
                 rank : i + 1,
                 title : titles[i].replace(/\n/g, ''),
-                artist : artists[i].replace(/\n/g, ''),
-                album : albumtitles[i].replace(/\n/g, ''),
+                artistName : artists[i].replace(/\n/g, ''),
+                albumName : albumtitles[i].replace(/\n/g, ''),
                 image : images[i],
                 album_id: albumInfoNumbers[i]
             }
@@ -42,7 +42,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
     await page.goto(`https://music.bugs.co.kr/album/${albumId}`);
     
     const albumName = await page.$eval('.innerContainer > h1', el => el.textContent);
-    const artist = await page.$eval('.info td', el => el.textContent);
+    const artistName = await page.$eval('.info td', el => el.textContent);
     const tracks = await page.$$eval('th > p.title', trackList => trackList.map((el) => el.textContent?.trim()));
     const releaseDate = await page.$eval('td > time', time => time.textContent);
     // YYYY.MM.DD
@@ -51,7 +51,7 @@ export async function fetchAlbumInfo({ page, albumId }: { page : Page, albumId: 
 
     return {
         albumName,
-        artist,
+        artistName,
         tracks : tracks.map((trackName, index) => {
             return {
                 track : trackName,

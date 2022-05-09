@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Chart = sequelize.define('Chart', {
+    const Chart = sequelize.define('charts', {
         rank : {
             type : DataTypes.INTEGER,
             allowNull : false,
@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             type : DataTypes.STRING(15),
             allowNull : false
         }
-        // MusicId
+        // musicId
     }, {
         charset : 'utf8',
         collate : 'utf8_general_ci'

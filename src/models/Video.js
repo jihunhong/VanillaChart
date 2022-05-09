@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const Video = sequelize.define('Video', {
-        // MusicId
+    const Video = sequelize.define('videos', {
+        // musicId
         videoId : {
             type : DataTypes.STRING(20),
             allowNull : false,
