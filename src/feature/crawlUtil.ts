@@ -25,7 +25,7 @@ db.sequelize.sync()
         console.error(err);
 });
 
-const MIN_MATCH_SCORE = 9;
+const MIN_MATCH_SCORE = 7.5;
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
@@ -154,11 +154,11 @@ export async function fullTextSearch(element : ChartData): Promise<ChartData> {
                     matched: true
                 }
             }else{
-                if((element.title.includes(matchedList[0].title) && element.artistName.includes(matchedList[0].artist))
+                if((element.title.includes(matchedList[0].title) && element.artistName.includes(matchedList[0].artistName))
                 ||
-                matchedList[0].title.includes(element.title) && matchedList[0].artist.includes(element.artistName)
+                matchedList[0].title.includes(element.title) && matchedList[0].artistName.includes(element.artistName)
                 ){
-                    console.warn(`💫 '${element.title} - ${element.artistName}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artist} : ${matchedList[0].score} `)
+                    console.warn(`💫 '${element.title} - ${element.artistName}' can not matched max score => ${matchedList[0].title} - ${matchedList[0].artistName} : ${matchedList[0].score} `)
                     return {
                         ...element,
                         id: matchedList[0].id,
