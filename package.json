@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "deploy": "tsc && npm run sync-dir",
-    "dev": "npm run deploy && export NODE_ENV=development && node dist/app.js",
+    "dev": "npm run deploy && export NODE_ENV=development && npx nodemon dist/app.js",
     "sync-dir": "cp .env ./dist/.env",
     "crawl": "npm run deploy && export NODE_ENV=production && node dist/src/feature/crawl.js"
   },
