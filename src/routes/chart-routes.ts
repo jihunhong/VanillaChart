@@ -2,6 +2,7 @@ import express from 'express';
 import moment from 'moment';
 import { Chart, Music, Video, Album } from '../models';
 import { Op } from 'sequelize';
+import { mappingChartCover } from '../lib/imgix';
 
 const router = express.Router();
 
@@ -76,7 +77,8 @@ router.get('/:site', async(req, res, next) => {
             ],
             group: ['rank']
         })
-        res.status(200).send(chart);
+        const json = mappingChartCover(chart);
+        res.status(200).send(json);
     }catch(err){
         console.error(err);
         next(err);
@@ -119,6 +121,7 @@ router.get('/:chart/:date', async(req, res, next) => {
             ],
             group: ['rank']
         })
+        const json = mappingChartCover(chart);
         res.status(200).send(chart);
     }catch(err){
         console.error(err);
@@ -165,7 +168,8 @@ router.get('/:chart/:rank',  async(req, res, next) => {
                 ['rank', 'ASC']
             ]
         })
-        res.status(200).send(chart);
+        const json = mappingChartCover(chart);
+        res.status(200).send(json);
     }catch(err){
         console.error(err);
         next(err);

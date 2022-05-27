@@ -1,3 +1,4 @@
+import { mappingSongs } from './../lib/imgix';
 import express from 'express';
 import { Music, Video, Sequelize, Album } from '../models';
 import { Op } from 'sequelize';
@@ -28,7 +29,7 @@ router.get('/updated', async(req, res, next) => {
             ],
             limit: 320
         })
-        res.json(songs);
+        res.json(mappingSongs(songs));
     }catch(err){
         console.error(err);
         next(err);

@@ -1,3 +1,4 @@
+import { mappingAlbumDetail, mappingArtistAlbums } from './../lib/imgix';
 import express from 'express';
 import moment from 'moment';
 import { Chart, Music, Video, Album } from '../models';
@@ -30,7 +31,7 @@ router.get('/tracks/:album_id', async(req, res, next) => {
                 }
             ]
         })
-        res.json(tracks);
+        res.json(mappingAlbumDetail(tracks));
     }catch(err){
         console.error(err);
     }
@@ -61,7 +62,7 @@ router.get('/artist/:artistName', async(req, res, next) => {
                 ['releaseDate', 'DESC']
             ],
         })
-        res.status(200).send(albums);
+        res.status(200).send(mappingArtistAlbums(albums));
     }catch(err){
         console.error(err);
         next(err);
