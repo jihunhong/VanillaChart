@@ -1,3 +1,4 @@
+import { mappingChartCover } from './../lib/imgix';
 import express from 'express';
 import { Music, Video, Sequelize, Album } from '../models';
 
@@ -15,6 +16,7 @@ router.get('/updated', async(req, res, next) => {
                         'title',
                         'artistName',
                         'lead',
+                        'albumName'
                     ],
                     include: [
                         {
@@ -32,7 +34,7 @@ router.get('/updated', async(req, res, next) => {
             ],
             limit: 12
         })
-        res.json(vidoes);
+        res.json(mappingChartCover(vidoes));
     }catch(err){
         console.error(err);
         next(err);
