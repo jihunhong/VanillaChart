@@ -33,7 +33,7 @@ export const waitor = {
 
 export async function launchBrowser() {
     const browser = await puppeteer.launch({
-        headless : process.env.NODE_ENV === 'production'
+        headless : true
     });
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36');
@@ -204,11 +204,11 @@ function deleteFile({ targetPath }) {
     fs.unlinkSync(targetPath);
 }
 
-async function uploadS3({ targetPath, music }: { targetPath : string, music: ChartData }){
+export async function uploadS3({ targetPath, outputPath }: { targetPath : string, outputPath: string }){
     const fileContent = fs.readFileSync(targetPath);
     const params = {
         Bucket : 'cherrychart.resources',
-        Key : `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
+        Key : outputPath,
         Body : fileContent
     }
     return new Promise((res, rej) => {
@@ -230,7 +230,10 @@ export async function imageDownload({ url, site, music } : { url : string, site 
     }
     if(!fs.existsSync(targetPath)){
         await download({ targetPath, url });
-        await uploadS3({ targetPath, music });
+        await uploadS3({ 
+            targetPath, 
+            outputPath: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
+        });
         deleteFile({ targetPath });
     }
 }

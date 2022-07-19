@@ -13,3 +13,9 @@ export const sign = (user: { id: number, email: string, nickname: string }) => {
         })
     })
 }
+
+export const delay = (time) => {
+    return new Promise(function(resolve) { 
+        setTimeout(resolve, time)
+    });
+ }

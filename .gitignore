@@ -10,3 +10,4 @@ server.log
 /.vscode
 /dist
 /covers
+/static
