@@ -26,6 +26,7 @@ db.sequelize.sync()
 });
 
 const MIN_MATCH_SCORE = 7.5;
+const BUCKET_NAME = 'cherrychart.resources';
 
 export const waitor = {
     waitUntil : <LoadEvent> "networkidle2"
@@ -214,9 +215,20 @@ export async function uploadS3({ targetPath, outputPath }: { targetPath : string
     return new Promise((res, rej) => {
         s3.upload(params, (err, data) => {
             if(err) rej(err);
-            console.log(`File uploaded Successfully at ${data.Location}`)
             res(data);
         })    
+    })
+}
+
+export async function getObjectS3({ Key }: { Key : string}) {
+    return new Promise((res) => {
+        s3.getObject({
+            Bucket: BUCKET_NAME,
+            Key,
+        }, (err, data) => {
+            if(err) res(null);
+            res(data);
+        })
     })
 }
 
