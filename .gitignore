@@ -11,3 +11,4 @@ server.log
 /dist
 /covers
 /static
+*.http

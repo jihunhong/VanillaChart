@@ -4,7 +4,7 @@ export const mappingChartCover = (data) => {
     const rawData = data.map(model => model.get({ plain: true }));
     return rawData?.map(item => {
         if(item?.music?.albumName) {
-            const rawAlbumName = item.music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_');
+            const rawAlbumName = item.music.albumName?.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_');
             return { 
                 ...item,
                 music : {

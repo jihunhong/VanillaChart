@@ -1,29 +1,11 @@
+import { IMGIX_URL } from './../config/variables';
 import express from 'express';
 import moment from 'moment';
 import { Chart, Music, Video, Album } from '../models';
-import { Op } from 'sequelize';
+import { col, fn, Op } from 'sequelize';
 import { mappingChartCover } from '../lib/imgix';
 
 const router = express.Router();
-
-router.get('/artists/:site', async(req, res, next) => {
-    try{
-        const artists = await Chart.findAll({
-            where : {
-                site : req.params.site,
-                updatedAt : {
-                    [Op.gte] : moment().format('YYYY-MM-DD 00:00:00'),
-                    [Op.lt] : moment().add(1, 'days').format('YYYY-MM-DD'),
-                }
-            },
-            group : ['artists']
-        })
-        res.status(200).send(artists);
-    }catch(err){
-        console.error(err);
-        next(err);
-    }
-})
 
 router.get('/album/:album_id', async(req, res, next) => {
     try{
@@ -60,13 +42,13 @@ router.get('/:site', async(req, res, next) => {
                         'title',
                         'artistName',
                         'albumName',
-                        'albumId'
+                        'albumId',
                     ],
                     include : [
                         {
                             model : Video,
                             attributes : [
-                                'videoId'
+                                'videoId' 
                             ]
                         }
                     ]
@@ -75,7 +57,7 @@ router.get('/:site', async(req, res, next) => {
             order : [
                 ['rank', 'ASC']
             ],
-            group: ['rank']
+            group: ['rank'],
         })
         const json = mappingChartCover(chart);
         res.status(200).send(json);
