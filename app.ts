@@ -12,15 +12,8 @@ import userRoutes from './src/routes/user-routes';
 import albumRoutes from './src/routes/album-routes';
 import videoRoutes from './src/routes/video-routes';
 import songRoutes from './src/routes/song-routes';
-<<<<<<< Updated upstream
-import artistRoutes from './src/routes/artist-routes';
-=======
-<<<<<<< Updated upstream
-=======
 import artistRoutes from './src/routes/artist-routes';
 import oauthRoutes from './src/routes/oauth-routes';
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 const app = express();
 dotenv.config({ path : path.join(__dirname, './.env')});
@@ -49,15 +42,8 @@ app.use('/api/album', albumRoutes);
 app.use('/api/chart', chartRoutes);
 app.use('/api/video', videoRoutes);
 app.use('/api/song', songRoutes);
-<<<<<<< Updated upstream
-app.use('/api/artist', artistRoutes);
-=======
-<<<<<<< Updated upstream
-=======
 app.use('/api/artist', artistRoutes);
 app.use('/api/oauth', oauthRoutes);
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 app.listen(8080, () => {
   console.log('LOCAL DEV SETTING app.listen port 8080')
