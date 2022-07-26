@@ -41,7 +41,7 @@ export async function launchBrowser() {
     return { browser, page };
 }
 
-async function getAlbumInfo({ page, site, albumId }): Promise<any>{
+async function fetchAlbumInfo({ page, site, albumId }): Promise<any>{
     const func = {
         'melon': getMelonAlbumInfo,
         'genie': getGenieAlbumInfo,
@@ -54,23 +54,13 @@ async function getAlbumInfo({ page, site, albumId }): Promise<any>{
 
 export async function insertChart({ page, site, chart }: { page: Page, site: siteName, chart: Array<ChartData> }){
     for(const row of chart) {
-        if(row.matched){
-            // 매칭이 됐다면 앨범정보, 음원 정보 모두 이미 있다는 말이다.
-            await Chart.create({
-                rank: row.rank,
-                site,
-                musicId: row.id
-            })
-            continue;
-        }
-        // 매칭이 되지 않은 경우
         const albumInfoExist = await Album.findOne({
             where : {
                 id: row.album_id
             }
         })
         if(!albumInfoExist){
-             const albumInfo = await getAlbumInfo({ page, site, albumId: row.album_id });
+             const albumInfo = await fetchAlbumInfo({ page, site, albumId: row.album_id });
              const { tracks } = albumInfo;
 
              const album = await Album.findOrCreate({
@@ -92,7 +82,7 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
                          albumId: album[0].id
                      }
                  })
-                 if(row.title === element.track){
+                 if(row.title === element.track && element.lead){
                     await Chart.create({
                         rank: row.rank,
                         site,
@@ -103,7 +93,6 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
              await imageDownload({ url : row.image!, music : row, site });
              continue;
         }
-        //  매칭이 되지 않았지만 이미 앨범 정보가 있다면
         //  이전에 이미 가져왔기 때문에 위의 if문
         //  음원정보는 모두 존재한다는 말이다. 또한 Music도 이미 존재할것이다.
         const music = await Music.findOrCreate({

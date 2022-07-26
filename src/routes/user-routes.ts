@@ -1,12 +1,10 @@
 import express from 'express';
 import passport from 'passport';
-
-const router = express.Router();
-
 import { signUpUser } from '../controller/userController';
 import { User } from '../models';
 import { sign } from '../lib';
 
+const router = express.Router();
 router.get('/', (req, res, next) => {
     passport.authenticate('jwt', { session : false }, (error, user, info) => {
         if(error){

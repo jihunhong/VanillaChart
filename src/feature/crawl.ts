@@ -7,16 +7,14 @@ import { createYoutubeRows } from './youtubeMatch';
 (async() => {
     const { browser, page } = await launchBrowser();
     try {
-        const genie = await collectGenieCharts({ page });
-        await insertChart({ page, site : 'genie', chart : genie });
+        // const genieChart = await collectGenieCharts({ page });
+        // await insertChart({ page, site : 'genie', chart : genieChart });
  
-        const melon = await collectMelonCharts({ page });
-        const convertedMelon = await ftsMatchingJob({ chart : melon });
-        await insertChart({ page, site : 'melon', chart : convertedMelon });
+        const melonChart = await collectMelonCharts({ page });
+        await insertChart({ page, site : 'melon', chart : melonChart });
 
-        const bugs = await collectBugsCharts({ page });
-        const convertedBugs = await ftsMatchingJob({ chart : bugs });
-        await insertChart({ page, site : 'bugs', chart : convertedBugs });
+        const bugsChart = await collectBugsCharts({ page });
+        await insertChart({ page, site : 'bugs', chart : bugsChart });
 
         await createYoutubeRows();
         
