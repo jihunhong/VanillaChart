@@ -13,7 +13,6 @@ import albumRoutes from './src/routes/album-routes';
 import videoRoutes from './src/routes/video-routes';
 import songRoutes from './src/routes/song-routes';
 import artistRoutes from './src/routes/artist-routes';
-import oauthRoutes from './src/routes/oauth-routes';
 
 const app = express();
 dotenv.config({ path : path.join(__dirname, './.env')});
@@ -43,7 +42,6 @@ app.use('/api/chart', chartRoutes);
 app.use('/api/video', videoRoutes);
 app.use('/api/song', songRoutes);
 app.use('/api/artist', artistRoutes);
-app.use('/api/oauth', oauthRoutes);
 
 app.listen(8080, () => {
   console.log('LOCAL DEV SETTING app.listen port 8080')
