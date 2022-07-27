@@ -4,7 +4,7 @@ import { Page } from 'puppeteer';
 async function fetchBugsCharts({ page }: { page : Page }){
 
     const titles = await page.$$eval('p.title', titles => titles.map((el) => el.textContent)) as unknown as Array<string>;
-    const artists = await page.$$eval('p.artist', artists => artists.map((el) => el.textContent)) as unknown as Array<string>;
+    const artists = await page.$$eval('p.artist > a:nth-of-type(1)', artists => artists.map((el) => el.getAttribute('title'))) as unknown as Array<string>;
     const albumtitles = await page.$$eval('td[class="left"] > a', albumtitles => albumtitles.map((el) => el.textContent)) as unknown as Array<string>;
     const images = await page.$$eval('td a img', imageTags => imageTags.map((el) => el!.getAttribute('src')?.replace('/images/50', '/images/500')));
     // "https://image.bugsm.co.kr/album/images/50/40271/4027185.jpg?version=20210128063905.0"
