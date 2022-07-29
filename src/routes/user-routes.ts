@@ -5,6 +5,7 @@ import { User } from '../models';
 import { sign } from '../lib';
 
 const router = express.Router();
+
 router.get('/', (req, res, next) => {
     passport.authenticate('jwt', { session : false }, (error, user, info) => {
         if(error){
@@ -17,7 +18,25 @@ router.get('/', (req, res, next) => {
 
         return res.status(200).json(user);
     })(req, res, next);
-})
+});
+
+
+router.get('/auth/google', 
+    passport.authenticate('google', {
+        scope: [
+            'email',
+            'profile'
+        ]
+    })
+);
+
+router.get('/auth/google/callback', 
+    passport.authenticate('google', {
+        session: true
+    }), (req, res) => (
+        res.redirect('/profile')
+    )
+);
 
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {

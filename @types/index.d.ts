@@ -50,6 +50,11 @@ declare global {
         PRODUCTION_DB_HOST : string
         SECRET_KEY : string
         YOUTUBE_API_KEY : string
+        GOOGLE_CLIENT_ID : string
+        GOOGLE_SECRET : string
+        GOOGLE_REDIRECT : string
+        AWS_ACESS_KEY : string
+        AWS_SECRET_KEY : string
       }
     }
 }

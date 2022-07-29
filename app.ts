@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import passport from 'passport';
-import { passportConfig  } from './src/passport'
+import { googlePassport  } from './src/passport/google'
 import { sequelize } from './src/models';
 import cors from 'cors';
 
@@ -32,7 +32,7 @@ app.use(cors({
   credentials: true,
 }))
 
-passportConfig();
+googlePassport();
 app.use(passport.initialize());
 app.use('/api/cover', express.static(path.join(__dirname, '../covers')));
 

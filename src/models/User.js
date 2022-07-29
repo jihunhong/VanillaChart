@@ -6,11 +6,23 @@ module.exports = (sequelize, DataTypes) => {
         },
         nickname : {
             type : DataTypes.STRING(30),
-            allowNull : false,
+            allowNull : true,
+        },
+        oauth_id: {
+            type: DataTypes.STRING(150),
+            allowNull: true,
+        },
+        accessToken: {
+            type: DataTypes.STRING(300),
+            allowNull: true,
+        },
+        refreshToken: {
+            type: DataTypes.STRING(150),
+            allowNull: true,
         },
         password : {
             type : DataTypes.STRING(100),
-            allowNull : false,
+            allowNull : true,
         },
     }, {
         charset : 'utf8',
