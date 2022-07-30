@@ -52,7 +52,7 @@ declare global {
         YOUTUBE_API_KEY : string
         GOOGLE_CLIENT_ID : string
         GOOGLE_SECRET : string
-        GOOGLE_REDIRECT : string
+        GOOGLE_CALLBACK : string
         AWS_ACESS_KEY : string
         AWS_SECRET_KEY : string
         COOKIE_KEY: string

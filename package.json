@@ -32,6 +32,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "google-auth-library": "^7.14.1",
+    "googleapis": "^105.0.0",
     "greenlock": "^3.1.5",
     "greenlock-express": "^2.7.18",
     "http-proxy-middleware": "^0.20.0",

@@ -1,27 +1,25 @@
 import express from 'express';
-import passport from 'passport';
+import { GaxiosResponse } from 'gaxios';
+import { isAuthenticated } from '../middlewares';
+import { checkToken, oauth2Client } from '../middlewares/oauthValidator';
 
 const router = express.Router();
 
-router.get('/playlist/list', (req, res) => {
+router.get('/playlist/list', isAuthenticated, checkToken, async(req, res) => {
     try{
-        
+        const response: GaxiosResponse = await oauth2Client.request({
+            url: 'https://www.googleapis.com/youtube/v3/playlists',
+            params: {
+                key: process.env.YOUTUBE_API_KEY,
+                mine: 'true',
+                part: 'snippet',
+
+            }
+        })
+        res.status(200).send(response?.data?.items);
+    }catch(err){
+        res.send(err);
     }
 });
-
-router.get('/google/user', isAuthenticated, (req, res) => {
-    res.json(req.user);
-})
-
-router.get('/google/callback', 
-    passport.authenticate('google', {
-        successRedirect: 'http://localhost:3000/login/success',
-        failureMessage: 'Cannot login to Google, please try again later',
-        failureRedirect: 'http://localhost:3000/login/error'
-    }), (req, res) => {
-        console.log('User: ', req.user);
-        res.send('Thank you for siginning in');
-    }
-);
 
 export default router;

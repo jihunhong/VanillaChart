@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(150),
             allowNull: true,
         },
+        expire: {
+            type: DataTypes.STRING(20),
+        },
         password : {
             type : DataTypes.STRING(100),
             allowNull : true,

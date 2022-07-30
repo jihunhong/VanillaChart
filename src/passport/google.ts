@@ -1,3 +1,4 @@
+import moment from 'moment';
 import passport from 'passport';
 import { Strategy } from 'passport-google-oauth2';
 import { User } from '../models';
@@ -16,7 +17,6 @@ passport.use(new Strategy({
     ],
 }, async(req, accessToken, refreshToken, params, profile, done) => {
     try{
-        console.log(params);
         const existUser = await User.findOne({
             where: {
                 oauth_id : profile?.id
@@ -27,13 +27,14 @@ passport.use(new Strategy({
             return done(null, existUser);
         }
         console.log('Creating new user : ', profile.id);
-        
+
         const newUser = await User.create({
             email: profile?.emails[0].value,
             nickname: profile?.displayName,
             oauth_id: profile?.id,
             accessToken,
-            refreshToken
+            refreshToken,
+            expire: moment().add(params.expires_in, 's').format('x')
         });
         return done(null, newUser?.dataValues);
     }catch(err){
@@ -43,15 +44,15 @@ passport.use(new Strategy({
 
 passport.serializeUser((user, done) => {
     console.log('Serialize User : ', user);
-    done(null, user);
+    done(null, user.id);
 })
 
-passport.deserializeUser(async(user, done) => {
+passport.deserializeUser(async(id, done) => {
     try {
-        const exist = await User.findOne({ where : { id: user.id } });
-        if(exist) {
-            console.log('Deserialized User : ', exist.dataValues);
-            done(null, exist);
+        const user = await User.findOne({ where : { id }, raw: true });
+        if(user) {
+            console.log('Deserialized User : ', user);
+            done(null, user);
         }
     }catch(err){
         console.error('Error Deserialize', err);

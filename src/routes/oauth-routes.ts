@@ -4,7 +4,7 @@ import { isAuthenticated } from '../middlewares';
 
 const router = express.Router();
 
-router.get('/google/login', 
+router.get('/google/login',
     passport.authenticate('google', {
         accessType: 'offline',
         prompt: 'consent',
@@ -18,7 +18,7 @@ router.get('/google/login',
     })
 );
 
-router.get('/google/user', isAuthenticated, (req, res) => {
+router.get('/google/user', (req, res) => {
     res.json(req.user);
 })
 
