@@ -55,6 +55,7 @@ declare global {
         GOOGLE_REDIRECT : string
         AWS_ACESS_KEY : string
         AWS_SECRET_KEY : string
+        COOKIE_KEY: string
       }
     }
 }

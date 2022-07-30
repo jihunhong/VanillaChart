@@ -2,34 +2,59 @@ import passport from 'passport';
 import { Strategy } from 'passport-google-oauth2';
 import { User } from '../models';
 
-export function googlePassport() {
-    passport.use(new Strategy({
-        clientID: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_SECRET,
-        callbackURL: "http://localhost:8080/api/user/auth/google/callback",
-        passReqToCallback: true
-    }, async(request, accessToken, refreshToken, profile, done) => {
-        try{
-            const existUser = await User.findOne({
-                where: {
-                    oauth_id : profile?.id
-                }
-            });
-            if(existUser) {
-                return done(null, existUser);
-            }
-            console.log('Creating new user : ', profile.id);
-            
-            const newUser = await User.create({
-                email: profile?.emails[0].value,
-                nickname: profile?.displayName,
-                oauth_id: profile?.id,
-                accessToken,
-                refreshToken: refreshToken || null
-            })
-            return done(null, newUser);
-        }catch(err){
-            return done(err, false);
+passport.use(new Strategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_SECRET,
+    callbackURL: "http://localhost:8080/api/oauth/google/callback",
+    passReqToCallback: true,
+    scope: [
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/youtube.readonly',
+        'https://www.googleapis.com/auth/youtube.force-ssl',
+        'https://www.googleapis.com/auth/youtubepartner'
+    ],
+}, async(req, accessToken, refreshToken, params, profile, done) => {
+    try{
+        console.log(params);
+        const existUser = await User.findOne({
+            where: {
+                oauth_id : profile?.id
+            },
+            raw: true
+        });
+        if(existUser) {
+            return done(null, existUser);
         }
-    }))
-}
+        console.log('Creating new user : ', profile.id);
+        
+        const newUser = await User.create({
+            email: profile?.emails[0].value,
+            nickname: profile?.displayName,
+            oauth_id: profile?.id,
+            accessToken,
+            refreshToken
+        });
+        return done(null, newUser?.dataValues);
+    }catch(err){
+        return done(err, false);
+    }
+}))
+
+passport.serializeUser((user, done) => {
+    console.log('Serialize User : ', user);
+    done(null, user);
+})
+
+passport.deserializeUser(async(user, done) => {
+    try {
+        const exist = await User.findOne({ where : { id: user.id } });
+        if(exist) {
+            console.log('Deserialized User : ', exist.dataValues);
+            done(null, exist);
+        }
+    }catch(err){
+        console.error('Error Deserialize', err);
+        done(err, null);
+    }
+})

@@ -1,6 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 
+export const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+    if(req.user) {
+        next();
+    }else{
+        res.status(401).send('You must login first');
+    }
+}
+
 export const jwtAuth  = async(req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split('Bearer ')[1];
     
