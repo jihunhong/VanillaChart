@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
         expire: {
             type: DataTypes.STRING(20),
         },
+        picture: {
+            type: DataTypes.STRING(300),
+        },
         password : {
             type : DataTypes.STRING(100),
             allowNull : true,

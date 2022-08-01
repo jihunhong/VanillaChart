@@ -34,6 +34,7 @@ passport.use(new Strategy({
             oauth_id: profile?.id,
             accessToken,
             refreshToken,
+            picture: profile?.picture,
             expire: moment().add(params.expires_in, 's').format('x')
         });
         return done(null, newUser?.dataValues);
