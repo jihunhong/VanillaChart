@@ -39,6 +39,7 @@ router.get('/:site', async(req, res, next) => {
                 {
                     model : Music,
                     attributes : [
+                        'id',
                         'title',
                         'artistName',
                         'albumName',
