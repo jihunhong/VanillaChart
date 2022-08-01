@@ -18,7 +18,7 @@ router.get('/google/login',
     })
 );
 
-router.get('/google/user', (req, res) => {
+router.get('/google/user', isAuthenticated, (req, res) => {
     res.json(req.user);
 })
 
