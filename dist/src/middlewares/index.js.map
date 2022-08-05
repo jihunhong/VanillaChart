@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/middlewares/index.ts"],"names":[],"mappings":";;;AAEO,MAAM,eAAe,GAAG,CAAC,GAAY,EAAE,GAAa,EAAE,IAAkB,EAAE,EAAE;IAC/E,IAAG,GAAG,CAAC,IAAI,EAAE;QACT,IAAI,EAAE,CAAC;KACV;SAAI;QACD,GAAG,CAAC,MAAM,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC,sBAAsB,CAAC,CAAC;KAChD;AACL,CAAC,CAAA;AANY,QAAA,eAAe,mBAM3B"}
