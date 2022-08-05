@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         collate : 'utf8_general_ci'
     });
     Music.associate = (db) => {
+        db.Music.hasMany(db.PlaylistItems);
         db.Music.hasMany(db.Chart);
         db.Music.hasOne(db.Video);
         db.Music.belongsTo(db.Album);

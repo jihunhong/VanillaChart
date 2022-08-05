@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const middlewares_1 = require("../middlewares");
 const oauthValidator_1 = require("../middlewares/oauthValidator");
+const models_1 = require("../models");
+const uuid_1 = require("uuid");
 const router = express_1.default.Router();
 router.get('/playlist/list', middlewares_1.isAuthenticated, oauthValidator_1.checkToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -28,6 +30,64 @@ router.get('/playlist/list', middlewares_1.isAuthenticated, oauthValidator_1.che
             }
         });
         res.status(200).send((_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.items);
+    }
+    catch (err) {
+        res.send(err);
+    }
+}));
+router.post('/playlist', middlewares_1.isAuthenticated, oauthValidator_1.checkToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _b, _c;
+    try {
+        const newList = yield models_1.Playlist.create({
+            pId: uuid_1.v4(),
+            title: req.body.title,
+            description: req.body.description,
+            userId: (_b = req.user) === null || _b === void 0 ? void 0 : _b.id,
+            private: req.body.private || 0
+        });
+        if ((_c = req.body) === null || _c === void 0 ? void 0 : _c.items) {
+            const { items } = req.body;
+            for (const [order, id] of items.entries()) {
+                yield models_1.PlaylistItems.create({
+                    playlistPId: newList === null || newList === void 0 ? void 0 : newList.pId,
+                    musicId: id,
+                    order
+                });
+            }
+        }
+        const response = yield models_1.Playlist.findOne({
+            where: {
+                pId: newList === null || newList === void 0 ? void 0 : newList.pId,
+            },
+            include: [
+                {
+                    model: models_1.PlaylistItems,
+                    attributes: [
+                        'musicId'
+                    ],
+                    include: [
+                        {
+                            model: models_1.Music,
+                            attributes: [
+                                'title',
+                                'artistName',
+                                'albumName',
+                                'albumId'
+                            ],
+                            include: [
+                                {
+                                    model: models_1.Video,
+                                    attributes: [
+                                        'videoId'
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        });
+        res.status(200).send(response.dataValues);
     }
     catch (err) {
         res.send(err);

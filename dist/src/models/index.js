@@ -9,6 +9,8 @@ db.Music = require('./Music')(sequelize, Sequelize);
 db.User = require('./User')(sequelize, Sequelize);
 db.Video = require('./Video')(sequelize, Sequelize);
 db.Album = require('./Album')(sequelize, Sequelize);
+db.Playlist = require('./Playlist')(sequelize, Sequelize);
+db.PlaylistItems = require('./PlaylistItems')(sequelize, Sequelize);
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
         db[modelName].associate(db);
