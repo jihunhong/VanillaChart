@@ -7,8 +7,8 @@ import { createYoutubeRows } from './youtubeMatch';
 (async() => {
     const { browser, page } = await launchBrowser();
     try {
-        // const genieChart = await collectGenieCharts({ page });
-        // await insertChart({ page, site : 'genie', chart : genieChart });
+        const genieChart = await collectGenieCharts({ page });
+        await insertChart({ page, site : 'genie', chart : genieChart });
  
         const melonChart = await collectMelonCharts({ page });
         await insertChart({ page, site : 'melon', chart : melonChart });
