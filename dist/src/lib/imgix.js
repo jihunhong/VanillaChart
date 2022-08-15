@@ -17,7 +17,10 @@ exports.mappingChartCover = mappingChartCover;
 const mappingAlbumDetail = (data) => {
     const rawData = data.get({ plain: true });
     const rawAlbumName = data === null || data === void 0 ? void 0 : data.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_');
-    return Object.assign(Object.assign({}, rawData), { middleCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=300&ar=1:1&fit=crop&auto=format`, smallCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=64&ar=1:1&fit=crop&auto=format` });
+    const tracks = rawData.music.map(item => {
+        return Object.assign(Object.assign({}, item), { middleCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=300&ar=1:1&fit=crop&auto=format`, smallCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=64&ar=1:1&fit=crop&auto=format` });
+    });
+    return Object.assign(Object.assign({}, rawData), { middleCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=300&ar=1:1&fit=crop&auto=format`, smallCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=64&ar=1:1&fit=crop&auto=format`, music: tracks });
 };
 exports.mappingAlbumDetail = mappingAlbumDetail;
 const mappingArtistAlbums = (data) => {

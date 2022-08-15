@@ -28,10 +28,18 @@ export const mappingChartCover = (data) => {
 export const mappingAlbumDetail = (data) => {
     const rawData = data.get({ plain : true });
     const rawAlbumName = data?.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_');
+    const tracks = rawData.music.map(item => {
+        return {
+            ...item,
+            middleCoverImage: `${IMGIX_URL}/${rawAlbumName}.png?w=300&ar=1:1&fit=crop&auto=format`,
+            smallCoverImage: `${IMGIX_URL}/${rawAlbumName}.png?w=64&ar=1:1&fit=crop&auto=format`
+        }
+    })
     return {
         ...rawData,
         middleCoverImage: `${IMGIX_URL}/${rawAlbumName}.png?w=300&ar=1:1&fit=crop&auto=format`,
-        smallCoverImage: `${IMGIX_URL}/${rawAlbumName}.png?w=64&ar=1:1&fit=crop&auto=format`
+        smallCoverImage: `${IMGIX_URL}/${rawAlbumName}.png?w=64&ar=1:1&fit=crop&auto=format`,
+        music: tracks
     }
 }
 

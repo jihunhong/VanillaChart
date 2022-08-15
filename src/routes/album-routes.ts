@@ -17,8 +17,10 @@ router.get('/tracks/:album_id', async(req, res, next) => {
                     model: Music,
                     attributes : [
                         'title',
+                        'albumName',
                         'artistName',
                         'lead',
+                        'albumId'
                     ],
                     include: [
                         {
@@ -56,6 +58,7 @@ router.get('/artist/:artistName', async(req, res, next) => {
         const albums = await Album.findAll({
             where : {
                 artistName : req.params.artistName,
+                site: req.query.site,
             },
             group: 'albumName',
             order : [

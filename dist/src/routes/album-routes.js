@@ -27,8 +27,10 @@ router.get('/tracks/:album_id', (req, res, next) => __awaiter(void 0, void 0, vo
                     model: models_1.Music,
                     attributes: [
                         'title',
+                        'albumName',
                         'artistName',
                         'lead',
+                        'albumId'
                     ],
                     include: [
                         {
@@ -66,6 +68,7 @@ router.get('/artist/:artistName', (req, res, next) => __awaiter(void 0, void 0, 
         const albums = yield models_1.Album.findAll({
             where: {
                 artistName: req.params.artistName,
+                site: req.query.site,
             },
             group: 'albumName',
             order: [
