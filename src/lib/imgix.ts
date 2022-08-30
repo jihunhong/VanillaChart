@@ -1,5 +1,16 @@
 import { IMGIX_URL } from './../config/variables';
 
+export const mappingPlaylistPreview = (data) => {
+    const items = data?.playlistItems.map(model => model.get({ plain: true }));
+    const thumbnails = items.map(t => {
+        return `${IMGIX_URL}/${t.music.albumName?.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png?w=300&ar=1:1&fit=crop&auto=format`
+    })
+    return {
+        ...data,
+        thumbnails
+    }
+}
+
 export const mappingChartCover = (data) => {
     const rawData = data.map(model => model.get({ plain: true }));
     return rawData?.map(item => {

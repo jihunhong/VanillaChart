@@ -1,7 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mappingSongs = exports.mappingArtistAlbums = exports.mappingAlbumDetail = exports.mappingChartCover = void 0;
+exports.mappingSongs = exports.mappingArtistAlbums = exports.mappingAlbumDetail = exports.mappingChartCover = exports.mappingPlaylistPreview = void 0;
 const variables_1 = require("./../config/variables");
+const mappingPlaylistPreview = (data) => {
+    const items = data === null || data === void 0 ? void 0 : data.playlistItems.map(model => model.get({ plain: true }));
+    const thumbnails = items.map(t => {
+        var _a;
+        return `${variables_1.IMGIX_URL}/${(_a = t.music.albumName) === null || _a === void 0 ? void 0 : _a.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png?w=300&ar=1:1&fit=crop&auto=format`;
+    });
+    return Object.assign(Object.assign({}, data), { thumbnails });
+};
+exports.mappingPlaylistPreview = mappingPlaylistPreview;
 const mappingChartCover = (data) => {
     const rawData = data.map(model => model.get({ plain: true }));
     return rawData === null || rawData === void 0 ? void 0 : rawData.map(item => {

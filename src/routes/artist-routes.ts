@@ -1,10 +1,35 @@
 import express from 'express';
 import moment from 'moment';
 import { fn, Op, col } from 'sequelize';
-import { Chart, Music, Video } from '../models';
+import { favoriteArtistArrange } from '../lib/arragne';
+import { Chart, Music, Playlist, PlaylistItems, Sequelize } from '../models';
 import { IMGIX_URL } from './../config/variables';
 
 const router = express.Router();
+
+
+router.get('/favorite', async(req, res, next) => {
+    try {
+        const artists = await Playlist.findOne({
+            where : {
+                userId: req.query.userId
+            },
+            include: [{
+                model: PlaylistItems,
+                include: [{
+                    model : Music,
+                    attributes: [
+                        'artistName'
+                    ],
+                }]
+            }]
+        })
+        res.json(favoriteArtistArrange(artists));
+    }catch(err){
+        console.error(err);
+        next(err)
+    }
+})
 
 router.get('/:site', async(req, res, next) => {
     try{
@@ -42,5 +67,6 @@ router.get('/:site', async(req, res, next) => {
         next(err);
     }
 })
+
 
 export default router;

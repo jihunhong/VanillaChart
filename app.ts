@@ -14,6 +14,7 @@ import songRoutes from './src/routes/song-routes';
 import artistRoutes from './src/routes/artist-routes';
 import oauthRoutes from './src/routes/oauth-routes';
 import youtubeRoutes from './src/routes/youtube-routes';
+import playlistRoutes from './src/routes/playlist-routes';
 
 require('./src/passport/google');
 const app = express();
@@ -50,6 +51,7 @@ app.use('/api/song', songRoutes);
 app.use('/api/artist', artistRoutes);
 app.use('/api/oauth', oauthRoutes);
 app.use('/api/youtube', youtubeRoutes);
+app.use('/api/playlist', playlistRoutes);
 
 app.listen(8080, () => {
   console.log('LOCAL DEV SETTING app.listen port 8080')

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import passport from 'passport';
 import { Strategy } from 'passport-google-oauth2';
-import { User } from '../models';
+import { Playlist, PlaylistItems, User } from '../models';
 
 passport.use(new Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -50,11 +50,22 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async(id, done) => {
     try {
-        const user = await User.findOne({ where : { id }, raw: true });
-        if(user) {
-            console.log('Deserialized User : ', user);
-            done(null, user);
-        }
+        // 유저 정보와 함께 playlistId만 가져오기
+        const user = await User.findOne({ 
+            where : { 
+                id
+            },
+            include: [
+                {
+                    model: Playlist,
+                    attributes: ['pId'],
+                    as: 'playlists'
+                }
+            ],
+        });
+        
+        console.log('Deserialized User : ', user);
+        done(null, user);
     }catch(err){
         console.error('Error Deserialize', err);
         done(err, null);

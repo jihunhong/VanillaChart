@@ -44,7 +44,7 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
                 }
                 return null;
             });
-            if (!src) {
+            if (!src || src.includes('blank_')) {
                 console.error(`검색어 : ${album === null || album === void 0 ? void 0 : album.artistName} 결과가 없습니다`);
                 continue;
             }

@@ -15,9 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const moment_1 = __importDefault(require("moment"));
 const sequelize_1 = require("sequelize");
+const arragne_1 = require("../lib/arragne");
 const models_1 = require("../models");
 const variables_1 = require("./../config/variables");
 const router = express_1.default.Router();
+router.get('/favorite', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const artists = yield models_1.Playlist.findOne({
+            where: {
+                userId: req.query.userId
+            },
+            include: [{
+                    model: models_1.PlaylistItems,
+                    include: [{
+                            model: models_1.Music,
+                            attributes: [
+                                'artistName'
+                            ],
+                        }]
+                }]
+        });
+        res.json(arragne_1.favoriteArtistArrange(artists));
+    }
+    catch (err) {
+        console.error(err);
+        next(err);
+    }
+}));
 router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const artists = yield models_1.Chart.findAll({

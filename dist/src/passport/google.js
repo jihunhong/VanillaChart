@@ -61,11 +61,21 @@ passport_1.default.serializeUser((user, done) => {
 });
 passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield models_1.User.findOne({ where: { id }, raw: true });
-        if (user) {
-            console.log('Deserialized User : ', user);
-            done(null, user);
-        }
+        // 유저 정보와 함께 playlistId만 가져오기
+        const user = yield models_1.User.findOne({
+            where: {
+                id
+            },
+            include: [
+                {
+                    model: models_1.Playlist,
+                    attributes: ['pId'],
+                    as: 'playlists'
+                }
+            ],
+        });
+        console.log('Deserialized User : ', user);
+        done(null, user);
     }
     catch (err) {
         console.error('Error Deserialize', err);
