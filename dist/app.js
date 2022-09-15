@@ -19,6 +19,7 @@ const artist_routes_1 = __importDefault(require("./src/routes/artist-routes"));
 const oauth_routes_1 = __importDefault(require("./src/routes/oauth-routes"));
 const youtube_routes_1 = __importDefault(require("./src/routes/youtube-routes"));
 const playlist_routes_1 = __importDefault(require("./src/routes/playlist-routes"));
+const user_routes_1 = __importDefault(require("./src/routes/user-routes"));
 require('./src/passport/google');
 const app = express_1.default();
 dotenv_1.default.config({ path: path_1.default.join(__dirname, './.env') });
@@ -51,6 +52,7 @@ app.use('/api/artist', artist_routes_1.default);
 app.use('/api/oauth', oauth_routes_1.default);
 app.use('/api/youtube', youtube_routes_1.default);
 app.use('/api/playlist', playlist_routes_1.default);
+app.use('/api/user', user_routes_1.default);
 app.listen(8080, () => {
     console.log('LOCAL DEV SETTING app.listen port 8080');
 });

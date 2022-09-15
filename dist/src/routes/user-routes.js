@@ -12,26 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpUser = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const variables_1 = require("../config/variables");
+const express_1 = __importDefault(require("express"));
+const userController_1 = require("../controller/userController");
 const models_1 = require("../models");
-function signUpUser({ email, nickname, password }) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const hashPassword = yield bcrypt_1.default.hash(password, 12);
-            const newUser = yield models_1.User.create({
-                email,
-                nickname,
-                password: hashPassword,
-                picture: `${variables_1.IMGIX_URL}/static/example-user-avatar.png?w=256&ar=1:1&auto=format`
-            });
-            return Object.assign(Object.assign({}, newUser), { password: null });
+const router = express_1.default.Router();
+router.post('/signup', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const existUser = yield models_1.User.findOne({
+            where: {
+                email: req.body.email
+            }
+        });
+        if (existUser) {
+            return res.status(403).send('이미 사용중인 아이디 입니다.');
         }
-        catch (err) {
-            throw err;
-        }
-    });
-}
-exports.signUpUser = signUpUser;
-//# sourceMappingURL=userController.js.map
+        const newUser = yield userController_1.signUpUser({ email: req.body.email, password: req.body.password, nickname: req.body.nickname });
+        res.status(201).send(newUser);
+    }
+    catch (err) {
+        console.error(err);
+        next(err);
+    }
+}));
+exports.default = router;
+//# sourceMappingURL=user-routes.js.map

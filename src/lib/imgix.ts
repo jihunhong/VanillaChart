@@ -2,11 +2,15 @@ import { IMGIX_URL } from './../config/variables';
 
 export const mappingPlaylistPreview = (data) => {
     const items = data?.playlistItems.map(model => model.get({ plain: true }));
-    const thumbnails = items.map(t => {
-        return `${IMGIX_URL}/${t.music.albumName?.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png?w=300&ar=1:1&fit=crop&auto=format`
+    const set:Set<string> = new Set(items.map(item => item?.music?.albumName));
+    const thumbnails = Array.from(set)?.slice(0, 4).map(name => {
+        return `${IMGIX_URL}/${name?.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png?w=300&ar=1:1&fit=crop&auto=format`
     })
     return {
         ...data,
+        playlistItems: [],
+        // 너무 많은 데이터라서 용량 줄이기위해 빈배열로 반환
+        playlistItemCount: data?.playlistItems.length,
         thumbnails
     }
 }

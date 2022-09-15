@@ -1,6 +1,6 @@
 import express from 'express';
 import { mappingPlaylistPreview } from '../lib/imgix';
-import { Music, Playlist, PlaylistItems } from '../models';
+import { Music, Playlist, PlaylistItems, User } from '../models';
 
 const router = express.Router();
 
@@ -14,7 +14,6 @@ router.get('/preview', async(req, res, next) => {
                     attributes: [
                         'musicId'
                     ],
-                    limit: 4,
                     include: [
                         {
                             model: Music,
@@ -22,6 +21,12 @@ router.get('/preview', async(req, res, next) => {
                                 'albumName'
                             ]
                         }
+                    ]
+                },
+                {
+                    model: User,
+                    attributes: [
+                        'nickname'
                     ]
                 }
             ],

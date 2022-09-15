@@ -3,12 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mappingSongs = exports.mappingArtistAlbums = exports.mappingAlbumDetail = exports.mappingChartCover = exports.mappingPlaylistPreview = void 0;
 const variables_1 = require("./../config/variables");
 const mappingPlaylistPreview = (data) => {
+    var _a;
     const items = data === null || data === void 0 ? void 0 : data.playlistItems.map(model => model.get({ plain: true }));
-    const thumbnails = items.map(t => {
-        var _a;
-        return `${variables_1.IMGIX_URL}/${(_a = t.music.albumName) === null || _a === void 0 ? void 0 : _a.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png?w=300&ar=1:1&fit=crop&auto=format`;
+    const set = new Set(items.map(item => { var _a; return (_a = item === null || item === void 0 ? void 0 : item.music) === null || _a === void 0 ? void 0 : _a.albumName; }));
+    const thumbnails = (_a = Array.from(set)) === null || _a === void 0 ? void 0 : _a.slice(0, 4).map(name => {
+        return `${variables_1.IMGIX_URL}/${name === null || name === void 0 ? void 0 : name.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png?w=300&ar=1:1&fit=crop&auto=format`;
     });
-    return Object.assign(Object.assign({}, data), { thumbnails });
+    return Object.assign(Object.assign({}, data), { playlistItems: [], 
+        // 너무 많은 데이터라서 용량 줄이기위해 빈배열로 반환
+        playlistItemCount: data === null || data === void 0 ? void 0 : data.playlistItems.length, thumbnails });
 };
 exports.mappingPlaylistPreview = mappingPlaylistPreview;
 const mappingChartCover = (data) => {

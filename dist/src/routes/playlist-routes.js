@@ -26,7 +26,6 @@ router.get('/preview', (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                     attributes: [
                         'musicId'
                     ],
-                    limit: 4,
                     include: [
                         {
                             model: models_1.Music,
@@ -34,6 +33,12 @@ router.get('/preview', (req, res, next) => __awaiter(void 0, void 0, void 0, fun
                                 'albumName'
                             ]
                         }
+                    ]
+                },
+                {
+                    model: models_1.User,
+                    attributes: [
+                        'nickname'
                     ]
                 }
             ],

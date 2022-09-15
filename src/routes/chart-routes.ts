@@ -1,9 +1,8 @@
-import { IMGIX_URL } from './../config/variables';
 import express from 'express';
 import moment from 'moment';
-import { Chart, Music, Video, Album } from '../models';
-import { col, fn, Op } from 'sequelize';
+import { Op } from 'sequelize';
 import { mappingChartCover } from '../lib/imgix';
+import { Album, Chart, Music, Video } from '../models';
 
 const router = express.Router();
 

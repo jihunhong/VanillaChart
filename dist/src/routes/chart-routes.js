@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const moment_1 = __importDefault(require("moment"));
-const models_1 = require("../models");
 const sequelize_1 = require("sequelize");
 const imgix_1 = require("../lib/imgix");
+const models_1 = require("../models");
 const router = express_1.default.Router();
 router.get('/album/:album_id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
