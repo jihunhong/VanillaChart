@@ -2,7 +2,7 @@ import express from 'express';
 import moment from 'moment';
 import { Op } from 'sequelize';
 import { mappingChartCover } from '../lib/imgix';
-import { Album, Chart, Music, Video } from '../models';
+import { Album, Chart, Music, User, Video } from '../models';
 
 const router = express.Router();
 
@@ -50,6 +50,16 @@ router.get('/:site', async(req, res, next) => {
                             attributes : [
                                 'videoId' 
                             ]
+                        },
+                        {
+                            model: User,
+                            as: 'liker',
+                            attributes: [
+                                'id'
+                            ],
+                            through: {
+                                attributes: []
+                            }     
                         }
                     ]
                 },

@@ -61,6 +61,16 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                             attributes: [
                                 'videoId'
                             ]
+                        },
+                        {
+                            model: models_1.User,
+                            as: 'liker',
+                            attributes: [
+                                'id'
+                            ],
+                            through: {
+                                attributes: []
+                            }
                         }
                     ]
                 },

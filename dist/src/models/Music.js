@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         db.Music.hasMany(db.Chart);
         db.Music.hasOne(db.Video);
         db.Music.belongsTo(db.Album);
+        db.Music.belongsToMany(db.User, { through: 'Like', as: 'liker' });
     };
     return Music;
 };
