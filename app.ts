@@ -18,6 +18,7 @@ import playlistRoutes from './src/routes/playlist-routes';
 import userRoutes from './src/routes/user-routes';
 
 require('./src/passport/google');
+require('./src/passport/local');
 const app = express();
 dotenv.config({ path : path.join(__dirname, './.env')});
 

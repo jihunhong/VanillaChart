@@ -21,6 +21,7 @@ const youtube_routes_1 = __importDefault(require("./src/routes/youtube-routes"))
 const playlist_routes_1 = __importDefault(require("./src/routes/playlist-routes"));
 const user_routes_1 = __importDefault(require("./src/routes/user-routes"));
 require('./src/passport/google');
+require('./src/passport/local');
 const app = express_1.default();
 dotenv_1.default.config({ path: path_1.default.join(__dirname, './.env') });
 models_1.sequelize.sync({ force: false })

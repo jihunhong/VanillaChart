@@ -20,13 +20,43 @@ function signUpUser({ email, nickname, password }) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const hashPassword = yield bcrypt_1.default.hash(password, 12);
-            const newUser = yield models_1.User.create({
+            yield models_1.User.create({
                 email,
                 nickname,
                 password: hashPassword,
                 picture: `${variables_1.IMGIX_URL}/static/example-user-avatar.png?w=256&ar=1:1&auto=format`
             });
-            return Object.assign(Object.assign({}, newUser), { password: null });
+            const user = yield models_1.User.findOne({
+                where: {
+                    email
+                },
+                attributes: {
+                    exclude: ['password']
+                },
+                include: [
+                    {
+                        model: models_1.Playlist,
+                        attributes: ['pId'],
+                        as: 'playlists'
+                    },
+                    {
+                        model: models_1.Music,
+                        attributes: ['id'],
+                        as: 'liked',
+                    },
+                    {
+                        model: models_1.User,
+                        attrbiutes: ['id'],
+                        as: 'followings'
+                    },
+                    {
+                        model: models_1.User,
+                        attrbiutes: ['id'],
+                        as: 'followers'
+                    },
+                ],
+            });
+            return user;
         }
         catch (err) {
             throw err;

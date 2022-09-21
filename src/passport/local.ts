@@ -1,47 +1,32 @@
-import moment from 'moment';
+import bcrypt from 'bcrypt';
 import passport from 'passport';
-import { Strategy } from 'passport-google-oauth2';
+import { Strategy } from 'passport-local';
 import { Music, Playlist, User } from '../models';
 
 passport.use(new Strategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: "http://localhost:8080/api/oauth/google/callback",
-    passReqToCallback: true,
-    scope: [
-        'https://www.googleapis.com/auth/userinfo.profile',
-        'https://www.googleapis.com/auth/userinfo.email',
-    ],
-}, async(req, accessToken, refreshToken, params, profile, done) => {
+    usernameField: 'email',
+    passwordField: 'password',
+}, async(email, password, done) => {
     try{
-        const existUser = await User.findOne({
-            where: {
-                oauth_id : profile?.id
-            },
+        const user = await User.findOne({
+            where: { email },
             raw: true
         });
-        if(existUser) {
-            return done(null, existUser);
+        if(!user) {
+            return done(null, false, { message: '존재하지 않는 이메일입니다.' });
         }
-        console.log('Creating new user : ', profile.id);
-
-        const newUser = await User.create({
-            email: profile?.emails[0].value,
-            nickname: profile?.displayName,
-            oauth_id: profile?.id,
-            accessToken,
-            refreshToken,
-            picture: profile?.picture,
-            expire: moment().add(params.expires_in, 's').format('x')
-        });
-        return done(null, newUser?.dataValues);
+        const result = await bcrypt.compare(password, user.password);
+        if(result) {
+            return done(null, user);
+        }
+        return done(null, false, { message: '비밀번호를 확인해주세요' });
     }catch(err){
         return done(err, false);
     }
 }))
 
 passport.serializeUser((user, done) => {
-    console.log('Serialize User : ', user);
+    console.log('Serialize User : ', user);노
     done(null, user.id);
 })
 
