@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const passport_1 = __importDefault(require("passport"));
-const middlewares_1 = require("../middlewares");
 const router = express_1.default.Router();
 router.get('/google/login', passport_1.default.authenticate('google', {
     accessType: 'offline',
@@ -18,9 +17,6 @@ router.get('/google/login', passport_1.default.authenticate('google', {
         'https://www.googleapis.com/auth/youtubepartner'
     ],
 }));
-router.get('/google/user', middlewares_1.isAuthenticated, (req, res) => {
-    res.json(req.user);
-});
 router.get('/google/callback', passport_1.default.authenticate('google', {
     successRedirect: 'http://localhost:3000/login/success',
     failureMessage: 'Cannot login to Google, please try again later',

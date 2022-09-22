@@ -24,7 +24,7 @@ export const mappingChartCover = (data) => {
                 ...item,
                 music : {
                     ...item.music,
-                    liker: item.music.liker.map(v => v.id).sort(),
+                    liker: item.music.liker?.map(v => v.id).sort() || [],
                     middleCoverImage : `${IMGIX_URL}/${rawAlbumName}.png?w=600&ar=1:1&fit=crop&auto=format`,
                     smallCoverImage : `${IMGIX_URL}/${rawAlbumName}.png?w=128&ar=1:1&fit=crop&auto=format`
                 }
@@ -34,7 +34,7 @@ export const mappingChartCover = (data) => {
              ...item, 
             music : {
                 ...item.music,
-                liker: item.music.liker.map(v => v.id).sort(),
+                liker: item.music.liker?.map(v => v.id).sort() || [],
                 middleCoverImage : null,
                 smallCoverImage : null
             }

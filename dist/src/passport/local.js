@@ -39,8 +39,7 @@ passport_1.default.use(new passport_local_1.Strategy({
     }
 })));
 passport_1.default.serializeUser((user, done) => {
-    console.log('Serialize User : ', user);
-    노;
+    console.log('Serialize User : ', user.id);
     done(null, user.id);
 });
 passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {

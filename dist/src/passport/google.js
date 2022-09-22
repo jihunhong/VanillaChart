@@ -53,7 +53,7 @@ passport_1.default.use(new passport_google_oauth2_1.Strategy({
     }
 })));
 passport_1.default.serializeUser((user, done) => {
-    console.log('Serialize User : ', user);
+    console.log('Serialize User : ', user === null || user === void 0 ? void 0 : user.id);
     done(null, user.id);
 });
 passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 0, function* () {

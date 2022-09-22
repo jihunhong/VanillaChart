@@ -18,6 +18,10 @@ const userController_1 = require("../controller/userController");
 const middlewares_1 = require("../middlewares");
 const models_1 = require("../models");
 const router = express_1.default.Router();
+router.get('/profile', middlewares_1.isAuthenticated, (req, res) => {
+    // my profile
+    res.json(req.user);
+});
 router.post('/signup', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const existUser = yield models_1.User.findOne({
@@ -90,6 +94,11 @@ router.post('/login', (req, res, next) => {
         }));
     })(req, res, next);
 });
+router.post('/logout', middlewares_1.isAuthenticated, (req, res) => {
+    req.logout();
+    req.session = null;
+    res.send('ok');
+});
 router.patch('/follow', middlewares_1.isAuthenticated, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // add follower
     try {
@@ -116,6 +125,45 @@ router.delete('/follow', middlewares_1.isAuthenticated, (req, res, next) => __aw
         yield targetUser.removeFollowers(req.user.id);
         const followers = yield targetUser.getFollowers();
         res.status(200).json(followers);
+    }
+    catch (err) {
+        console.error(err);
+        next(err);
+    }
+}));
+router.get('/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const targetUser = yield models_1.User.findOne({
+            where: {
+                id: parseInt(req.params.id)
+            },
+            attributes: {
+                exclude: ['password']
+            },
+            include: [
+                {
+                    model: models_1.Playlist,
+                    attributes: ['pId'],
+                    as: 'playlists'
+                },
+                {
+                    model: models_1.Music,
+                    attributes: ['id'],
+                    as: 'liked',
+                },
+                {
+                    model: models_1.User,
+                    attrbiutes: ['id'],
+                    as: 'followings'
+                },
+                {
+                    model: models_1.User,
+                    attrbiutes: ['id'],
+                    as: 'followers'
+                },
+            ]
+        });
+        res.status(200).json(targetUser);
     }
     catch (err) {
         console.error(err);

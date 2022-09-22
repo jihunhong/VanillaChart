@@ -6,6 +6,12 @@ import { Music, Playlist, User } from '../models';
 
 const router = express.Router();
 
+
+router.get('/profile', isAuthenticated, (req, res) => {
+    // my profile
+    res.json(req.user);
+})
+
 router.post('/signup', async(req, res, next) => {
     try {
         const existUser = await User.findOne({ 
@@ -80,6 +86,12 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
+router.post('/logout', isAuthenticated, (req, res) => {
+    req.logout();
+    req.session = null;
+    res.send('ok');
+})
+
 router.patch('/follow', isAuthenticated, async(req, res, next) => {
     // add follower
     try {
@@ -107,6 +119,45 @@ router.delete('/follow', isAuthenticated, async(req, res, next) => {
         const followers = await targetUser.getFollowers();
         res.status(200).json(followers);
     } catch (err) {
+        console.error(err);
+        next(err);
+    }
+})
+
+router.get('/:id', async(req, res, next) => {
+    try {
+        const targetUser = await User.findOne({
+            where: {
+                id: parseInt(req.params.id)
+            },
+            attributes: {
+                exclude: ['password']
+            },
+            include: [
+                {
+                    model: Playlist,
+                    attributes: ['pId'],
+                    as: 'playlists'
+                },
+                {
+                    model: Music,
+                    attributes: ['id'],
+                    as: 'liked',
+                },
+                {
+                    model: User,
+                    attrbiutes: ['id'],
+                    as: 'followings'
+                },
+                {
+                    model: User,
+                    attrbiutes: ['id'],
+                    as: 'followers'
+                },
+            ]
+        })
+        res.status(200).json(targetUser);
+    }catch(err) {
         console.error(err);
         next(err);
     }

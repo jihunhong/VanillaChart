@@ -41,7 +41,7 @@ passport.use(new Strategy({
 }))
 
 passport.serializeUser((user, done) => {
-    console.log('Serialize User : ', user);
+    console.log('Serialize User : ', user?.id);
     done(null, user.id);
 })
 

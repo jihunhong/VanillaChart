@@ -18,10 +18,6 @@ router.get('/google/login',
     })
 );
 
-router.get('/google/user', isAuthenticated, (req, res) => {
-    res.json(req.user);
-})
-
 router.get('/google/callback', 
     passport.authenticate('google', {
         successRedirect: 'http://localhost:3000/login/success',

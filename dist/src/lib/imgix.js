@@ -17,12 +17,12 @@ exports.mappingPlaylistPreview = mappingPlaylistPreview;
 const mappingChartCover = (data) => {
     const rawData = data.map(model => model.get({ plain: true }));
     return rawData === null || rawData === void 0 ? void 0 : rawData.map(item => {
-        var _a, _b;
+        var _a, _b, _c, _d;
         if ((_a = item === null || item === void 0 ? void 0 : item.music) === null || _a === void 0 ? void 0 : _a.albumName) {
             const rawAlbumName = (_b = item.music.albumName) === null || _b === void 0 ? void 0 : _b.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_');
-            return Object.assign(Object.assign({}, item), { music: Object.assign(Object.assign({}, item.music), { liker: item.music.liker.map(v => v.id).sort(), middleCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=600&ar=1:1&fit=crop&auto=format`, smallCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=128&ar=1:1&fit=crop&auto=format` }) });
+            return Object.assign(Object.assign({}, item), { music: Object.assign(Object.assign({}, item.music), { liker: ((_c = item.music.liker) === null || _c === void 0 ? void 0 : _c.map(v => v.id).sort()) || [], middleCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=600&ar=1:1&fit=crop&auto=format`, smallCoverImage: `${variables_1.IMGIX_URL}/${rawAlbumName}.png?w=128&ar=1:1&fit=crop&auto=format` }) });
         }
-        return Object.assign(Object.assign({}, item), { music: Object.assign(Object.assign({}, item.music), { liker: item.music.liker.map(v => v.id).sort(), middleCoverImage: null, smallCoverImage: null }) });
+        return Object.assign(Object.assign({}, item), { music: Object.assign(Object.assign({}, item.music), { liker: ((_d = item.music.liker) === null || _d === void 0 ? void 0 : _d.map(v => v.id).sort()) || [], middleCoverImage: null, smallCoverImage: null }) });
     });
 };
 exports.mappingChartCover = mappingChartCover;
