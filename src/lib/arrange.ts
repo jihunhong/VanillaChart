@@ -1,3 +1,4 @@
+import { getId } from ".";
 import { IMGIX_URL } from "../config/variables";
 
 export const favoriteArtistArrange = (artists) => {
@@ -18,4 +19,17 @@ export const favoriteArtistArrange = (artists) => {
         })
     }
     return [];
+}
+
+export const joinArrange = (user) => {
+    const { followings } = user;
+    const { followers } = user;
+
+    return {
+        ...user.toJSON(),
+        password: null,
+        followers: followers.map(getId),
+        followings: followings.map(getId)
+    }
+    
 }

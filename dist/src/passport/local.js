@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const passport_1 = __importDefault(require("passport"));
 const passport_local_1 = require("passport-local");
+const arrange_1 = require("../lib/arrange");
 const models_1 = require("../models");
 passport_1.default.use(new passport_local_1.Strategy({
     usernameField: 'email',
@@ -72,7 +73,7 @@ passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 
                 },
             ],
         });
-        done(null, user);
+        done(null, arrange_1.joinArrange(user));
     }
     catch (err) {
         console.error('Error Deserialize', err);

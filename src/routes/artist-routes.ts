@@ -1,7 +1,7 @@
 import express from 'express';
 import moment from 'moment';
 import { fn, Op, col } from 'sequelize';
-import { favoriteArtistArrange } from '../lib/arragne';
+import { favoriteArtistArrange } from '../lib/arrange';
 import { Chart, Music, Playlist, PlaylistItems, Sequelize } from '../models';
 import { IMGIX_URL } from './../config/variables';
 

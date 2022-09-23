@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const moment_1 = __importDefault(require("moment"));
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth2_1 = require("passport-google-oauth2");
+const arrange_1 = require("../lib/arrange");
 const models_1 = require("../models");
 passport_1.default.use(new passport_google_oauth2_1.Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -86,7 +87,7 @@ passport_1.default.deserializeUser((id, done) => __awaiter(void 0, void 0, void 
                 },
             ],
         });
-        done(null, user);
+        done(null, arrange_1.joinArrange(user));
     }
     catch (err) {
         console.error('Error Deserialize', err);

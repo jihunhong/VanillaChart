@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const passport_1 = __importDefault(require("passport"));
 const userController_1 = require("../controller/userController");
+const lib_1 = require("../lib");
+const arrange_1 = require("../lib/arrange");
 const middlewares_1 = require("../middlewares");
 const models_1 = require("../models");
 const router = express_1.default.Router();
@@ -90,14 +92,18 @@ router.post('/login', (req, res, next) => {
                     },
                 ]
             });
-            return res.status(200).json(existUser);
+            return res.status(200).json(arrange_1.joinArrange(existUser));
         }));
     })(req, res, next);
 });
-router.post('/logout', middlewares_1.isAuthenticated, (req, res) => {
-    req.logout();
-    req.session = null;
-    res.send('ok');
+router.post('/logout', middlewares_1.isAuthenticated, (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        req.session = null;
+        res.send('ok');
+    });
 });
 router.patch('/follow', middlewares_1.isAuthenticated, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // add follower
@@ -108,14 +114,14 @@ router.patch('/follow', middlewares_1.isAuthenticated, (req, res, next) => __awa
         }
         yield targetUser.addFollowers(req.user.id);
         const followers = yield targetUser.getFollowers();
-        res.status(200).json(followers);
+        res.status(200).json(followers.map(lib_1.getId));
     }
     catch (err) {
         console.error(err);
         next(err);
     }
 }));
-router.delete('/follow', middlewares_1.isAuthenticated, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete('/unfollow', middlewares_1.isAuthenticated, (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     // remove follower
     try {
         const targetUser = yield models_1.User.findOne({ where: { id: req.body.userId } });
@@ -124,7 +130,7 @@ router.delete('/follow', middlewares_1.isAuthenticated, (req, res, next) => __aw
         }
         yield targetUser.removeFollowers(req.user.id);
         const followers = yield targetUser.getFollowers();
-        res.status(200).json(followers);
+        res.status(200).json(followers.map(lib_1.getId));
     }
     catch (err) {
         console.error(err);
@@ -163,7 +169,7 @@ router.get('/:id', (req, res, next) => __awaiter(void 0, void 0, void 0, functio
                 },
             ]
         });
-        res.status(200).json(targetUser);
+        res.status(200).json(arrange_1.joinArrange(targetUser));
     }
     catch (err) {
         console.error(err);

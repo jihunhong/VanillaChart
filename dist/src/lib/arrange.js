@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userJoinArrange = exports.favoriteArtistArrange = void 0;
+exports.joinArrange = exports.favoriteArtistArrange = void 0;
+const _1 = require(".");
 const variables_1 = require("../config/variables");
 const favoriteArtistArrange = (artists) => {
     var _a;
@@ -24,10 +25,10 @@ const favoriteArtistArrange = (artists) => {
     return [];
 };
 exports.favoriteArtistArrange = favoriteArtistArrange;
-const userJoinArrange = (user) => {
+const joinArrange = (user) => {
     const { followings } = user;
     const { followers } = user;
-    return Object.assign(Object.assign({}, user), { followers: followers.map(item => item.get({ plain: true })) });
+    return Object.assign(Object.assign({}, user.toJSON()), { password: null, followers: followers.map(_1.getId), followings: followings.map(_1.getId) });
 };
-exports.userJoinArrange = userJoinArrange;
-//# sourceMappingURL=arragne.js.map
+exports.joinArrange = joinArrange;
+//# sourceMappingURL=arrange.js.map

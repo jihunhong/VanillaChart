@@ -1,6 +1,8 @@
 import express from 'express';
 import passport from 'passport';
 import { signUpUser } from '../controller/userController';
+import { getId } from '../lib';
+import { joinArrange } from '../lib/arrange';
 import { isAuthenticated } from '../middlewares';
 import { Music, Playlist, User } from '../models';
 
@@ -14,7 +16,7 @@ router.get('/profile', isAuthenticated, (req, res) => {
 
 router.post('/signup', async(req, res, next) => {
     try {
-        const existUser = await User.findOne({ 
+        const existUser = await User.findOne({
             where : {
                 email: req.body.email
             }
@@ -81,15 +83,20 @@ router.post('/login', (req, res, next) => {
                     },
                 ]
             });
-            return res.status(200).json(existUser);
+            return res.status(200).json(joinArrange(existUser));
         });
     })(req, res, next);
 });
 
-router.post('/logout', isAuthenticated, (req, res) => {
-    req.logout();
-    req.session = null;
-    res.send('ok');
+router.post('/logout', isAuthenticated, (req, res, next) => {
+    req.logout((err) => {
+        if(err) {
+            return next(err);
+        }
+        req.session = null!;
+        res.send('ok');
+    });
+    
 })
 
 router.patch('/follow', isAuthenticated, async(req, res, next) => {
@@ -101,14 +108,14 @@ router.patch('/follow', isAuthenticated, async(req, res, next) => {
         }
         await targetUser.addFollowers(req.user!.id);
         const followers = await targetUser.getFollowers();
-        res.status(200).json(followers);
+        res.status(200).json(followers.map(getId));
     } catch (err) {
         console.error(err);
         next(err);
     }
 })
 
-router.delete('/follow', isAuthenticated, async(req, res, next) => {
+router.delete('/unfollow', isAuthenticated, async(req, res, next) => {
     // remove follower
     try {
         const targetUser = await User.findOne({ where: { id: req.body.userId }});
@@ -117,7 +124,7 @@ router.delete('/follow', isAuthenticated, async(req, res, next) => {
         }
         await targetUser.removeFollowers(req.user!.id);
         const followers = await targetUser.getFollowers();
-        res.status(200).json(followers);
+        res.status(200).json(followers.map(getId));
     } catch (err) {
         console.error(err);
         next(err);
@@ -156,7 +163,7 @@ router.get('/:id', async(req, res, next) => {
                 },
             ]
         })
-        res.status(200).json(targetUser);
+        res.status(200).json(joinArrange(targetUser));
     }catch(err) {
         console.error(err);
         next(err);

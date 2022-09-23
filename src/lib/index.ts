@@ -19,3 +19,7 @@ export const delay = (time) => {
         setTimeout(resolve, time)
     });
  }
+
+ export const getId = (item) => {
+    return item.get({ plain : true})?.id;
+ }

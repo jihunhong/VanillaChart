@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const moment_1 = __importDefault(require("moment"));
 const sequelize_1 = require("sequelize");
-const arragne_1 = require("../lib/arragne");
+const arrange_1 = require("../lib/arrange");
 const models_1 = require("../models");
 const variables_1 = require("./../config/variables");
 const router = express_1.default.Router();
@@ -35,7 +35,7 @@ router.get('/favorite', (req, res, next) => __awaiter(void 0, void 0, void 0, fu
                         }]
                 }]
         });
-        res.json(arragne_1.favoriteArtistArrange(artists));
+        res.json(arrange_1.favoriteArtistArrange(artists));
     }
     catch (err) {
         console.error(err);

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpUser = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const variables_1 = require("../config/variables");
+const arrange_1 = require("../lib/arrange");
 const models_1 = require("../models");
 function signUpUser({ email, nickname, password }) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -56,7 +57,7 @@ function signUpUser({ email, nickname, password }) {
                     },
                 ],
             });
-            return user;
+            return arrange_1.joinArrange(user);
         }
         catch (err) {
             throw err;

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import passport from 'passport';
 import { Strategy } from 'passport-google-oauth2';
+import { joinArrange } from '../lib/arrange';
 import { Music, Playlist, User } from '../models';
 
 passport.use(new Strategy({
@@ -75,7 +76,7 @@ passport.deserializeUser(async(id, done) => {
                 },
             ],
         });
-        done(null, user);
+        done(null, joinArrange(user));
     }catch(err){
         console.error('Error Deserialize', err);
         done(err, null);

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { IMGIX_URL } from '../config/variables';
+import { joinArrange } from '../lib/arrange';
 import { Music, Playlist, User } from "../models";
 
 export async function signUpUser({ email, nickname, password } : { email: string, nickname: string, password: string }) {
@@ -41,7 +42,7 @@ export async function signUpUser({ email, nickname, password } : { email: string
                 },
             ],
         });
-        return user;
+        return joinArrange(user);
     }catch(err){
         throw err;
     }
