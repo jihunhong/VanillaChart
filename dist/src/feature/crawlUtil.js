@@ -88,32 +88,40 @@ function insertChart({ page, site, chart }) {
                     id: row.album_id
                 }
             });
+            const [artist] = yield models_1.Artist.findOrCreate({
+                where: {
+                    artistName: row.artistName,
+                    site,
+                }
+            });
             if (!albumInfoExist) {
                 const albumInfo = yield fetchAlbumInfo({ page, site, albumId: row.album_id });
                 const { tracks } = albumInfo;
-                const album = yield models_1.Album.findOrCreate({
+                const [album] = yield models_1.Album.findOrCreate({
                     where: {
                         albumName: row.albumName,
                         artistName: row.artistName,
+                        artistId: artist.id,
                         releaseDate: albumInfo.releaseDate,
                         site,
                     }
                 });
                 for (const element of tracks) {
-                    const res = yield models_1.Music.findOrCreate({
+                    const [res] = yield models_1.Music.findOrCreate({
                         where: {
                             title: element.track,
                             artistName: row.artistName,
                             albumName: row.albumName,
                             lead: element.lead,
-                            albumId: album[0].id
+                            albumId: album.id,
+                            artistId: artist.id
                         }
                     });
                     if (row.title === element.track && element.lead) {
                         yield models_1.Chart.create({
                             rank: row.rank,
                             site,
-                            musicId: res[0].id
+                            musicId: res.id
                         });
                     }
                 }
@@ -122,18 +130,19 @@ function insertChart({ page, site, chart }) {
             }
             //  이전에 이미 가져왔기 때문에 위의 if문
             //  음원정보는 모두 존재한다는 말이다. 또한 Music도 이미 존재할것이다.
-            const music = yield models_1.Music.findOrCreate({
+            const [music] = yield models_1.Music.findOrCreate({
                 where: {
                     title: row.title,
                     artistName: row.artistName,
                     albumName: row.albumName,
-                    albumId: row.album_id
+                    albumId: row.album_id,
+                    artistId: artist.id
                 }
             });
             yield models_1.Chart.create({
                 rank: row.rank,
                 site,
-                musicId: music[0].id
+                musicId: music.id
             });
             continue;
         }

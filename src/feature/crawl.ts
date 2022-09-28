@@ -1,7 +1,7 @@
-import { launchBrowser, insertChart, ftsMatchingJob, imageDownload } from './crawlUtil';
-import { collectMelonCharts } from './melonCrawl';
-import { collectGenieCharts } from './genieCrawl';
 import { collectBugsCharts } from './bugsCrawl';
+import { insertChart, launchBrowser } from './crawlUtil';
+import { collectGenieCharts } from './genieCrawl';
+import { collectMelonCharts } from './melonCrawl';
 import { createYoutubeRows } from './youtubeMatch';
 
 (async() => {

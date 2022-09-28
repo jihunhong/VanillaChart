@@ -9,10 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const crawlUtil_1 = require("./crawlUtil");
-const melonCrawl_1 = require("./melonCrawl");
-const genieCrawl_1 = require("./genieCrawl");
 const bugsCrawl_1 = require("./bugsCrawl");
+const crawlUtil_1 = require("./crawlUtil");
+const genieCrawl_1 = require("./genieCrawl");
+const melonCrawl_1 = require("./melonCrawl");
 const youtubeMatch_1 = require("./youtubeMatch");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const { browser, page } = yield crawlUtil_1.launchBrowser();

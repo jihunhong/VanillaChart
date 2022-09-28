@@ -52,7 +52,7 @@ router.get('/:site', async(req, res, next) => {
                         'artistName',
                         'albumName',
                         'albumId',
-                        [fn('concat', `${IMGIX_URL}/artist-profile/`, col('artistName'), '.jpg?w=600&ar=1:1&fit=crop&auto=format'), 'middleArtistProfile']
+                        [fn('concat', `${IMGIX_URL}/artist-profile/`, col('artistId'), '.jpg?w=600&ar=1:1&fit=crop&auto=format'), 'middleArtistProfile']
                     ],
                 }
             ],

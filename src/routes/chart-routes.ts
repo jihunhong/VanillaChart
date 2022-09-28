@@ -2,7 +2,7 @@ import express from 'express';
 import moment from 'moment';
 import { Op } from 'sequelize';
 import { mappingChartCover } from '../lib/imgix';
-import { Album, Chart, Music, User, Video } from '../models';
+import { Album, Artist, Chart, Music, User, Video } from '../models';
 
 const router = express.Router();
 
@@ -43,8 +43,15 @@ router.get('/:site', async(req, res, next) => {
                         'artistName',
                         'albumName',
                         'albumId',
+                        'artistId'
                     ],
                     include : [
+                        {
+                            model: Artist,
+                            attributes: [
+                                'artistName'
+                            ]
+                        },
                         {
                             model : Video,
                             attributes : [

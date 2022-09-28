@@ -63,7 +63,7 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                         'artistName',
                         'albumName',
                         'albumId',
-                        [sequelize_1.fn('concat', `${variables_1.IMGIX_URL}/artist-profile/`, sequelize_1.col('artistName'), '.jpg?w=600&ar=1:1&fit=crop&auto=format'), 'middleArtistProfile']
+                        [sequelize_1.fn('concat', `${variables_1.IMGIX_URL}/artist-profile/`, sequelize_1.col('artistId'), '.jpg?w=600&ar=1:1&fit=crop&auto=format'), 'middleArtistProfile']
                     ],
                 }
             ],

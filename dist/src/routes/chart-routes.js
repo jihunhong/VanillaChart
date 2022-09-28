@@ -54,8 +54,15 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                         'artistName',
                         'albumName',
                         'albumId',
+                        'artistId'
                     ],
                     include: [
+                        {
+                            model: models_1.Artist,
+                            attributes: [
+                                'artistName'
+                            ]
+                        },
                         {
                             model: models_1.Video,
                             attributes: [
