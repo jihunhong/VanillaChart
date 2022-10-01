@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         site: {
             type: DataTypes.STRING(10)
+        },
+        profileImage: {
+            type: DataTypes.STRING(300)
         }
     }, {
         charset : 'utf8',

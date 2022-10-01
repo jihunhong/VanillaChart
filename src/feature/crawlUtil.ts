@@ -98,7 +98,7 @@ export async function insertChart({ page, site, chart }: { page: Page, site: sit
                     })
                  }
              }
-             await imageDownload({ url : row.image!, music : row, site });
+             await coverDownload({ url : row.image!, music : row, site });
              continue;
         }
         
@@ -233,7 +233,7 @@ export async function getObjectS3({ Key }: { Key : string}) {
     })
 }
 
-export async function imageDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
+export async function coverDownload({ url, site, music } : { url : string, site : siteName, music : ChartData }) {
     const targetPath = path.join(__dirname, `../../covers/${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
     const coverDir = path.join(__dirname, `../../covers`);
     const exist = fs.existsSync(coverDir);
@@ -242,12 +242,15 @@ export async function imageDownload({ url, site, music } : { url : string, site 
         fs.mkdirSync(coverDir);
     }
     if(!fs.existsSync(targetPath)){
-        await download({ targetPath, url });
-        await uploadS3({ 
-            targetPath, 
-            outputPath: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
-        });
-        deleteFile({ targetPath });
+        const s3Exist = await getObjectS3({ Key: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png` });
+        if(!s3Exist) {
+            await download({ targetPath, url });
+            await uploadS3({ 
+                targetPath, 
+                outputPath: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
+            });
+            deleteFile({ targetPath });
+        }
     }
 }
 

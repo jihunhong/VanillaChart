@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const aws_sdk_1 = require("aws-sdk");
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
+const sequelize_1 = require("sequelize");
+const variables_1 = require("../config/variables");
 const models_1 = require("../models");
 const crawlUtil_1 = require("./crawlUtil");
 const trim_background_1 = __importDefault(require("./trim-background"));
@@ -26,17 +28,17 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
     const { browser, page } = yield crawlUtil_1.launchBrowser();
     try {
         const artists = yield models_1.Artist.findAll({
-            attributes: [
-                [models_1.Sequelize.fn('DISTINCT', models_1.Sequelize.col('artistName')), 'artistName'],
-                'id'
-            ],
-            raw: true
+            where: {
+                profileImage: {
+                    [sequelize_1.Op.eq]: null
+                },
+                id: {
+                    [sequelize_1.Op.gt]: 993
+                }
+            }
         });
         for (const artist of artists) {
             const outputPath = `artist-profile/${artist === null || artist === void 0 ? void 0 : artist.id}.jpg`;
-            const exist = yield crawlUtil_1.getObjectS3({ Key: outputPath });
-            if (exist)
-                continue;
             yield page.goto(`${ARTIST_SEARCH_URL}${encodeURIComponent(artist.artistName)}`);
             const src = yield page.evaluate(() => {
                 const element = document.querySelector('span.cover-img img');
@@ -46,13 +48,21 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
                 return null;
             });
             if (!src || src.includes('blank_')) {
-                console.error(`검색어 : ${artist === null || artist === void 0 ? void 0 : artist.artistName} 결과가 없습니다`);
+                console.error(`${artist === null || artist === void 0 ? void 0 : artist.id}:  검색어 : ${artist === null || artist === void 0 ? void 0 : artist.artistName} 결과가 없습니다`);
                 continue;
             }
             const artistImagePath = yield trim_background_1.default({ url: src, artistName: artist === null || artist === void 0 ? void 0 : artist.artistName });
-            if (artistImagePath)
+            if (artistImagePath) {
                 yield crawlUtil_1.uploadS3({ targetPath: artistImagePath, outputPath });
-            console.log(`${artist === null || artist === void 0 ? void 0 : artist.artistName} 아티스트 이미지 저장 성공 ✔️`);
+                yield models_1.Artist.update({
+                    profileImage: `${variables_1.IMGIX_URL}/artist-profile/${artist === null || artist === void 0 ? void 0 : artist.id}.jpg`
+                }, {
+                    where: {
+                        id: artist.id
+                    }
+                });
+                console.log(`${artist === null || artist === void 0 ? void 0 : artist.artistName} 아티스트 이미지 저장 성공 ✔️`);
+            }
         }
     }
     catch (err) {

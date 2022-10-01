@@ -1,6 +1,8 @@
 import { S3 } from 'aws-sdk';
 import dotenv from 'dotenv';
 import path from 'path';
+import { Op } from 'sequelize';
+import { IMGIX_URL } from '../config/variables';
 import { Album, Artist, Sequelize } from "../models";
 import { getObjectS3, launchBrowser, uploadS3 } from "./crawlUtil";
 import trimBackground from "./trim-background";
@@ -16,17 +18,18 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
  
     try {
         const artists = await Artist.findAll({
-            attributes: [
-                [Sequelize.fn('DISTINCT', Sequelize.col('artistName')), 'artistName'],
-                'id'
-            ],
-            raw: true
+            where : {
+                profileImage: {
+                    [Op.eq]: null
+                },
+                id : {
+                    [Op.gt]: 993
+                }
+            }
         });
         
         for(const artist of artists) {
-            const outputPath = `artist-profile/${artist?.id}.jpg`
-            const exist = await getObjectS3({ Key: outputPath });
-            if(exist) continue;
+            const outputPath = `artist-profile/${artist?.id}.jpg`;
             await page.goto(`${ARTIST_SEARCH_URL}${encodeURIComponent(artist.artistName)}`);
             const src = await page.evaluate(() => {
                 const element = document.querySelector('span.cover-img img')
@@ -36,13 +39,21 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
                 return null;
             })
             if(!src || src.includes('blank_')) {
-                console.error(`검색어 : ${artist?.artistName} 결과가 없습니다`);
+                console.error(`${artist?.id}:  검색어 : ${artist?.artistName} 결과가 없습니다`);
                 continue;
             }
             const artistImagePath = await trimBackground({ url: src, artistName: artist?.artistName })
-            if(artistImagePath)
+            if(artistImagePath) {
                 await uploadS3({ targetPath: artistImagePath, outputPath });
-            console.log(`${artist?.artistName} 아티스트 이미지 저장 성공 ✔️`);
+                await Artist.update({
+                    profileImage: `${IMGIX_URL}/artist-profile/${artist?.id}.jpg`
+                }, {
+                    where: {
+                        id: artist.id
+                    }
+                })
+                console.log(`${artist?.artistName} 아티스트 이미지 저장 성공 ✔️`);
+            }
         }
 
     }catch(err) {

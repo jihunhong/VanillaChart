@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ftsMatchingJob = exports.imageDownload = exports.getObjectS3 = exports.uploadS3 = exports.fullTextSearch = exports.insertChart = exports.launchBrowser = exports.waitor = void 0;
+exports.ftsMatchingJob = exports.coverDownload = exports.getObjectS3 = exports.uploadS3 = exports.fullTextSearch = exports.insertChart = exports.launchBrowser = exports.waitor = void 0;
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
 const puppeteer_extra_plugin_stealth_1 = __importDefault(require("puppeteer-extra-plugin-stealth"));
 const models_1 = __importStar(require("../models"));
@@ -125,7 +125,7 @@ function insertChart({ page, site, chart }) {
                         });
                     }
                 }
-                yield imageDownload({ url: row.image, music: row, site });
+                yield coverDownload({ url: row.image, music: row, site });
                 continue;
             }
             //  이전에 이미 가져왔기 때문에 위의 if문
@@ -245,7 +245,7 @@ function getObjectS3({ Key }) {
     });
 }
 exports.getObjectS3 = getObjectS3;
-function imageDownload({ url, site, music }) {
+function coverDownload({ url, site, music }) {
     return __awaiter(this, void 0, void 0, function* () {
         const targetPath = path_1.default.join(__dirname, `../../covers/${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`);
         const coverDir = path_1.default.join(__dirname, `../../covers`);
@@ -254,16 +254,19 @@ function imageDownload({ url, site, music }) {
             fs_1.default.mkdirSync(coverDir);
         }
         if (!fs_1.default.existsSync(targetPath)) {
-            yield download({ targetPath, url });
-            yield uploadS3({
-                targetPath,
-                outputPath: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
-            });
-            deleteFile({ targetPath });
+            const s3Exist = yield getObjectS3({ Key: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png` });
+            if (!s3Exist) {
+                yield download({ targetPath, url });
+                yield uploadS3({
+                    targetPath,
+                    outputPath: `${music.albumName.replace(/[`~!@#$%^&*|\\\'\";:\/?]/g, '_')}.png`,
+                });
+                deleteFile({ targetPath });
+            }
         }
     });
 }
-exports.imageDownload = imageDownload;
+exports.coverDownload = coverDownload;
 function ftsMatchingJob({ chart }) {
     return __awaiter(this, void 0, void 0, function* () {
         const res = [];
