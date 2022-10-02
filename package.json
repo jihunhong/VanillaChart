@@ -9,7 +9,7 @@
     "dev": "npm run deploy && export NODE_ENV=development && npx nodemon dist/app.js",
     "sync-dir": "cp .env ./dist/.env",
     "crawl": "npm run deploy && export NODE_ENV=production && node dist/src/feature/crawl.js",
-    "artist-crawl": "npm run deploy && export NODE_ENV=production && node dist/src/feature/artist-crawl.js"
+    "artist-crawl": "export NODE_ENV=production && node dist/src/feature/artist-crawl.js"
   },
   "repository": {
     "type": "git",

@@ -22,9 +22,6 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
                 profileImage: {
                     [Op.eq]: null
                 },
-                id : {
-                    [Op.gt]: 993
-                }
             }
         });
         
@@ -40,6 +37,13 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
             })
             if(!src || src.includes('blank_')) {
                 console.error(`${artist?.id}:  검색어 : ${artist?.artistName} 결과가 없습니다`);
+                await Artist.update({
+                    profileImage: `${IMGIX_URL}/artist-profile/default-artist.jpg`
+                }, {
+                    where: {
+                        id: artist.id
+                    }
+                })
                 continue;
             }
             const artistImagePath = await trimBackground({ url: src, artistName: artist?.artistName })

@@ -24,6 +24,7 @@ jobs:
       - run: echo ${{ secrets.DOT_ENV }} | base64 --decode > ./.env
       - run: ls -al
       - run: npm run crawl
+      - run: npm run artist-crawl
       
       - uses: 8398a7/action-slack@v3
         with:
