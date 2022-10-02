@@ -2,7 +2,7 @@ import express from 'express';
 import moment from 'moment';
 import { fn, Op, col } from 'sequelize';
 import { favoriteArtistArrange } from '../lib/arrange';
-import { Chart, Music, Playlist, PlaylistItems, Sequelize } from '../models';
+import { Artist, Chart, Music, Playlist, PlaylistItems, Sequelize } from '../models';
 import { IMGIX_URL } from './../config/variables';
 
 const router = express.Router();
@@ -49,17 +49,23 @@ router.get('/:site', async(req, res, next) => {
                     model: Music,
                     attributes : [
                         'title',
-                        'artistName',
                         'albumName',
                         'albumId',
                         [fn('concat', `${IMGIX_URL}/artist-profile/`, col('artistId'), '.jpg?w=600&ar=1:1&fit=crop&auto=format'), 'middleArtistProfile']
                     ],
-                }
+                    include: [
+                        {
+                            model: Artist,
+                            attributes: ['artistName', 'profileImage']
+                        }
+                    ]
+                },
+                
             ],
             order: [
                 ['rank', 'ASC']
             ],
-            group : ['artistName']
+            group : ['artistId']
         })
         res.status(200).send(artists);
     }catch(err){

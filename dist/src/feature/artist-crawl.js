@@ -32,9 +32,6 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
                 profileImage: {
                     [sequelize_1.Op.eq]: null
                 },
-                id: {
-                    [sequelize_1.Op.gt]: 993
-                }
             }
         });
         for (const artist of artists) {
@@ -49,6 +46,13 @@ const ARTIST_SEARCH_URL = 'https://www.genie.co.kr/search/searchMain?query=';
             });
             if (!src || src.includes('blank_')) {
                 console.error(`${artist === null || artist === void 0 ? void 0 : artist.id}:  검색어 : ${artist === null || artist === void 0 ? void 0 : artist.artistName} 결과가 없습니다`);
+                yield models_1.Artist.update({
+                    profileImage: `${variables_1.IMGIX_URL}/artist-profile/default-artist.jpg`
+                }, {
+                    where: {
+                        id: artist.id
+                    }
+                });
                 continue;
             }
             const artistImagePath = yield trim_background_1.default({ url: src, artistName: artist === null || artist === void 0 ? void 0 : artist.artistName });

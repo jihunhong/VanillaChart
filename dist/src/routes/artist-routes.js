@@ -60,17 +60,22 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                     model: models_1.Music,
                     attributes: [
                         'title',
-                        'artistName',
                         'albumName',
                         'albumId',
                         [sequelize_1.fn('concat', `${variables_1.IMGIX_URL}/artist-profile/`, sequelize_1.col('artistId'), '.jpg?w=600&ar=1:1&fit=crop&auto=format'), 'middleArtistProfile']
                     ],
-                }
+                    include: [
+                        {
+                            model: models_1.Artist,
+                            attributes: ['artistName', 'profileImage']
+                        }
+                    ]
+                },
             ],
             order: [
                 ['rank', 'ASC']
             ],
-            group: ['artistName']
+            group: ['artistId']
         });
         res.status(200).send(artists);
     }
