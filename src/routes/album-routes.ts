@@ -1,8 +1,6 @@
-import { mappingAlbumDetail, mappingArtistAlbums } from './../lib/imgix';
 import express from 'express';
-import moment from 'moment';
-import { Chart, Music, Video, Album } from '../models';
-import { Op } from 'sequelize';
+import { Album, Artist, Music, Video } from '../models';
+import { mappingAlbumDetail, mappingArtistAlbums } from './../lib/imgix';
 
 const router = express.Router();
 
@@ -28,8 +26,12 @@ router.get('/tracks/:album_id', async(req, res, next) => {
                             attributes: [
                                 'videoId'
                             ]
-                        }
+                        },
                     ]
+                },
+                {
+                    model: Artist,
+                    attributes: ['artistName', 'profileImage']
                 }
             ]
         })

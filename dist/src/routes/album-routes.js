@@ -12,9 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const imgix_1 = require("./../lib/imgix");
 const express_1 = __importDefault(require("express"));
 const models_1 = require("../models");
+const imgix_1 = require("./../lib/imgix");
 const router = express_1.default.Router();
 router.get('/tracks/:album_id', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -38,8 +38,12 @@ router.get('/tracks/:album_id', (req, res, next) => __awaiter(void 0, void 0, vo
                             attributes: [
                                 'videoId'
                             ]
-                        }
+                        },
                     ]
+                },
+                {
+                    model: models_1.Artist,
+                    attributes: ['artistName', 'profileImage']
                 }
             ]
         });

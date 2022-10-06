@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     Album.associate = (db) => {
         db.Album.hasMany(db.Music);
+        db.Album.belongsTo(db.Artist);
     };
     return Album;
 };
