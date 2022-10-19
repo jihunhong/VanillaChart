@@ -56,7 +56,7 @@ router.get('/:site', async(req, res, next) => {
                     include: [
                         {
                             model: Artist,
-                            attributes: ['artistName', 'profileImage']
+                            attributes: ['id', 'artistName', 'profileImage']
                         }
                     ]
                 },

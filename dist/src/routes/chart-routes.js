@@ -131,7 +131,7 @@ router.get('/:chart/:date', (req, res, next) => __awaiter(void 0, void 0, void 0
             group: ['rank']
         });
         const json = imgix_1.mappingChartCover(chart);
-        res.status(200).send(chart);
+        res.status(200).send(json);
     }
     catch (err) {
         console.error(err);

@@ -67,7 +67,7 @@ router.get('/:site', (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                     include: [
                         {
                             model: models_1.Artist,
-                            attributes: ['artistName', 'profileImage']
+                            attributes: ['id', 'artistName', 'profileImage']
                         }
                     ]
                 },

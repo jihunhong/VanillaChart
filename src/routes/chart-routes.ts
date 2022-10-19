@@ -121,7 +121,7 @@ router.get('/:chart/:date', async(req, res, next) => {
             group: ['rank']
         })
         const json = mappingChartCover(chart);
-        res.status(200).send(chart);
+        res.status(200).send(json);
     }catch(err){
         console.error(err);
         next(err);
