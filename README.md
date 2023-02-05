@@ -13,7 +13,10 @@
 
 ## 📷 Preview
 
-<center><img src="/preview.png"></center>
+<center><img src="./record/main-page.png"></center>
+<center><img src="./record/preview.png"></center>
+<center><img src="./record/album-detail.png"></center>
+<center><img src="./record/playlist.png"></center>
 
 ## ✒️ 개요
 
