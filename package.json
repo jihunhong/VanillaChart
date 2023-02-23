@@ -51,7 +51,7 @@
     "puppeteer-extra": "^3.1.9",
     "puppeteer-extra-plugin-stealth": "^2.4.9",
     "redis": "^3.0.2",
-    "sequelize": "^6.5.0",
+    "sequelize": "^6.28.2",
     "sequelize-cli": "^6.2.0",
     "sharp": "^0.30.7",
     "uuid": "^8.3.2"
